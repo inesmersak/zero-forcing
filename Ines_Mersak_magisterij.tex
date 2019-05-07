@@ -61,7 +61,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 
 % VEČ ZANIMIVIH PAKETOV
 % \usepackage{array}      % več možnosti za tabele
-% \usepackage[list=true,listformat=simple]{subcaption}  % več kot ena slika na figure, omogoči slika 1a, slika 1b
+ \usepackage[list=true,listformat=simple]{subcaption}  % več kot ena slika na figure, omogoči slika 1a, slika 1b
 % \usepackage[all]{xy}    % diagrami
 % \usepackage{doi}        % za clickable DOI entrye v bibliografiji
 % \usepackage{enumerate}     % več možnosti za sezname
@@ -77,7 +77,9 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 % \renewcommand{\listalgorithmname}{Kazalo algoritmov}
 
 % DRUGI TVOJI PAKETI:
-% tukaj
+\usepackage[labelfont=it, format=hang]{caption}
+\usepackage{tikz}
+\usetikzlibrary{math}
 
 \setlength{\overfullrule}{50pt} % označi predlogo vrstico
 \pagestyle{plain}               % samo številka strani na dnu, nobene glave / noge
@@ -104,7 +106,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \renewcommand{\C}{\mathbb C}
 \newcommand{\Q}{\mathbb Q}
 
-% \DeclareMathOperator{\tr}{tr}  % morda potrebuješ operator za sled ali kaj drugega?
+\DeclareMathOperator{\boxempty}{\Box}
 
 % bold matematika znotraj \textbf{ }, tudi v naslovih, kot \omega spodaj
 \makeatletter \g@addto@macro\bfseries{\boldmath} \makeatother
@@ -230,90 +232,368 @@ Napišite kratek zgodovinski in matematični uvod.  Pojasnite motivacijo za prob
 nastopa, kje vse je bil obravnavan. Na koncu opišite tudi organizacijo dela -- kaj je v kakšnem
 razdelku.
 
-\section{Integrali po \texorpdfstring{$\omega$}{ω}-kompleksih}
-\subsection{Definicija}
+\section{Osnovne definicije}
+V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa definiramo dva temeljna pojma tega dela, množico ničelne prisile in število ničelne prisile, si ogledamo motivacijo za poimenovanje in nekaj primerov.
+
+\emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jih z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. 
+
+Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina vozlišča} $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov. 
+
+\subsection{Produkti grafov}
+V delu si bomo ogledali tudi rezultate za nekatere produkte grafov, zato jih najprej definirajmo in ilustrirajmo s primeri.
+
 \begin{definicija}
-  Neskončno zaporedje kompleksnih števil, označeno z $\omega = (\omega_1, \omega_2, \ldots)$,
-  se imenuje \emph{$\omega$-kompleks}.\footnote{To ime je izmišljeno.}
-
-  Črni blok zgoraj je tam namenoma. Označuje, da \LaTeX{} ni znal vrstice prelomiti pravilno
-  in vas na to opozarja. Preoblikujte stavek ali mu pomagajte deliti problematično besedo z
-  ukazom \verb|\hyphenation{an-ti-ko-mu-ta-ti-ven}| v preambuli.
+    \emph{Kartezični produkt} grafov $G$ in $H$, označimo $G \boxempty H$, je graf, katerega  množica vozlišč je kartezični produkt množice vozlišč grafa $G$ in grafa $H$, sosednji pa sta tisti dve vozlišči $(u, v)$ in $(u', v')$, $u, u' \in V(G),\ v, v' \in V(H)$, za kateri velja eden izmed naslednjih pogojev:
+    \begin{enumerate}
+        \item $u = u'$ in $vv' \in E(H)$,
+        \item $v = v'$ in $uu' \in E(G)$.
+    \end{enumerate}
 \end{definicija}
-\begin{trditev}[Znano ime ali avtor]
-  \label{trd:obstoj-omega}
-  Obstaja vsaj en $\omega$-kompleks.
-\end{trditev}
-\begin{proof}
-  Naštejmo nekaj primerov:
-  \begin{align}
-    \omega &= (0, 0, 0, \dots), \label{eq:zero-kompleks} \\
-    \omega &= (1, i, -1, -i, 1, \ldots), \nonumber \\
-    \omega &= (0, 1, 2, 3, \ldots). \nonumber \qedhere  % postavi QED na zadnjo vrstico enačbe
-  \end{align}
-\end{proof}
 
-\section{Tehnični napotki za pisanje}
+\begin{definicija}
+    \emph{Krepki produkt} grafov $G$ in $H$, označimo $G \boxtimes H$, je graf, katerega  množica vozlišč je kartezični produkt množice vozlišč grafa $G$ in grafa $H$, sosednji pa sta tisti dve vozlišči $(u, v)$ in $(u', v')$, $u, u' \in V(G),\ v, v' \in V(H)$, za kateri velja eden izmed naslednjih pogojev:
+    \begin{enumerate}
+        \item $u = u'$ in $vv' \in E(H)$,
+        \item $v = v'$ in $uu' \in E(G)$,
+        \item $uu' \in E(G)$ in $vv' \in E(H)$.
+    \end{enumerate}
+\end{definicija}
 
-\subsection{Sklicevanje in citiranje}
-Za sklice uporabljamo \verb|\ref|, za sklice na enačbe \verb|\eqref|, za citate \verb|\cite|. Pri
-sklicevanju in citiranju sklicano številko povežemo s prejšnjo besedo z nedeljivim presledkom
-$\sim$, kot npr.\ \verb|iz trditve~\ref{trd:obstoj-omega} vidimo|.
+Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$. Poglejmo si  nekaj primerov obeh produktov z enostavnimi družinami grafov.
 
 \begin{primer}
-  Zaporedje~\eqref{eq:zero-kompleks} iz dokaza trditve~\ref{trd:obstoj-omega} na
-  strani~\pageref{trd:obstoj-omega} lahko najdemo tudi v Spletni enciklopediji zaporedij~\cite{oeis}.
-  Citiramo lahko tudi bolj natančno~\cite[trditev 2.1, str.\ 23]{lebedev2009introduction}.
+    Najprej si poglejmo primera kartezičnega produkta poti $P_2 \boxempty P_3$ in krepkega produkta poti $P_2 \boxtimes P_3$, ki sta prikazana na sliki~\ref{fig:produkta-poti}.
+    \begin{figure}[h]
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \begin{tikzpicture}[xscale=1.5, yscale=1.5]
+                \tikzmath{\o = 0.4;}
+                \begin{scope}[every node/.style={circle,draw}]
+                \node (u) at (1,0) {};
+                \node (v) at (2,0) {};
+                
+                \node (x) at (-0.5,1) {};
+                \node (y) at (-0.5,2) {};
+                \node (z) at (-0.5,3) {};
+                \end{scope}
+                
+                \node at (1, -\o) {$u$};
+                \node at (2, -\o) {$v$};
+                
+                \node at (-0.5-\o, 1) {$x$};
+                \node at (-0.5-\o, 2) {$y$};
+                \node at (-0.5-\o, 3) {$z$};
+                
+                \path[-,draw]
+                (u) edge (v)
+                (x) edge (y)
+                (y) edge (z);
+    
+                \begin{scope}[every node/.style={circle,thick,draw}]
+                \node (ux) at (1,1) {};
+                \node (uy) at (1,2) {};
+                \node (uz) at (1,3) {};
+                \node (vx) at (2,1) {};
+                \node (vy) at (2,2) {};
+                \node (vz) at (2,3) {};
+                \end{scope}
+                
+                \node at (1, 1-\o) {$(u,x)$};
+                \node at (2, 1-\o) {$(v,x)$};
+                \node at (1-1.3*\o, 2) {$(u,y)$};
+                \node at (2+1.3*\o, 2) {$(v,y)$};
+                \node at (1, 3+\o) {$(u,z)$};
+                \node at (2, 3+\o) {$(v,z)$};
+                
+                \path[-,draw,thick]
+                (ux) edge (uy)
+                (uy) edge (uz)
+                (vx) edge (vy)
+                (vy) edge (vz)
+                (ux) edge (vx)
+                (uy) edge (vy)
+                (uz) edge (vz);
+            \end{tikzpicture}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \begin{tikzpicture}[xscale=1.5, yscale=1.5]
+                \tikzmath{\o = 0.4;}
+                \begin{scope}[every node/.style={circle,draw}]
+                \node (u) at (1,0) {};
+                \node (v) at (2,0) {};
+                
+                \node (x) at (-0.5,1) {};
+                \node (y) at (-0.5,2) {};
+                \node (z) at (-0.5,3) {};
+                \end{scope}
+                
+                \node at (1, -\o) {$u$};
+                \node at (2, -\o) {$v$};
+                
+                \node at (-0.5-\o, 1) {$x$};
+                \node at (-0.5-\o, 2) {$y$};
+                \node at (-0.5-\o, 3) {$z$};
+                
+                \path[-,draw]
+                (u) edge (v)
+                (x) edge (y)
+                (y) edge (z);
+                
+                \begin{scope}[every node/.style={circle,thick,draw}]
+                \node (ux) at (1,1) {};
+                \node (uy) at (1,2) {};
+                \node (uz) at (1,3) {};
+                \node (vx) at (2,1) {};
+                \node (vy) at (2,2) {};
+                \node (vz) at (2,3) {};
+                \end{scope}
+                
+                \node at (1, 1-\o) {$(u,x)$};
+                \node at (2, 1-\o) {$(v,x)$};
+                \node at (1-1.3*\o, 2) {$(u,y)$};
+                \node at (2+1.3*\o, 2) {$(v,y)$};
+                \node at (1, 3+\o) {$(u,z)$};
+                \node at (2, 3+\o) {$(v,z)$};
+                
+                \path[-,draw,thick]
+                (ux) edge (uy)
+                (uy) edge (uz)
+                (vx) edge (vy)
+                (vy) edge (vz)
+                (ux) edge (vx)
+                (uy) edge (vy)
+                (uz) edge (vz)
+                (ux) edge (vy)
+                (uy) edge (vx)
+                (uy) edge (vz)
+                (uz) edge (vy);
+            \end{tikzpicture}
+        \end{subfigure}
+        \caption{Na sliki sta prikazana kartezični produkt $P_2 \boxempty P_3$ (levo) in $P_2 \boxtimes P_3$ (desno). Kartezični produkt označujemo z $\boxempty$, krepki produkt pa z $\boxtimes$ ravno zaradi rezultata teh dveh produktov poti $P_2$ same s seboj.}
+        \label{fig:produkta-poti}
+    \end{figure}
+    
+    Pri obeh produktih opazimo, da kot inducirani podgrafi za ustrezno izbrano podmnožico vozlišč nastopajo 3 (ravno $|P_3|$) kopije grafa $P_2$ in 2 (ravno $|P_2|$) kopiji grafa $P_3$.
+    
+    Na spodnjih slikah je prikazan še primer kartezičnega in krepkega produkta cikla in poti na $n$ vozliščih, natančneje $C_4 \boxempty P_n$ na sliki~\ref{fig:kartez-produkt-cikel-pot} in $C_4 \boxtimes P_n$ na sliki~\ref{fig:krep-produkt-cikel-pot}.
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[xscale=1.2,yscale=1.5]
+        \foreach \i in {1,...,4}
+        {
+            \begin{scope}[every node/.style={circle,thick,draw}]
+                \node (u\i) at (2*\i,0) {};
+                \node (v\i) at (2*\i,1) {};
+                \node (x\i) at (2*\i+0.5,0.5) {};
+                \node (y\i) at (2*\i+0.5,1.5) {};
+            \end{scope}
+            
+            \path[-,thick,draw]
+            (u\i) edge (v\i)
+            (x\i) edge (y\i)
+            (u\i) edge (x\i)
+            (v\i) edge (y\i);
+            \ifthenelse{\i=1}{}{
+                \tikzmath{\im = \i-1;}
+                \ifthenelse{\NOT \i=4}{
+                    \path[-,thick,draw]
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
+                }{
+                    \path[dashed,draw]
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
+                }
+            }
+        }
+        \end{tikzpicture}
+        \caption{Prikazan je kartezični produkt $C_4 \boxempty P_n$.}
+        \label{fig:kartez-produkt-cikel-pot}
+    \end{figure}
+    
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[xscale=1.2,yscale=1.5]
+        \foreach \i in {1,...,4}
+        {
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \node (u\i) at (2*\i,0) {};
+            \node (v\i) at (2*\i,1) {};
+            \node (x\i) at (2*\i+0.5,0.5) {};
+            \node (y\i) at (2*\i+0.5,1.5) {};
+            \end{scope}
+            
+            \path[-,thick,draw]
+            (u\i) edge (v\i)
+            (x\i) edge (y\i)
+            (u\i) edge (x\i)
+            (v\i) edge (y\i);
+            \ifthenelse{\i=1}{}{
+                \tikzmath{\im = \i-1;}
+                \ifthenelse{\NOT \i=4}{
+                    \path[-,thick,draw]
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
+                    \path[-,draw]
+                    (u\i) edge (v\im)
+                    (v\i) edge (u\im)
+                    (x\i) edge (y\im)
+                    (y\i) edge (x\im);
+                }{
+                \path[dashed,draw]
+                (u\i) edge (u\im)
+                (v\i) edge (v\im)
+                (x\i) edge (x\im)
+                (y\i) edge (y\im);
+                \path[dotted,draw]
+                (u\i) edge (v\im)
+                (v\i) edge (u\im)
+                (x\i) edge (y\im)
+                (y\i) edge (x\im);
+                
+                }
+            }
+        }
+        \end{tikzpicture}
+        \caption{Prikazan je krepki produkt $C_4 \boxtimes P_n$.}
+        \label{fig:krep-produkt-cikel-pot}
+    \end{figure}
 \end{primer}
 
-\subsection{Okrajšave}
-Pri uporabi okrajšav \LaTeX{} za piko vstavi predolg presledek, kot npr. tukaj. Zato se za vsako
-piko, ki ni konec stavka doda presledek običajne širine z ukazom \verb*|\ |, kot npr.\ tukaj.
-Primerjaj z okrajšavo zgoraj za razliko.
+Iz zgornjih definicij in primerov lahko vidimo, da sta tako kartezični kot tudi krepki produkt komutativna produkta, do izomorfnosti grafov natančno. Poglejmo si še en grafovski produkt, za katerega pa komutativnost v splošnem ne velja.
 
-\subsection{Vstavljanje slik}
-Sliko vstavimo v plavajočem okolju \texttt{figure}. Plavajoča okolja \emph{plavajo} po tekstu, in
-jih lahko postavimo na vrh strani z opcijskim parametrom `\texttt{t}', na lokacijo, kjer je v kodi s
-`\texttt{h}', in če to ne deluje, potem pa lahko rečete \LaTeX u, da ga \emph{res} želite tukaj,
-kjer ste napisali, s `\texttt{h!}'. Lepo je da so vstavljene slike vektorske (recimo \texttt{.pdf}
-ali \texttt{.eps} ali \texttt{.svg}) ali pa \texttt{.png} visoke resolucije (več kot
-\unit[300]{dpi}).  Pod vsako sliko je napis in na vsako sliko se skličemo v besedilu. Primer
-vektorske slike je na sliki~\ref{fig:sample}. Vektorsko sliko prepoznate tako, da močno
-zoomate v sliko, in še vedno ostane gladka. Več informacij je na voljo na
-\url{https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions}. Če so slike bitne, kot na
-primer slika~\ref{fig:image}, poskrbite, da so v dovolj visoki resoluciji.
+\begin{definicija}
+    \emph{Korona} grafov $G$ in $H$, označimo jo z $G \circ H$, je graf velikosti $|G||H| + |G|$, ki ga sestavimo tako, da vzamemo eno kopijo $G$ in $|G|$ kopij grafa $H$, vsa vozlišča $i$-te kopije $H$ pa povežemo z $i$-tim vozliščem v kopiji grafa $G$.
+\end{definicija}
+Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2$ in $P_2 \circ C_5$.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[width=0.6\textwidth]{images/sample.pdf}
-% \caption[caption za v kazalo]{Dolg caption pod sliko}
-  \caption[Primer vektorske slike.]{Primer vektorske slike z oznakami v enaki pisavi, kot jo
-     uporablja \LaTeX{}.  Narejena je s programom Inkscape, \LaTeX{} oznake so importane v
-     Inkscape iz pomožnega PDF.}
-  \label{fig:sample}
+    \begin{subfigure}{0.33\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {};
+        \node (2) at (2,0) {};
+        \node (3) at (3,2) {};
+        \node (4) at (1,3.5) {};
+        \node (5) at (-1,2) {};
+        
+        \node (u1) at ([shift=({-0.5,-1})]1) {};
+        \node (v1) at ([shift=({0.5,-1})]1) {};
+        
+        \node (u2) at ([shift=({-0.5,-1})]2) {};
+        \node (v2) at ([shift=({0.5,-1})]2) {};
+        
+        \node (u3) at ([shift=({1,-0.5})]3) {};
+        \node (v3) at ([shift=({1,0.5})]3) {};
+        
+        \node (u4) at ([shift=({-0.5,1})]4) {};
+        \node (v4) at ([shift=({0.5,1})]4) {};
+        
+        \node (u5) at ([shift=({-1,-0.5})]5) {};
+        \node (v5) at ([shift=({-1,0.5})]5) {};
+        \end{scope}
+        
+        \path[-,thick,draw]
+        (1) edge (2)
+        (2) edge (3)
+        (3) edge (4)
+        (4) edge (5)
+        (5) edge (1);
+        
+        \foreach \i in {1,...,5}
+        {
+            \path[-,thick,draw]
+            (u\i) edge (v\i)
+            (u\i) edge (\i)
+            (v\i) edge (\i);
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.66\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+        \begin{scope}[every node/.style={circle,thick,draw}, rotate=-10, xscale=0.6]
+        \node (1) at (0,0) {};
+        \node (2) at (2,0) {};
+        \node (3) at (3,2) {};
+        \node (4) at (1,3.5) {};
+        \node (5) at (-1,2) {};
+        \end{scope}
+        
+        \begin{scope}[every node/.style={circle,thick,draw}, rotate=15, xscale=0.6, shift={(16,-3)}]
+        \node (6) at (0,0) {};
+        \node (7) at (2,0) {};
+        \node (8) at (3,2) {};
+        \node (9) at (1,3.5) {};
+        \node (10) at (-1,2) {};
+        \end{scope}
+        
+        \begin{scope}[every node/.style={circle,thick,draw}]
+         \node (v1) at (4,2) {};
+         \node (v2) at (7,2) {};
+        \end{scope}
+        
+        \path[-,thick,draw]
+        (1) edge (2)
+        (2) edge (3)
+        (3) edge (4)
+        (4) edge (5)
+        (5) edge (1)
+        (6) edge (7)
+        (7) edge (8)
+        (8) edge (9)
+        (9) edge (10)
+        (10) edge (6)
+        (v1) edge (v2);
+        
+        \foreach \i in {1,...,5} {
+            \path[-,thick,draw]
+            (\i) edge (v1);
+        }
+        \foreach \i in {6,...,10} {
+            \path[-,thick,draw]
+            (\i) edge (v2);
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Na sliki sta prikazana korona $C_5 \circ P_2$ (levo) in $P_2 \circ C_5$ (desno). Že iz velikosti lahko vidimo, da grafa nista izomorfna.}
+    \label{fig:korona-poti-cikla}
 \end{figure}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.8\textwidth]{images/image.png}
-  \caption[Primer bitne slike.]{Primer bitne slike, izvožene iz Matlaba. Poskrbite, da so slike v
-  dovolj visoki resoluciji in da ne vsebujejo prosojnih elementov (to zahteva PDF/A-1b format).}
-  \label{fig:image}
-\end{figure}
+\subsection{Definicija ničelne prisile}
 
-\subsection{Kako narediti stvarno kazalo}
-Dodate ukaze \verb|\index{polje}| na besede, kjer je pojavijo, kot tukaj\index{tukaj}.
-Več o stvarnih kazalih je na voljo na \url{https://en.wikibooks.org/wiki/LaTeX/Indexing}.
+Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, in jih demonstrirajmo na preprostih primerih.
 
-\subsection{Navajanje literature}
-Članke citiramo z uporabo \verb|\cite{label}|, \verb|\cite[text]{label}| ali pa več naenkrat s
-\verb|\cite\{label1, label2}|. Tudi tukaj predhodno besedo in citat povežemo z nedeljivim presledkom
-$\sim$. Na primer~\cite{chen2006meshless,liu2001point}, ali pa \cite{kibriya2007empirical}, ali pa
-\cite[str.\ 12]{trobec2015parallel}, \cite[enačba (2.3)]{pereira2016convergence}.
-Vnosi iz \verb|.bib| datoteke, ki niso citirani, se ne prikažejo v seznamu literature, zato jih
-tukaj citiram.~\cite{vene2000categorical}, \cite{gregoric2017stopniceni}, \cite{slak2015induktivni},
-\cite{nsphere}, \cite{kearsley1975linearly}, \cite{STtemplate}, \cite{NunbergerTand}.
+\begin{definicija}
+    \emph{Množica ničelne prisile} $Z$ grafa $G$ je podmnožica vozlišč tega grafa, takšna, da velja: če na začetku s črno barvo pobarvamo vsa vozlišča iz $Z$, potem pa sledimo pravilu, da vsako črno vozlišče $u$ z natanko enim belim sosedom $v$ prisili vozlišče $v$, da spremeni barvo v črno, in postopek ponavljamo, dokler se še dogajajo kakšne spremembe, morajo biti po koncu postopka vsa vozlišča grafa $G$ pobarvana črno.
+\end{definicija}
 
+\begin{primer}
+    Za graf na sliki~\ref{fig:osnovni-primer-prisile} je množica ničelne prisile $Z = $.
+    
+    \begin{figure}[h]
+        \caption{TODO}
+        \label{fig:osnovni-primer-prisile}
+    \end{figure}
+\end{primer}
+
+Zanima nas, kakšna je najmanjša možna množica vozlišč, ki jo moramo vzeti, da bo po končanem postopku barvanja celoten graf pobarvan črno. 
+
+\begin{definicija}
+    \emph{Število ničelne prisile} $Z(G)$ grafa $G$ je definirano kot velikost najmanjše množice ničelne prisile grafa $G$, oziroma
+    \[ Z(G) = \min \{|Z| \mid Z \subseteq V(G) \text{ množica ničelne prisile grafa } G \}. \]
+\end{definicija}
+
+Hitro vidimo, da je število ničelne prisile dobro definirano, saj lahko za poljuben graf vedno vzamemo vsa vozlišča, razen enega, in s tem dobimo množico ničelne prisile. Velja torej
+\[ Z(G) \leq |G| - 1. \]
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
 % ampak bi moral stil poskrbeti za vse. Reference se uredijo po abecedi.
