@@ -237,7 +237,7 @@ V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa
 
 \emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jih z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. 
 
-Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina vozlišča} $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov. 
+Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina vozlišča} $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov. Največjo stopnjo nekega vozlišča v grafu $G$ bomo označili z $\Delta(G)$, najmanjšo pa z $\delta(G)$. Kadar je očitno, za kateri graf gre, bomo pisali kar $\Delta$ in $\delta$.
 
 \subsection{Produkti grafov}
 V delu si bomo ogledali tudi rezultate za nekatere produkte grafov, zato jih najprej definirajmo in ilustrirajmo s primeri.
@@ -568,7 +568,7 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
     \label{fig:korona-poti-cikla}
 \end{figure}
 
-\subsection{Definicija ničelne prisile}
+\subsection{Ničelna prisila}
 
 Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, in jih demonstrirajmo na preprostih primerih.
 
@@ -577,12 +577,32 @@ Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, in jih demonstri
 \end{definicija}
 
 \begin{primer}
-    Za graf na sliki~\ref{fig:osnovni-primer-prisile} je množica ničelne prisile $Z = $.
-    
+    Za graf na sliki~\ref{fig:osnovni-primer-prisile} je množica ničelne prisile na primer $Z = \{ 1, 5\}$. 
     \begin{figure}[h]
-        \caption{TODO}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {1};
+        \node (2) at (0,2) {2};
+        \node (3) at (2,0) {3};
+        \node (4) at (2,2) {4};
+        \node (5) at (4,2) {5};
+        \end{scope}
+        
+        \path[-,thick,draw]
+        (1) edge (2)
+        (2) edge (3)
+        (1) edge (3)
+        (3) edge (4)
+        (4) edge (5);
+        
+        \end{tikzpicture}
+        \caption{Ena izmed petih možnih množic ničelne prisile velikosti~2 grafa na sliki je množica $Z =\{1,5\}$.}
         \label{fig:osnovni-primer-prisile}
     \end{figure}
+    Pravzaprav od podmnožic vozlišč velikosti~2 zadostujejo tiste, ki vsebujejo vozlišče~1 ali vozlišče~2 ter hkrati vozlišče~3 ali vozlišče~5, pa tudi podmnožica, ki vsebuje tako vozlišče~1 kot vozlišče~2. (Če se virus začne širiti iz trikotnika, potem morata biti pobarvani vsaj dve izmed vozlišč trikotnika, če pa se začne širiti iz vozlišča~5, ki je stopnje 1, mora biti pobarvano vsaj še eno vozlišče trikotnika (1 ali 2), da bo vozlišče~3 lahko okužilo zadnje neokuženo vozlišče trikotnika.) Vse možne množice ničelne prisile velikosti~2 so torej:
+    \[ Z_1 = \{ 1, 2\}, Z_2 = \{ 1, 3\},\ Z_3 = \{ 1, 5\},\ Z_4 = \{ 2, 3\},\ Z_5 = \{2, 5\}. \]
+    Če gledamo podmnožice vozlišč velikosti~3, pa so množice ničelne prisile vse, razen tista, ki ne vsebuje ne vozlišča~1 ne vozlišča~2, torej množica $\{3, 4, 5\}$. Množice ničelne prisile velikosti 4 so očitno vse možne podmnožice vozlišč velikosti 4.
 \end{primer}
 
 Zanima nas, kakšna je najmanjša možna množica vozlišč, ki jo moramo vzeti, da bo po končanem postopku barvanja celoten graf pobarvan črno. 
@@ -594,6 +614,35 @@ Zanima nas, kakšna je najmanjša možna množica vozlišč, ki jo moramo vzeti,
 
 Hitro vidimo, da je število ničelne prisile dobro definirano, saj lahko za poljuben graf vedno vzamemo vsa vozlišča, razen enega, in s tem dobimo množico ničelne prisile. Velja torej
 \[ Z(G) \leq |G| - 1. \]
+Po drugi strani seveda velja tudi, da moramo za zadostitev definicije vedno imeti vsaj eno vozlišče, da lahko govorimo o množici ničelne prisile, očitno velja
+\[ Z(G)  \geq 1. \]
+
+Nek primer, ki demonstrira, da more biti vsaj $\delta(G)$, in potem še ta sklep. 
+
+Nekaj o uniquenessu barvanja.
+
+Tukaj nekje še, zakaj je ``ničelne prisile'', brez dokaza.
+
+
+\section{Osnovni rezultati}
+
+\subsection{Poti}
+
+\subsection{Cikli}
+
+\subsection{Polni grafi}
+
+\subsection{Zvezde}
+
+\subsection{Kolesa}
+
+\subsection{Trikotniki}
+
+\section{Ekstremni primeri}
+
+\section{Ničelna prisila produktov grafov}
+
+
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
 % ampak bi moral stil poskrbeti za vse. Reference se uredijo po abecedi.
