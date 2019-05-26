@@ -616,11 +616,17 @@ Zanima nas, kakšna je najmanjša možna množica vozlišč, ki jo moramo vzeti,
 \end{definicija}
 
 Hitro vidimo, da je število ničelne prisile dobro definirano, saj lahko za poljuben graf vedno vzamemo vsa vozlišča, razen enega, in s tem dobimo množico ničelne prisile. Velja torej
-\[ Z(G) \leq |G| - 1. \]
+\begin{equation}
+    Z(G) \leq |G| - 1.
+    \label{eq:trv-zgornja-meja}
+\end{equation}
 Po drugi strani seveda velja tudi, da moramo za zadostitev definicije vedno imeti vsaj eno vozlišče, da lahko govorimo o množici ničelne prisile, očitno velja
 \[ Z(G)  \geq 1. \]
 Hitro lahko postavimo boljšo očitno spodnjo mejo. Če imamo graf z najmanjšo stopnjo vozlišča $\delta$, mora biti velikost množice ničelne prisile $|Z|$ vsaj $\delta$. V nasprotnem primeru, če bi torej na začetku pobarvali $\delta - 1$ vozlišč ali manj, bi imelo vsako od pobarvanih vozlišč stopnjo vsaj $\delta$, torej bi imelo vsako od pobarvanih vozlišč $u$ vsaj $\delta - (\delta - 1 - 1) = 2$ nepobarvana soseda (ker je $u$ eno izmed pobarvanih vozlišč in ni samo svoj sosed) in se proces širjenja barve sploh ne bi mogel začeti. Velja torej spodnja meja
-\[ Z(G) \geq \delta.  \]
+\begin{equation}
+    Z(G) \geq \delta.
+    \label{eq:trv-spodnja-meja}
+\end{equation}
 Ta spodnja meja je tesna za splošen graf $G$ brez dodatnih omejitev: če vzamemo primer poti $P_n$, ki ima $\delta = 1$, vidimo, da je $Z(G)$ prav tako enak 1 (pobarvamo eno od krajišč poti), torej $Z(P_n) = \delta(P_n).$
 
 Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč $Z$, ki ni nujno množica ničelne prisile, končen rezultat postopka širjenja barve vedno enaka množica neodvisno od vrstnega reda spreminjanja barve. Pokažimo:
@@ -636,7 +642,7 @@ Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč 
 \end{proof}
 
 Poglejmo si še, zakaj temu pojmu rečemo ``ničelna prisila''. Najprej definirajmo graf $\G(A)$ simetrične matrike $A$ velikosti $n$ nad poljem~$\F$ (pišemo $A \in Sym_n(\F)$):
-\[ V(\G(A)) = \{1, \ldots n\},\ E(\G(A)) = \{\{i,j\} \mid a_{ij} \neq 0, 1 \leq i < j \leq n \}. \]
+\[ V(\G(A)) = \{1, \ldots n\},\ E(\G(A)) = \{\{i,j\} \mid a_{ij} \neq 0,\ 1 \leq i < j \leq n \}. \]
 \begin{primer}
     Graf, ki pripada matriki \[ A = \begin{bmatrix*}[r]
     5 & -2 & 3 & 0 & 0 \\
@@ -652,13 +658,137 @@ Ideja za imenom ničelne prisile je sledeča. Črna vozlišča predstavljajo tis
 \begin{trditev}[{\cite[trditev 2.3]{aim2008minimumrank}}]
     Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake 0, potem je $x = 0$.
 \end{trditev}
+
+
 \section{Osnovni rezultati}
 
+V tem poglavju si ogledamo, kakšno je število ničilne prisile za nekatere osnovne družine grafov, kot npr.~poti, cikli ali polni grafi.
+
 \subsection{Poti}
+Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta dve stopnje~1 (krajišči), preostala vozlišča pa so stopnje 2. Za poti velja: 
+\begin{trditev}
+    $Z(P_n) = 1$.
+\end{trditev}
+\begin{proof}
+    Če na začetku pobarvamo eno izmed krajišč, označimo ga z $u$, ki je torej stopnje 1, potem ta prisili v spremembo svojega edinega soseda $v$, ki je stopnje 2 in katerega sosed $u$ je že pobarvan, zato $v$ prisili v spremembo svojega edinega nepobarvanega soseda in tako dalje \ldots (Predstavljeno tudi na sliki~\ref{fig:pot}.) Velja torej $Z(P_n) \leq 1$, saj je krajišče množica ničelne prisile. Ker je $\delta = 1$, po trivialni spodnji meji~\ref{eq:trv-spodnja-meja} velja $Z(P_n) = 1$.
+    \begin{figure}[h]
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=1.2]
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \foreach \i in {1,...,5}
+            {
+                \ifthenelse{\i>2} {
+                \node (\i) at (\i,0) {}; } {
+                \node[fill=black] (\i) at (\i,0) {}; }
+            }
+            \end{scope}
+
+            \foreach \i in {2,...,5}
+            {
+                \tikzmath{\im = \i-1;}
+                \ifthenelse{\NOT \i=4} {
+                \path[-,thick,draw]
+                (\im) edge (\i); }{
+                \path[dashed,draw]
+                (\im) edge (\i); }
+            }
+            \end{tikzpicture}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=1.2]
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \foreach \i in {1,...,5}
+            {
+                \ifthenelse{\i>3} {
+                    \node (\i) at (\i,0) {}; } {
+                    \node[fill=black] (\i) at (\i,0) {}; }
+            }
+            \end{scope}
+            
+            \foreach \i in {2,...,5}
+            {
+                \tikzmath{\im = \i-1;}
+                \ifthenelse{\NOT \i=4} {
+                    \path[-,thick,draw]
+                    (\im) edge (\i); }{
+                    \path[dashed,draw]
+                    (\im) edge (\i); }
+            }
+            \end{tikzpicture}
+        \end{subfigure}
+        \caption{Prikazano je vmesno stanje širjenja črne barve v grafu $P_n$, če smo na začetku pobarvali samo levo krajišče. Drugo vozlišče z leve ima natanko enega nepobarvanega soseda (na sliki levo) in ga prisili v spremembo barve (na sliki desno). Širjenje se nadaljuje na enak način, dokler ni pobarvan cel graf.}
+        \label{fig:pot}
+    \end{figure}
+\end{proof}
 
 \subsection{Cikli}
+Cikel na $n$ vozliščih $C_n$ je graf, v katerem imajo vsa vozlišča stopnjo~2, velja torej $\delta = \Delta = 2$. 
+\begin{trditev}
+    $Z(C_n) = 2$. 
+\end{trditev}
+\begin{proof}
+    Če za začetno množico pobarvanih vozlišč vzamemo dva soseda, bo vsak imel natanko enega nepobarvanega soseda, širjenje bo torej potekalo v obe smeri (prikazano na sliki~\ref{fig:cikel}), dokler ne bo cel graf pobarvan. Takšna začetna množica torej je množica ničelne prisile, torej velja $Z(C_n) \leq 2$. Če upoštevamo trivialno spodnjo mejo~\ref{eq:trv-spodnja-meja} in dejstvo, da je najmanjša stopnja v ciklu enaka~2, dobimo $Z(C_n) = 2$.\qedhere
+    \begin{figure}[h]
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \begin{tikzpicture}
+            \tikzmath{\n = 7; \r = 2.5;}
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \foreach \i in {1,...,\n}
+            {
+                \ifthenelse{\i>2} {
+                    \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
+                    \node[fill=black, label=right:{\i}] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
+            }
+            \end{scope}
+            
+            \foreach \i in {2,...,\n}
+            {
+                \tikzmath{\im = \i-1;}
+                \ifthenelse{\NOT \i=4} {
+                    \path[-,thick,draw]
+                    (\im) edge (\i); }{
+                    \path[dashed,draw]
+                    (\im) edge (\i); }
+            }
+            \path[-,thick,draw] (\n) edge (1);
+            \end{tikzpicture}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \begin{tikzpicture}
+            \tikzmath{\n = 7; \r = 2.5;}
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \foreach \i in {1,...,\n}
+            {
+                \ifthenelse{\i>3 \AND \i<\n} {
+                    \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
+                    \node[fill=black] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
+            }
+            \end{scope}
+            
+            \foreach \i in {2,...,\n}
+            {
+                \tikzmath{\im = \i-1;}
+                \ifthenelse{\NOT \i=4} {
+                    \path[-,thick,draw]
+                    (\im) edge (\i); }{
+                    \path[dashed,draw]
+                    (\im) edge (\i); }
+            }
+            \path[-,thick,draw] (\n) edge (1);
+            \end{tikzpicture}
+        \end{subfigure}
+        \caption{Prikazano je vmesno stanje širjenja barve v grafu $C_n$, pri čemer sta na začetku pobarvani sosednji vozlišči~1 in~2 (prikazano na sliki levo). Vozlišče~1 lahko v spremembo prisili desnega soseda, vozlišče~2 pa levega soseda (prikazano na sliki desno). Postopek se ponavlja, dokler ni pobarvan cel graf.}
+        \label{fig:cikel}
+    \end{figure}
+\end{proof}
 
 \subsection{Polni grafi}
+
+\subsection{Polni dvodelni grafi}
 
 \subsection{Zvezde}
 
