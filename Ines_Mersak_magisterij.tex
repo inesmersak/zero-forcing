@@ -398,7 +398,7 @@ Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$. Po
             (u\i) edge (x\i)
             (v\i) edge (y\i);
             \ifthenelse{\i=1}{}{
-                \tikzmath{\im = \i-1;}
+                \tikzmath{\im = int(\i-1);}
                 \ifthenelse{\NOT \i=4}{
                     \path[-,thick,draw]
                     (u\i) edge (u\im)
@@ -437,7 +437,7 @@ Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$. Po
             (u\i) edge (x\i)
             (v\i) edge (y\i);
             \ifthenelse{\i=1}{}{
-                \tikzmath{\im = \i-1;}
+                \tikzmath{\im = int(\i-1);}
                 \ifthenelse{\NOT \i=4}{
                     \path[-,thick,draw]
                     (u\i) edge (u\im)
@@ -686,7 +686,7 @@ Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta dve stopnje~1 (krajiš
 
             \foreach \i in {2,...,5}
             {
-                \tikzmath{\im = \i-1;}
+                \tikzmath{\im = int(\i-1);}
                 \ifthenelse{\NOT \i=4} {
                 \path[-,thick,draw]
                 (\im) edge (\i); }{
@@ -709,7 +709,7 @@ Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta dve stopnje~1 (krajiš
             
             \foreach \i in {2,...,5}
             {
-                \tikzmath{\im = \i-1;}
+                \tikzmath{\im = int(\i-1);}
                 \ifthenelse{\NOT \i=4} {
                     \path[-,thick,draw]
                     (\im) edge (\i); }{
@@ -724,71 +724,104 @@ Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta dve stopnje~1 (krajiš
 \end{proof}
 
 \subsection{Cikli}
-Cikel na $n$ vozliščih $C_n$ je graf, v katerem imajo vsa vozlišča stopnjo~2, velja torej $\delta = \Delta = 2$. 
+Cikel na $n$ vozliščih $C_n$ je graf, v katerem imajo vsa vozlišča stopnjo~2, velja torej $\delta = \Delta = 2$.
 \begin{trditev}
     $Z(C_n) = 2$. 
 \end{trditev}
+\begin{figure}[h]
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+        \tikzmath{\n = 7; \r = 2.5;}
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \foreach \i in {1,...,\n}
+        {
+            \ifthenelse{\i>2} {
+                \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
+                \node[fill=black, label=right:{\i}] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
+        }
+        \end{scope}
+        
+        \foreach \i in {1,...,\n}
+        {
+            \tikzmath{\im = int(mod(\i,\n)+1);}
+            \ifthenelse{\NOT \i=4} {
+                \path[-,thick,draw]
+                (\im) edge (\i); }{
+                \path[dashed,draw]
+                (\im) edge (\i); }
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+        \tikzmath{\n = 7; \r = 2.5;}
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \foreach \i in {1,...,\n}
+        {
+            \ifthenelse{\i>3 \AND \i<\n} {
+                \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
+                \node[fill=black] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
+        }
+        \end{scope}
+        
+        \foreach \i in {1,...,\n}
+        {
+            \tikzmath{\im = int(mod(\i,\n)+1);}
+            \ifthenelse{\NOT \i=4} {
+                \path[-,thick,draw]
+                (\im) edge (\i); }{
+                \path[dashed,draw]
+                (\im) edge (\i); }
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Prikazano je vmesno stanje širjenja barve v grafu $C_n$, pri čemer sta na začetku pobarvani sosednji vozlišči~1 in~2 (prikazano na sliki levo). Vozlišče~1 lahko v spremembo prisili desnega soseda, vozlišče~2 pa levega soseda (prikazano na sliki desno). Postopek se ponavlja, dokler ni pobarvan cel graf.}
+    \label{fig:cikel}
+\end{figure}
 \begin{proof}
     Če za začetno množico pobarvanih vozlišč vzamemo dva soseda, bo vsak imel natanko enega nepobarvanega soseda, širjenje bo torej potekalo v obe smeri (prikazano na sliki~\ref{fig:cikel}), dokler ne bo cel graf pobarvan. Takšna začetna množica torej je množica ničelne prisile, torej velja $Z(C_n) \leq 2$. Če upoštevamo trivialno spodnjo mejo~\ref{eq:trv-spodnja-meja} in dejstvo, da je najmanjša stopnja v ciklu enaka~2, dobimo $Z(C_n) = 2$.\qedhere
-    \begin{figure}[h]
-        \begin{subfigure}{0.5\textwidth}
-            \centering
-            \begin{tikzpicture}
-            \tikzmath{\n = 7; \r = 2.5;}
-            \begin{scope}[every node/.style={circle,thick,draw}]
-            \foreach \i in {1,...,\n}
-            {
-                \ifthenelse{\i>2} {
-                    \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
-                    \node[fill=black, label=right:{\i}] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
-            }
-            \end{scope}
-            
-            \foreach \i in {2,...,\n}
-            {
-                \tikzmath{\im = \i-1;}
-                \ifthenelse{\NOT \i=4} {
-                    \path[-,thick,draw]
-                    (\im) edge (\i); }{
-                    \path[dashed,draw]
-                    (\im) edge (\i); }
-            }
-            \path[-,thick,draw] (\n) edge (1);
-            \end{tikzpicture}
-        \end{subfigure}
-        \begin{subfigure}{0.49\textwidth}
-            \centering
-            \begin{tikzpicture}
-            \tikzmath{\n = 7; \r = 2.5;}
-            \begin{scope}[every node/.style={circle,thick,draw}]
-            \foreach \i in {1,...,\n}
-            {
-                \ifthenelse{\i>3 \AND \i<\n} {
-                    \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
-                    \node[fill=black] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
-            }
-            \end{scope}
-            
-            \foreach \i in {2,...,\n}
-            {
-                \tikzmath{\im = \i-1;}
-                \ifthenelse{\NOT \i=4} {
-                    \path[-,thick,draw]
-                    (\im) edge (\i); }{
-                    \path[dashed,draw]
-                    (\im) edge (\i); }
-            }
-            \path[-,thick,draw] (\n) edge (1);
-            \end{tikzpicture}
-        \end{subfigure}
-        \caption{Prikazano je vmesno stanje širjenja barve v grafu $C_n$, pri čemer sta na začetku pobarvani sosednji vozlišči~1 in~2 (prikazano na sliki levo). Vozlišče~1 lahko v spremembo prisili desnega soseda, vozlišče~2 pa levega soseda (prikazano na sliki desno). Postopek se ponavlja, dokler ni pobarvan cel graf.}
-        \label{fig:cikel}
-    \end{figure}
 \end{proof}
 
 \subsection{Polni grafi}
+Polni graf na $n$ vozliščih $K_n$ je graf, v katerem je vsako vozlišče sosednje vsem ostalim, vsa vozlišča so torej stopnje $n-1$. 
+\begin{trditev}
+    $Z(K_n) = n-1$.
+\end{trditev}
+\begin{proof}
+    Če pobarvamo vsa vozlišča, razen enega (označimo $v$), je to množica ničelne prisile, saj so vsi sosedi vozlišča $v$ črni in je $v$ njihov edini nepobarvan sosed, torej ga prisilijo v spremembo barve in pobarvan je cel graf. Velja torej $Z(K_n) \leq n-1$, po spodnji meji~\ref{eq:trv-spodnja-meja} pa velja tudi $Z(K_n) \geq \delta = n-1$, torej je $Z(K_n) = n-1$.
+\end{proof}
+Na sliki~\ref{fig:polni-graf} je prikazan polni graf na 5 vozliščih in njegova množica ničelne prisile.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.76]
+    \tikzmath{\n = 5; \r = 2.5; \nm = int(\n-1);}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+    \foreach \i in {1,...,\n}
+    {
+        \ifthenelse{\i<2} {
+            \node (\i) at ({90 + (360/\n * (\i - 1))}: \r) {}; } {
+            \node[fill=black] (\i) at ({90 + (360/\n * (\i - 1))}: \r) {}; }
+    }
+    \end{scope}
+    
+    \foreach \i in {1,...,\nm}
+    {
+        \tikzmath{\ip = int(\i + 1);}
+        \foreach \j in {\ip,...,\n} {
+            \path[-,thick,draw] (\i) edge (\j); 
+        }
+    }
+    \end{tikzpicture}
+    \caption{Prikazan je polni graf $K_5$ in njegova množica ničelne prisile. Čim bi pobarvali eno vozlišče manj, bi imelo vsako črno vozlišče dva nepobarvana soseda in se postopek širjenja barve ne bi mogel začeti.}
+    \label{fig:polni-graf}
+\end{figure}
 
 \subsection{Polni dvodelni grafi}
+\begin{trditev}
+    $Z(K_{m,n}) = m + n - 2$.
+\end{trditev}
 
 \subsection{Zvezde}
 
