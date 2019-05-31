@@ -64,7 +64,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
  \usepackage[list=true,listformat=simple]{subcaption}  % več kot ena slika na figure, omogoči slika 1a, slika 1b
 % \usepackage[all]{xy}    % diagrami
 % \usepackage{doi}        % za clickable DOI entrye v bibliografiji
-% \usepackage{enumerate}     % več možnosti za sezname
+\usepackage{enumerate}     % več možnosti za sezname
 
 % Za barvanje source kode
 % \usepackage{minted}
@@ -819,9 +819,24 @@ Na sliki~\ref{fig:polni-graf} je prikazan polni graf na 5 vozliščih in njegova
 \end{figure}
 
 \subsection{Polni dvodelni grafi}
+Poln dvodelni graf $K_n,m$ je tak graf na $n+m$ vozliščih, kjer lahko množico vozlišč razbijemo na dve množici $V_m$ velikosti $m$ in $V_n$ velikosti $n$ tako, da znotraj vsake od množic ni povezav, vsako vozlišče iz $V_m$ pa je sosednje vsakemu vozlišču iz $V_n$. Na sliki~\ref{fig:polni-dvodelni-graf} je prikazan primer polnega dvodelnega graf $K_{3,4}$.
+\begin{figure}[h]
+    \caption{TODO}
+    \label{fig:polni-dvodelni-graf}
+\end{figure}
 \begin{trditev}
     $Z(K_{m,n}) = m + n - 2$.
 \end{trditev}
+\begin{proof}
+    Poglejmo si najprej poseben primer, ko je $m = 1$. Na eni strani (v množici $V_m$) imamo torej samo eno vozlišče, ki je stopnje $n$, na drugi strani pa $n$ vozlišč stopnje 1 (opazimo, da so vozlišča iz $V_n$ ekvivalentna v smislu, da ni važno, katero točno je pobarvano, saj imajo vsa isto stopnjo in soseda). Če črno pobarvamo vsa vozlišča v $V_n$ razen enega, bo eno izmed teh vozlišč poskrbelo za spremembo barve vozlišča stopnje $n$, to pa bo poskrbelo za spremembo barve edinega vozlišča stopnje 1, ki še ni črno. Velja torej $Z(K_{1,n}) \leq 1 + n - 2 = n-1$. Poskusimo najti manjšo množico ničelne prisile. Na začetku lahko pobarvamo $n-2$ vozlišča na dva načina: lahko pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, lahko pa pobarvamo $n-2$ vozlišč stopnje 1. Obravnavajmo oba primera.
+    \begin{enumerate}[a)]
+        \item Če na začetku pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, potem črna vozlišča stopnje 1 nimajo več nobenega nepobarvanega soseda, vozlišče stopnje $n$ pa ima še 3 nepobarvane sosede, zato se črna barva ne more širiti. 
+        \item Če na začetku pobarvamo $n-2$ vozlišč stopnje 1, ima vsako od njih enega nepobarvanega soseda, to je vozlišče stopnje $n$, ki torej spremeni barvo. Sedaj ima vozlišče stopnje $n$ še 2 nepobarvana soseda in širjenje barve se ustavi.
+    \end{enumerate}
+    Torej ne glede na to, kako izberemo začetno množico velikosti $n-2$, ta ne bo množica ničelne prisile. Velja torej $Z(K_{1,n}) = n-1$.
+    
+    Zdaj si poglejmo splošen primer, torej število ničelne prisile $K_{m,n}$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$, lahko eno izmed pobarvanih vozlišč v $V_m$ prisili v spremembo barve edino nepobarvano vozlišče v $V_n$ in obratno. Velja torej $Z(K_{m,n}) \leq (m - 1) + (n - 1) = m + n -2$. Sedaj poskusimo najti $m + n - 3$ vozlišč, ki so množica ničelne prisile. Podobno kot prej jih lahko izberemo tako, da pobarvamo vsa vozlišča iz $V_n$ in $m-3$ vozlišč iz $V_m$, v tem primeru pobarvana vozlišča iz $V_m$ nimajo nobenega nepobarvanega soseda, vozlišča iz $V_n$ pa imajo tri nepobarvane sosede, zato se barva ne more razširiti. Simetrično v primeru, če pobarvamo vsa vozlišča iz $V_m$ in $n-3$ vozlišč iz $V_n$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-2$ vozlišč iz $V_n$, potem imajo črna vozlišča iz $V_n$ enega nepobarvanega soseda, ki torej spremeni barvo, pobarvana vozlišča iz $V_m$ pa imajo 2~nepobarvana soseda, torej se širjenje ustavi. Simetrično, če na začetku pobarvamo $m-2$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$. Ne glede na to, kako izberemo vozlišča, torej ne dobimo množice ničelne prisile. Velja torej $Z(K_{m,n}) \geq m + n - 2$, trditev sledi.
+\end{proof}
 
 \subsection{Zvezde}
 
