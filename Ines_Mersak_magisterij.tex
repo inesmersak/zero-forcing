@@ -795,7 +795,7 @@ Polni graf na $n$ vozliščih $K_n$ je graf, v katerem je vsako vozlišče sosed
 Na sliki~\ref{fig:polni-graf} je prikazan polni graf na 5 vozliščih in njegova množica ničelne prisile.
 \begin{figure}[h]
     \centering
-    \begin{tikzpicture}[scale=0.76]
+    \begin{tikzpicture}[scale=0.7]
     \tikzmath{\n = 5; \r = 2.5; \nm = int(\n-1);}
     \begin{scope}[every node/.style={circle,thick,draw}]
     \foreach \i in {1,...,\n}
@@ -818,29 +818,109 @@ Na sliki~\ref{fig:polni-graf} je prikazan polni graf na 5 vozliščih in njegova
     \label{fig:polni-graf}
 \end{figure}
 
+\subsection{Zvezde}
+Zvezda $S_n$ je tak graf na $n+1$ vozliščih, ki ima $n$ vozlišč stopnje~1 in eno vozlišče stopnje~$n$. Je pravzaprav poseben primer polnega dvodelnega grafa, množico vozlišč lahko torej razbijemo na dve množici $X$, v kateri je vozlišče stopnje $n$, in $Y$, v kateri so vsa preostala vozlišča, ki so stopnje 1. Znotraj množic $X$ in $Y$ ni povezav, vsako vozlišče iz $X$ pa je sosednje vsakemu v $Y$. Primer zvezde je prikazan na sliki~\ref{fig:zvezda}.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.6]
+    \tikzmath{\n = 6; \r = 2.5; \nm = int(\n-1);}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+    \foreach \i in {1,...,\n} {
+        \ifthenelse{\i<2} {
+            \node (\i) at ({90 + (360/\n * (\i - 1))}: \r) {}; } {
+            \node[fill=black] (\i) at ({90 + (360/\n * (\i - 1))}: \r) {}; }
+    }
+    \node (0) at (0,0) {};
+    \end{scope}
+    
+    \foreach \i in {1,...,\n} {
+        \path[-,thick,draw] (\i) edge (0); 
+    }
+    \end{tikzpicture}
+    \caption{Prikazana je zvezda $S_6$ in njena množica ničelne prisile.}
+    \label{fig:zvezda}
+\end{figure}
+
+\begin{trditev}
+    $Z(S_n) = n - 1$.
+\end{trditev}
+\begin{proof}
+    Za namene tega dokaza si bomo sliko zvezde predstavljali kot poln dvodelen graf $K_{1,n}$ (podobno kot na sliki~\ref{fig:polni-dvodelni-graf}), sredinsko vozlišče stopnje $n$ na eni strani (množica $X$), na drugi pa vsa preostala vozlišča, ki so stopnje 1 (množica $Y$).
+    Opazimo, da so vozlišča iz $Y$ ekvivalentna v smislu, da ni važno, katero točno je pobarvano, saj imajo vsa isto stopnjo in soseda. Če črno pobarvamo vsa vozlišča v $Y$ razen enega, bo eno izmed teh vozlišč poskrbelo za spremembo barve sredinskega vozlišča stopnje $n$, to pa bo poskrbelo za spremembo barve edinega vozlišča stopnje 1, ki še ni črno. Velja torej $Z(K_{1,n}) \leq n-1$. Poskusimo najti manjšo množico ničelne prisile. Na začetku lahko pobarvamo $n-2$ vozlišča na dva načina: lahko pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, lahko pa pobarvamo $n-2$ vozlišč stopnje 1. Obravnavajmo oba primera.
+    \begin{enumerate}[a)]
+        \item Če na začetku pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, potem črna vozlišča stopnje 1 nimajo več nobenega nepobarvanega soseda, vozlišče stopnje $n$ pa ima še 3 nepobarvane sosede, zato se črna barva ne more širiti. 
+        \item Če na začetku pobarvamo $n-2$ vozlišč stopnje 1, ima vsako od njih enega nepobarvanega soseda, to je vozlišče stopnje $n$, ki torej spremeni barvo. Sedaj ima vozlišče stopnje $n$ še 2 nepobarvana soseda in širjenje barve se ustavi.
+    \end{enumerate}
+    Torej ne glede na to, kako izberemo začetno množico velikosti $n-2$, ta ne bo množica ničelne prisile. Velja torej $Z(S_n) = n-1$.
+\end{proof}
+
 \subsection{Polni dvodelni grafi}
 Poln dvodelni graf $K_n,m$ je tak graf na $n+m$ vozliščih, kjer lahko množico vozlišč razbijemo na dve množici $V_m$ velikosti $m$ in $V_n$ velikosti $n$ tako, da znotraj vsake od množic ni povezav, vsako vozlišče iz $V_m$ pa je sosednje vsakemu vozlišču iz $V_n$. Na sliki~\ref{fig:polni-dvodelni-graf} je prikazan primer polnega dvodelnega graf $K_{3,4}$.
 \begin{figure}[h]
-    \caption{TODO}
+    \centering
+    \begin{tikzpicture}
+    \tikzmath{\n = 4; \m = 3;}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+    \foreach \i in {1,...,\m} {
+        \ifthenelse {\i < \m} {
+            \node[fill=black] (u\i) at (1+2*\i, 0) {}; }{
+            \node (u\i) at (1+2*\i, 0) {}; }
+    }
+    \foreach \i in {1,...,\n} {
+        \ifthenelse {\i < \n} {
+            \node[fill=black] (v\i) at (2*\i, 2) {}; }{
+            \node (v\i) at (2*\i, 2) {}; }
+    }
+    \end{scope}
+    
+    \foreach \i in {1,...,\m} {
+        \foreach \j in {1,...,\n} {
+            \path[-,thick,draw] (u\i) edge (v\j); 
+        }
+    }
+    \end{tikzpicture}
+    \caption{Prikazan je polni dvodelni graf $K_{3,4}$ in njegova množica ničelne prisile.}
     \label{fig:polni-dvodelni-graf}
 \end{figure}
 \begin{trditev}
     $Z(K_{m,n}) = m + n - 2$.
 \end{trditev}
 \begin{proof}
-    Poglejmo si najprej poseben primer, ko je $m = 1$. Na eni strani (v množici $V_m$) imamo torej samo eno vozlišče, ki je stopnje $n$, na drugi strani pa $n$ vozlišč stopnje 1 (opazimo, da so vozlišča iz $V_n$ ekvivalentna v smislu, da ni važno, katero točno je pobarvano, saj imajo vsa isto stopnjo in soseda). Če črno pobarvamo vsa vozlišča v $V_n$ razen enega, bo eno izmed teh vozlišč poskrbelo za spremembo barve vozlišča stopnje $n$, to pa bo poskrbelo za spremembo barve edinega vozlišča stopnje 1, ki še ni črno. Velja torej $Z(K_{1,n}) \leq 1 + n - 2 = n-1$. Poskusimo najti manjšo množico ničelne prisile. Na začetku lahko pobarvamo $n-2$ vozlišča na dva načina: lahko pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, lahko pa pobarvamo $n-2$ vozlišč stopnje 1. Obravnavajmo oba primera.
-    \begin{enumerate}[a)]
-        \item Če na začetku pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, potem črna vozlišča stopnje 1 nimajo več nobenega nepobarvanega soseda, vozlišče stopnje $n$ pa ima še 3 nepobarvane sosede, zato se črna barva ne more širiti. 
-        \item Če na začetku pobarvamo $n-2$ vozlišč stopnje 1, ima vsako od njih enega nepobarvanega soseda, to je vozlišče stopnje $n$, ki torej spremeni barvo. Sedaj ima vozlišče stopnje $n$ še 2 nepobarvana soseda in širjenje barve se ustavi.
-    \end{enumerate}
-    Torej ne glede na to, kako izberemo začetno množico velikosti $n-2$, ta ne bo množica ničelne prisile. Velja torej $Z(K_{1,n}) = n-1$.
+    Če je $m=1$, dobimo ravno zvezdo, $Z(K_{1,n}) = 1 + n - 2 = n - 1 = Z(S_n)$, trditev torej velja.
     
-    Zdaj si poglejmo splošen primer, torej število ničelne prisile $K_{m,n}$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$, lahko eno izmed pobarvanih vozlišč v $V_m$ prisili v spremembo barve edino nepobarvano vozlišče v $V_n$ in obratno. Velja torej $Z(K_{m,n}) \leq (m - 1) + (n - 1) = m + n -2$. Sedaj poskusimo najti $m + n - 3$ vozlišč, ki so množica ničelne prisile. Podobno kot prej jih lahko izberemo tako, da pobarvamo vsa vozlišča iz $V_n$ in $m-3$ vozlišč iz $V_m$, v tem primeru pobarvana vozlišča iz $V_m$ nimajo nobenega nepobarvanega soseda, vozlišča iz $V_n$ pa imajo tri nepobarvane sosede, zato se barva ne more razširiti. Simetrično v primeru, če pobarvamo vsa vozlišča iz $V_m$ in $n-3$ vozlišč iz $V_n$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-2$ vozlišč iz $V_n$, potem imajo črna vozlišča iz $V_n$ enega nepobarvanega soseda, ki torej spremeni barvo, pobarvana vozlišča iz $V_m$ pa imajo 2~nepobarvana soseda, torej se širjenje ustavi. Simetrično, če na začetku pobarvamo $m-2$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$. Ne glede na to, kako izberemo vozlišča, torej ne dobimo množice ničelne prisile. Velja torej $Z(K_{m,n}) \geq m + n - 2$, trditev sledi.
+    Zdaj si poglejmo splošen primer, torej število ničelne prisile $K_{m,n}$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$, lahko eno izmed pobarvanih vozlišč v $V_m$ prisili v spremembo barve edino nepobarvano vozlišče v $V_n$ in obratno. Velja torej $Z(K_{m,n}) \leq (m - 1) + (n - 1) = m + n -2$. Sedaj poskusimo najti $m + n - 3$ vozlišč, ki so množica ničelne prisile. Podobno kot v posebenem primeru zvezde jih lahko izberemo tako, da pobarvamo vsa vozlišča iz $V_n$ in $m-3$ vozlišč iz $V_m$, v tem primeru pobarvana vozlišča iz $V_m$ nimajo nobenega nepobarvanega soseda, vozlišča iz $V_n$ pa imajo tri nepobarvane sosede, zato se barva ne more razširiti. Simetrično v primeru, če pobarvamo vsa vozlišča iz $V_m$ in $n-3$ vozlišč iz $V_n$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-2$ vozlišč iz $V_n$, potem imajo črna vozlišča iz $V_n$ enega nepobarvanega soseda, ki torej spremeni barvo, pobarvana vozlišča iz $V_m$ pa imajo 2~nepobarvana soseda, torej se širjenje ustavi. Simetrično, če na začetku pobarvamo $m-2$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$. Ne glede na to, kako izberemo vozlišča, torej ne dobimo množice ničelne prisile. Velja torej $Z(K_{m,n}) \geq m + n - 2$, trditev sledi.
 \end{proof}
 
-\subsection{Zvezde}
-
 \subsection{Kolesa}
+Kolo $W_n$ je graf na $n+1$ vozliščih, ki ga dobimo, če vzamemo cikel $C_n$, na sredino postavimo še eno vozlišče in ga povežemo z vsemi ostalimi. Najmanjša stopnja v grafu je torej $\delta = 3$, največja pa $\Delta = n$. Kolo $W_7$ je prikazano na sliki~\ref{fig:kolo}.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.7]
+        \tikzmath{\n = 7; \r = 2.5; \nm = int(\n-1);}
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \foreach \i in {1,...,\n} {
+            \ifthenelse{\i<2 \OR \i>4 } {
+                \node (\i) at ({90 + (360/\n * (\i - 1))}: \r) {}; } {
+                \node[fill=black] (\i) at ({90 + (360/\n * (\i - 1))}: \r) {}; }
+        }
+        \node (0) at (0,0) {};
+        \end{scope}
+        
+        \foreach \i in {1,...,\n} {
+            \tikzmath{\im = int(mod(\i,\n)+1);}
+            \path[-,thick,draw] (\i) edge (0); 
+            \path[-,thick,draw] (\i) edge (\im); 
+        }
+    \end{tikzpicture}
+    \caption{Na sliki je prikazano kolo $W_7$ in njegova množica ničelne prisile.}
+    \label{fig:kolo}
+\end{figure}
+\begin{trditev}
+    $Z(W_n) = 3$.
+\end{trditev}
+\begin{proof}
+    Če na začetku pobarvamo enega izmed vozlišč stopnje 3, označimo ga z $u$, in njegova soseda, označimo ju z $v$ in $w$, potem ima $u$ natanko enega nepobarvanega soseda, to je sredinsko vozlišče, ki torej postane črno. Sedaj ima $v$ natanko enega nepobarvanega soseda $x$, saj sta sredinsko vozlišče in $u$ že pobarvana. Tudi $x$ ima nato natanko enega nepobarvanega soseda, saj sta sredinsko vozlišče in $v$ že črna. Postopek se nadaljuje, podobno se dogaja tudi z druge strani (z vozliščem $w$ in njegovimi sosedi), na koncu so pobarvana vsa vozlišča. Velja torej $Z(W_n) \leq 3$, po trivialni spodnji meji~\ref{eq:trv-spodnja-meja} pa velja tudi $Z(W_n) \geq \delta = 3$, trditev sledi.
+\end{proof}
 
 \subsection{Trikotniki}
 
