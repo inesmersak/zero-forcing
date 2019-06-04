@@ -855,7 +855,7 @@ Zvezda $S_n$ je tak graf na $n+1$ vozliščih, ki ima $n$ vozlišč stopnje~1 in
 \end{proof}
 
 \subsection{Polni dvodelni grafi}
-Poln dvodelni graf $K_n,m$ je tak graf na $n+m$ vozliščih, kjer lahko množico vozlišč razbijemo na dve množici $V_m$ velikosti $m$ in $V_n$ velikosti $n$ tako, da znotraj vsake od množic ni povezav, vsako vozlišče iz $V_m$ pa je sosednje vsakemu vozlišču iz $V_n$. Na sliki~\ref{fig:polni-dvodelni-graf} je prikazan primer polnega dvodelnega graf $K_{3,4}$.
+Poln dvodelni graf $K_{m,n}$ je tak graf na $m+n$ vozliščih, kjer lahko množico vozlišč razbijemo na dve množici $V_m$ velikosti $m$ in $V_n$ velikosti $n$ tako, da znotraj vsake od množic ni povezav, vsako vozlišče iz $V_m$ pa je sosednje vsakemu vozlišču iz $V_n$. Na sliki~\ref{fig:polni-dvodelni-graf} je prikazan primer polnega dvodelnega graf $K_{3,4}$.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
@@ -923,11 +923,62 @@ Kolo $W_n$ je graf na $n+1$ vozliščih, ki ga dobimo, če vzamemo cikel $C_n$, 
 \end{proof}
 
 \subsection{Trikotniki}
+Trikotnik $T_n$ je graf z $\frac{n (n+1)}{2}$ vozlišči. Najlažje ga definiramo rekurzivno:
+$T_1$ je graf na enem vozlišču (tudi $K_1$), graf $T_n$ pa iz grafa $T_{n-1}$ dobimo tako, da pod sliko grafa $T_{n-1}$ dodamo $n$ vozlišč v ravni vrsti, jih povežemo v pot, nato pa vsako vozlišče povežemo z vozliščema iz prejšnje ravni, ki imata enak indeks ali indeks, ki je za ena večji. Zapišimo matematično: če $j$-to vozlišče na $i$-ti ravni označimo z $u_{i,j}$, potem za graf $T_n$ velja: 
+\begin{align*}
+    V(T_n) &= \{u_{i,j} \mid i=0,\ldots,n-1, \quad j=0,\ldots,i \} \\
+    E(T_n) &= \{ \{u_{i,j}, u_{i, j+1} \} \mid i=1,\ldots,n-1, \quad j=0,\ldots,i-1  \} 
+    \\ &\phantom{=} \cup \{ \{ u_{i-1, j}, u_{i,j}  \} \mid i=1,\ldots,n-1, \quad j=0,\ldots,i-1  \} 
+    \\ &\phantom{=} \cup \{ \{ u_{i-1, j},u_{i,j+1} \} \mid i=1,\ldots,n-1, \quad j=0,\ldots,i-1  \} 
+\end{align*}
+Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ skupaj z oznakami vozlišč.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.7]
+    \tikzmath{\n = 4; \nm = \n-1;}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+    \foreach \i in {0,...,\nm} {
+        \tikzmath{\z = int(\nm - \i);}
+        \foreach \j in {0,...,\i} {
+            \ifthenelse{\j=0}{
+                \node[fill=black,label=below:{$u_{\i,\j}$}] (\i\j) at (\z + 2*\j, 2*\z) {};
+            }{
+                \node[label=below:{$u_{\i,\j}$}] (\i\j) at (\z + 2*\j, 2*\z) {};
+            }
+        }
+    }
+    \end{scope}
+    
+    \foreach \i in {1,...,\nm} {
+        \tikzmath{\im = int(\i-1);}
+        \foreach \j in {0,...,\im} {
+            \tikzmath{\jv = int(\j+1); \jm = int(\j-1);}
+            \path[-,thick,draw] (\i\j) edge (\im\j); 
+            \path[-,thick,draw] (\i\j) edge (\i\jv); 
+            \path[-,thick,draw] (\i\jv) edge (\im\j);
+        }
+    }
+    \end{tikzpicture}
+    \caption{Prikazan je trikotnik $T_4$ in njegova množica ničelne prisile.}
+    \label{fig:trikotnik}
+\end{figure}
+
+\begin{trditev}
+    $Z(T_n) = n$. 
+\end{trditev}
+
+\subsection{Hiperkocke}
 
 \section{Ekstremni primeri}
 
 \section{Ničelna prisila produktov grafov}
 
+\section{Izračun ničelne prisile}
+\subsection{Preverljivost}
+\subsection{Eksponenten algoritem}
+\subsection{NP-polnost}
+\subsection{Dinamično programiranje?}
+\subsection{Aproksimativni algoritmi?}
 
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
