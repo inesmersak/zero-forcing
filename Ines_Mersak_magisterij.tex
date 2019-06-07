@@ -81,6 +81,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \usepackage{tikz}
 \usetikzlibrary{math}
 \usepackage{mathtools}
+\usepackage{soulutf8}
 
 \setlength{\overfullrule}{50pt} % označi predlogo vrstico
 \pagestyle{plain}               % samo številka strani na dnu, nobene glave / noge
@@ -621,7 +622,10 @@ Hitro vidimo, da je število ničelne prisile dobro definirano, saj lahko za pol
     \label{eq:trv-zgornja-meja}
 \end{equation}
 Po drugi strani seveda velja tudi, da moramo za zadostitev definicije vedno imeti vsaj eno vozlišče, da lahko govorimo o množici ničelne prisile, očitno velja
-\[ Z(G)  \geq 1. \]
+\begin{equation}
+Z(G)  \geq 1.
+\label{eq:trv-trv-spodnja-meja}
+\end{equation}
 Hitro lahko postavimo boljšo očitno spodnjo mejo. Če imamo graf z najmanjšo stopnjo vozlišča $\delta$, mora biti velikost množice ničelne prisile $|Z|$ vsaj $\delta$. V nasprotnem primeru, če bi torej na začetku pobarvali $\delta - 1$ vozlišč ali manj, bi imelo vsako od pobarvanih vozlišč stopnjo vsaj $\delta$, torej bi imelo vsako od pobarvanih vozlišč $u$ vsaj $\delta - (\delta - 1 - 1) = 2$ nepobarvana soseda (ker je $u$ eno izmed pobarvanih vozlišč in ni samo svoj sosed) in se proces širjenja barve sploh ne bi mogel začeti. Velja torej spodnja meja
 \begin{equation}
     Z(G) \geq \delta.
@@ -668,6 +672,7 @@ V tem poglavju si ogledamo, kakšno je število ničilne prisile za nekatere osn
 Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta dve stopnje~1 (krajišči), preostala vozlišča pa so stopnje 2. Za poti velja: 
 \begin{trditev}
     $Z(P_n) = 1$.
+    \label{trd:pot}
 \end{trditev}
 \begin{proof}
     Če na začetku pobarvamo eno izmed krajišč, označimo ga z $u$, ki je torej stopnje 1, potem ta prisili v spremembo svojega edinega soseda $v$, ki je stopnje 2 in katerega sosed $u$ je že pobarvan, zato $v$ prisili v spremembo svojega edinega nepobarvanega soseda in tako dalje \ldots (Predstavljeno tudi na sliki~\ref{fig:pot}.) Velja torej $Z(P_n) \leq 1$, saj je krajišče množica ničelne prisile. Ker je $\delta = 1$, po trivialni spodnji meji~\ref{eq:trv-spodnja-meja} velja $Z(P_n) = 1$.
@@ -787,6 +792,7 @@ Cikel na $n$ vozliščih $C_n$ je graf, v katerem imajo vsa vozlišča stopnjo~2
 \subsection{Polni grafi}
 Polni graf na $n$ vozliščih $K_n$ je graf, v katerem je vsako vozlišče sosednje vsem ostalim, vsa vozlišča so torej stopnje $n-1$. 
 \begin{trditev}
+    \label{trd:polni-graf}
     $Z(K_n) = n-1$.
 \end{trditev}
 \begin{proof}
@@ -959,17 +965,47 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
         }
     }
     \end{tikzpicture}
-    \caption{Prikazan je trikotnik $T_4$ in njegova množica ničelne prisile.}
+    \caption{Prikazan je trikotnik $T_4$ in ena izmed njegovih množic ničelne prisile.}
     \label{fig:trikotnik}
 \end{figure}
 
 \begin{trditev}
     $Z(T_n) = n$. 
 \end{trditev}
+\begin{proof}
+    Na začetku pobarvajmo eno izmed stranic trikotnika (npr.~levo, kot na sliki~\ref{fig:trikotnik}, torej vozlišča $u_{i,0}$ za $i = 0, \ldots, n-1$). Vozlišče $u_{0,0}$ ima natanko enega nepobarvanega soseda, to je diagonalni sosed $u_{1,1}$, ki torej postane črn. Nato ima $u_{1,0}$ natanko enega nepobarvanega soseda, to je $u_{2,1}$, ki spremeni barvo, in zato ima $u_{2,0}$ natanko enega nepobarvanega soseda in tako naprej \ldots Tako se barva razširi po celi diagonali, pobarvana so torej tudi vsa vozlišča $u_{i,1}$ za $i = 1, \ldots, n-1$. Sedaj ima $u_{1,1}$ natanko enega nepobarvanega soseda, to je $u_{2,2}$, nato ima $u_{2,1}$ natanko enega nepobarvanega soseda $u_{3,2}$, barva se ponovno razširi po celi diagonali $u_{i,2}$ za $i = 2, \ldots, n-1$. Postopek se ponavlja, na koncu se barva razširi na vse diagonale $u_{i,j},\ i = j, \ldots, n-1$ za $j = 1, \ldots, n-1$, torej na vsa vozlišča grafa $T_n$. Velja torej $Z(T_n) \leq n$.
+    
+    \hl{TODO: večje enako in posledično enakost}
+\end{proof}
 
-\subsection{Hiperkocke}
+\subsection{Hiperkocke?}
+
+\subsection{Drevesa?}
 
 \section{Ekstremni primeri}
+Poglejmo si, za katere grafe je pri zgornji~\eqref{eq:trv-zgornja-meja} in trivialni spodnji~\eqref{eq:trv-trv-spodnja-meja} meji za ničelno prisilo dosežena enakost. 
+\begin{trditev}
+    Za graf $G$ na $n > 1$ vozliščih velja:
+    \[ Z(G) = n - 1 \iff G = K_n .\]
+    Z besedami, enakost v zgornji meji~\eqref{eq:trv-zgornja-meja} je dosežena natanko takrat, ko imamo polni graf na $n$ vozliščih.
+\end{trditev}
+\begin{proof}
+    Po trditvi~\ref{trd:polni-graf} vemo, da velja implikacija v levo, torej
+    \[ G = K_n \implies Z(G) = n-1. \]
+    S protislovjem dokažimo še implikacijo v desno, vzemimo torej graf $G$, za katerega velja $Z(G) = n-1$. Recimo, da graf $G$ ni polni graf, torej obstaja neko vozlišče $u$, katerega stopnja je strogo manjša od $n-1$. 
+    Dokažimo najprej, da iz tega sledi, da obstaja vozlišče $w$, ki je sosed enega izmed sosedov $u$, ni pa tudi sosed $u$-ja. Če tako vozlišče $w$ ne bi obstajalo, bi to pomenilo, da je naš celoten graf sestavljen iz $u$ in njegovih sosedov, je torej graf na $n = \deg(u) + 1$ vozliščih, vozlišče $u$ pa ima stopnjo $\deg(u) = n-1$, kar je v nasprotju s predpostavko.
+    
+    Množico ničelne prisile lahko sedaj sestavimo tako, da pobarvamo vse sosede $u$, razen enega, poleg tega pa še vsa preostala vozlišča v grafu, razen vozlišča $w$. Vozlišče $u$ torej povzroči spremembo barve v edinem nepobarvanem sosedu, nato pa so pobarvana že vsa vozlišča v grafu, razen $w$, ki spremeni barvo zaradi enega izmed svojih sosedov. Našli smo torej množico ničelne prisile velikosti $n-2$, kar je v protislovju s predpostavko. Sledi, da je $G = K_n$. 
+\end{proof}
+
+\begin{trditev}
+    Za graf $G$ na $n$ vozliščih velja: 
+    \[ Z(G) = 1 \iff G = P_n. \]
+    Z besedami, enakost v trivialni spodnji meji~\eqref{eq:trv-trv-spodnja-meja} je dosežena natanko takrat, ko imamo pot na $n$ vozliščih.
+\end{trditev}
+\begin{proof}
+    Iz trditve~\ref{trd:pot} vemo, da drži implikacija v levo. Dokažimo še implikacijo v desno, vzemimo graf $G$ na $n$ vozliščih, za katerega velja $Z(G) = 1$. Vzemimo vozlišče $u$, ki predstavlja množico ničelne prisile. Če je $n = 1$, imamo torej graf $P_1$, trditev drži. Sicer mora $u$ povzročiti vsaj eno spremembo barve, torej mora imeti natanko enega nepobarvanega soseda $v$ -- vozlišče $u$ je torej stopnje 1. Če je $n=2$, je $v$ prav tako vozlišče stopnje 1, imamo graf $P_2$ in trditev drži.  V nasprotnem primeru mora $v$ povzročiti vsaj eno spremembo barve, torej ima natanko enega nepobarvanega soseda $w$ (poleg $u$, ki je že črne barve) -- $v$ je torej stopnje 2. Če je $n=3$, je vozlišče $w$ stopnje 1, dobimo torej graf $P_3$. Sicer se postopek nadaljuje, v vsakem koraku ugotovimo, da mora biti vozlišče, ki je nazadnje spremenilo barvo, stopnje 1, če je pobarvan že ves graf, imamo torej pot na $n$ vozliščih, ali pa stopnje 2, če imamo še kakšno nepobarvano vozlišče. Širjenje barve se nekoč ustavi, saj je $n$ končen.
+\end{proof}
 
 \section{Ničelna prisila produktov grafov}
 
