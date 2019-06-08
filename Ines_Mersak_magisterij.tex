@@ -993,7 +993,7 @@ Poglejmo si, za katere grafe je pri zgornji~\eqref{eq:trv-zgornja-meja} in trivi
     Po trditvi~\ref{trd:polni-graf} vemo, da velja implikacija v levo, torej
     \[ G = K_n \implies Z(G) = n-1. \]
     S protislovjem dokažimo še implikacijo v desno, vzemimo torej graf $G$, za katerega velja $Z(G) = n-1$. Recimo, da graf $G$ ni polni graf, torej obstaja neko vozlišče $u$, katerega stopnja je strogo manjša od $n-1$. 
-    Dokažimo najprej, da iz tega sledi, da obstaja vozlišče $w$, ki je sosed enega izmed sosedov $u$, ni pa tudi sosed $u$-ja. Če tako vozlišče $w$ ne bi obstajalo, bi to pomenilo, da je naš celoten graf sestavljen iz $u$ in njegovih sosedov, je torej graf na $n = \deg(u) + 1$ vozliščih, vozlišče $u$ pa ima stopnjo $\deg(u) = n-1$, kar je v nasprotju s predpostavko.
+    Dokažimo najprej, da iz tega sledi, da obstaja vozlišče $w$, ki je sosed enega izmed sosedov $u$, ni pa tudi sosed $u$-ja. Če tako vozlišče $w$ ne bi obstajalo, bi (zaradi predpostavke povezanosti) to pomenilo, da je naš celoten graf sestavljen iz $u$ in njegovih sosedov, je torej graf na $n = \deg(u) + 1$ vozliščih, vozlišče $u$ pa ima stopnjo $\deg(u) = n-1$, kar je v nasprotju s predpostavko.
     
     Množico ničelne prisile lahko sedaj sestavimo tako, da pobarvamo vse sosede $u$, razen enega, poleg tega pa še vsa preostala vozlišča v grafu, razen vozlišča $w$. Vozlišče $u$ torej povzroči spremembo barve v edinem nepobarvanem sosedu, nato pa so pobarvana že vsa vozlišča v grafu, razen $w$, ki spremeni barvo zaradi enega izmed svojih sosedov. Našli smo torej množico ničelne prisile velikosti $n-2$, kar je v protislovju s predpostavko. Sledi, da je $G = K_n$. 
 \end{proof}
@@ -1007,7 +1007,35 @@ Poglejmo si, za katere grafe je pri zgornji~\eqref{eq:trv-zgornja-meja} in trivi
     Iz trditve~\ref{trd:pot} vemo, da drži implikacija v levo. Dokažimo še implikacijo v desno, vzemimo graf $G$ na $n$ vozliščih, za katerega velja $Z(G) = 1$. Vzemimo vozlišče $u$, ki predstavlja množico ničelne prisile. Če je $n = 1$, imamo torej graf $P_1$, trditev drži. Sicer mora $u$ povzročiti vsaj eno spremembo barve, torej mora imeti natanko enega nepobarvanega soseda $v$ -- vozlišče $u$ je torej stopnje 1. Če je $n=2$, je $v$ prav tako vozlišče stopnje 1, imamo graf $P_2$ in trditev drži.  V nasprotnem primeru mora $v$ povzročiti vsaj eno spremembo barve, torej ima natanko enega nepobarvanega soseda $w$ (poleg $u$, ki je že črne barve) -- $v$ je torej stopnje 2. Če je $n=3$, je vozlišče $w$ stopnje 1, dobimo torej graf $P_3$. Sicer se postopek nadaljuje, v vsakem koraku ugotovimo, da mora biti vozlišče, ki je nazadnje spremenilo barvo, stopnje 1, če je pobarvan že ves graf, imamo torej pot na $n$ vozliščih, ali pa stopnje 2, če imamo še kakšno nepobarvano vozlišče. Širjenje barve se nekoč ustavi, saj je $n$ končen.
 \end{proof}
 
+\begin{trditev}[{\cite[izrek~2.3]{row2012technique}}]
+    \hl{TODO: ?}
+    \[ Z(G) = 2 \iff G \text{ je graf dveh paralelnih poti}.  \]
+\end{trditev}
+
 \section{Ničelna prisila produktov grafov}
+V tem poglavju si bomo ogledali nekaj rezultatov o številu ničelne prisile za produkte grafov. Osnova za to poglavje je predvsem~\cite{aim2008minimumrank}.
+
+\begin{trditev}
+    Za kartezični produkt grafov $G$ in $H$ velja
+    \begin{equation}
+        Z(G \boxempty H) \leq \min\{Z(G) |H|, Z(H) |G|\}.
+    \end{equation}
+\end{trditev}
+\begin{proof}
+    Po definiciji kartezičnega produkta vemo, da graf $G \boxempty H$ vsebuje (kot podgrafe) $|H|$ kopij grafa $G$. V vsaki kopiji $G$ pobarvamo pripadajoča vozlišča, ki tvorijo množico ničelne prisile v osnovnem grafu $G$. (Natančneje, če je $U \subseteq V(G)$ množica ničelne prisile osnovnega grafa $G$, potem v grafu $G \boxempty H$ vzamemo vsa taka vozlišča, katere prva koordinata je v množici $U$.) To je množica ničelne prisile celotnega produkta, saj se širjenje barve zgodi v vsaki kopiji neodvisno, ker so po definiciji kartezičnega produkta med kopijami $G$ povezave le med vozlišči z enako prvo komponento (na začetku velja, da če je pobarvano vozlišče v eni kopiji $G$, potem so pobarvana tudi pripadajoča vozlišča v vseh ostalih kopijah $G$, ko se barva začne širiti, pa si lahko predstavljamo, da vsa istoležna vozlišča v vseh kopijah $G$ hkrati postanejo črna). Velja torej
+    \[ Z(G \boxempty H) \leq Z(G) |H|, \]
+    saj imamo ravno $|H|$ kopij $G$.
+    
+    Podobno graf $G \boxempty H$ vsebuje $|G|$ kopij grafa $H$, množico ničelne prisile konstruiramo kot prej in dobimo 
+    \[ Z(G \boxempty H)  \leq Z(H) |G|, \]
+    trditev sledi.
+\end{proof}
+
+Na sliki~\ref{fig:zf-kartezicni-produkt} sta prikazani množici ničelne prisile za kartezični produkt $C_4 \boxempty P_n$. 
+\begin{figure}[h]
+    \caption{TODO}
+    \label{fig:zf-kartezicni-produkt}
+\end{figure}
 
 \section{Izračun ničelne prisile}
 \subsection{Preverljivost}
