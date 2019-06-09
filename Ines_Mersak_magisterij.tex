@@ -124,6 +124,15 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 % \let\oldsection\section
 % \def\section{\cleardoublepage\oldsection}
 
+% da package soul dela pravilno
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\SOUL@ulunderline}{\dimen@}{\SOUL@dimen}{}{}
+\patchcmd{\SOUL@ulunderline}{\dimen@}{\SOUL@dimen}{}{}
+\patchcmd{\SOUL@ulunderline}{\dimen@}{\SOUL@dimen}{}{}
+\newdimen\SOUL@dimen
+\makeatother
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%           DOCUMENT           %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -665,6 +674,7 @@ Ideja za imenom ničelne prisile je sledeča. Črna vozlišča predstavljajo tis
 
 
 \section{Osnovni rezultati}
+\label{sec:osnovni-rezultati}
 
 V tem poglavju si ogledamo, kakšno je število ničilne prisile za nekatere osnovne družine grafov, kot npr.~poti, cikli ali polni grafi.
 
@@ -1016,9 +1026,11 @@ Poglejmo si, za katere grafe je pri zgornji~\eqref{eq:trv-zgornja-meja} in trivi
 V tem poglavju si bomo ogledali nekaj rezultatov o številu ničelne prisile za produkte grafov. Osnova za to poglavje je predvsem~\cite{aim2008minimumrank}.
 
 \begin{trditev}
+    \label{trd:kartezicni-produkt-zgornja-meja}
     Za kartezični produkt grafov $G$ in $H$ velja
     \begin{equation}
         Z(G \boxempty H) \leq \min\{Z(G) |H|, Z(H) |G|\}.
+        \label{eq:kartezicni-produkt-zgornja-meja}
     \end{equation}
 \end{trditev}
 \begin{proof}
@@ -1031,18 +1043,115 @@ V tem poglavju si bomo ogledali nekaj rezultatov o številu ničelne prisile za 
     trditev sledi.
 \end{proof}
 
-Na sliki~\ref{fig:zf-kartezicni-produkt} sta prikazani množici ničelne prisile za kartezični produkt $C_4 \boxempty P_n$. 
+Na sliki~\ref{fig:zf-kartezicni-produkt} sta prikazani množici ničelne prisile, konstruirani kot v dokazu zgornje trditve, za kartezični produkt $C_4 \boxempty P_n$. 
 \begin{figure}[h]
-    \caption{TODO}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \begin{tikzpicture}[yscale=1.3]
+            \foreach \i in {1,...,4}
+            {
+                \begin{scope}[every node/.style={circle,thick,draw}]
+                \ifthenelse{\i=1}{
+                    \node[fill=black] (u\i) at (2*\i,0) {};
+                    \node[fill=black] (v\i) at (2*\i,1) {};
+                    \node[fill=black] (x\i) at (2*\i+0.5,0.5) {};
+                    \node[fill=black] (y\i) at (2*\i+0.5,1.5) {};
+                    }{
+                    \node (u\i) at (2*\i,0) {};
+                    \node (v\i) at (2*\i,1) {};
+                    \node (x\i) at (2*\i+0.5,0.5) {};
+                    \node (y\i) at (2*\i+0.5,1.5) {};
+                }                
+                \end{scope}
+                
+                \path[-,thick,draw]
+                (u\i) edge (v\i)
+                (x\i) edge (y\i)
+                (u\i) edge (x\i)
+                (v\i) edge (y\i);
+                \ifthenelse{\i=1}{}{
+                    \tikzmath{\im = int(\i-1);}
+                    \ifthenelse{\NOT \i=4}{
+                        \path[-,thick,draw]
+                        (u\i) edge (u\im)
+                        (v\i) edge (v\im)
+                        (x\i) edge (x\im)
+                        (y\i) edge (y\im);
+                    }{
+                    \path[dashed,draw]
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
+                }
+            }
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}[yscale=1.3]
+        \foreach \i in {1,...,4}
+        {
+            \begin{scope}[every node/.style={circle,thick,draw}]
+                \node[fill=black] (u\i) at (2*\i,0) {};
+                \node[fill=black] (v\i) at (2*\i,1) {};
+                \node (x\i) at (2*\i+0.5,0.5) {};
+                \node (y\i) at (2*\i+0.5,1.5) {};       
+            \end{scope}
+            
+            \path[-,thick,draw]
+            (u\i) edge (v\i)
+            (x\i) edge (y\i)
+            (u\i) edge (x\i)
+            (v\i) edge (y\i);
+            \ifthenelse{\i=1}{}{
+                \tikzmath{\im = int(\i-1);}
+                \ifthenelse{\NOT \i=4}{
+                    \path[-,thick,draw]
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
+                }{
+                    \path[dashed,draw]
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
+                }
+            }
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Prikazan je graf $C_4 \boxempty P_n$ in množici ničelne prisile, konstruirani kot v dokazu trditve~\ref{trd:kartezicni-produkt-zgornja-meja}. Levo je množica ničelne prisile, konstruirana tako, da smo pobarvali pripadajoča vozlišča iz množice ničelne prisile grafa $P_n$ v vseh kopijah $P_n$, desno pa tako, da smo pobarvali množico ničelne prisile v vsaki kopiji $C_4$.}
     \label{fig:zf-kartezicni-produkt}
 \end{figure}
 
+Sledi nekaj trivialnih posledic trditve~\ref{trd:kartezicni-produkt-zgornja-meja}.
+\begin{posledica}
+    Za kartezične produkte splošnega grafa $G$ velja:
+    \begin{enumerate}
+        \item $Z(G \boxempty P_n) \leq \min \{ Z(G)n, |G| \} \stackrel{|G| \leq n}{=} |G|$
+        \item $Z(G \boxempty C_n) \leq \min \{ Z(G)n, 2|G| \}$
+        \item $Z(G \boxempty K_n) \leq \min \{ Z(G)n, (n-1)|G| \}$
+    \end{enumerate}
+\end{posledica}
+\begin{proof}
+    Pri vseh točkah uporabimo zgornjo mejo~\eqref{eq:kartezicni-produkt-zgornja-meja}, dejstvo, da so velikosti grafov $P_n, C_n$ in $K_n$ enake $n$ in rezultate o njihovih ničelnih prisilah iz poglavja~\ref{sec:osnovni-rezultati}. Dodatek pri produktu s potjo $P_n$ sledi iz trivialne spodnje meje $Z(G) \geq 1$ in predpostavke, da je $|G| \leq n$. 
+\end{proof}
+
+TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
+TODO: hiperkocke?
+TODO: krepki produkt, vse isto probaj
+TODO: korona
 \section{Izračun ničelne prisile}
 \subsection{Preverljivost}
 \subsection{Eksponenten algoritem}
 \subsection{NP-polnost}
 \subsection{Dinamično programiranje?}
 \subsection{Aproksimativni algoritmi?}
+
 
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
@@ -1058,8 +1167,7 @@ Na sliki~\ref{fig:zf-kartezicni-produkt} sta prikazani množici ničelne prisile
 \phantomsection                            % da prav delujejo hiperlinki
 \addcontentsline{toc}{section}{\bibname}   % dodajmo v kazalo
 \bibliographystyle{fmf-sl}                 % uporabljen stil je v datoteki fmf-sl.bst, na voljo tudi angleška verzija
-\bibliography{\literatura}                 % literatura je v datoteki, definirani na začetku
-
+\bibliography{literatura}                 % literatura je v datoteki, definirani na začetku
 % Za stvarno kazalo
 %\cleardoublepage                           % na desni strani
 %\phantomsection                            % da prav delujejo hiperlinki
