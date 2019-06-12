@@ -1141,10 +1141,17 @@ Sledi nekaj trivialnih posledic trditve~\ref{trd:kartezicni-produkt-zgornja-meja
     Pri vseh točkah uporabimo zgornjo mejo~\eqref{eq:kartezicni-produkt-zgornja-meja}, dejstvo, da so velikosti grafov $P_n, C_n$ in $K_n$ enake $n$ in rezultate o njihovih ničelnih prisilah iz poglavja~\ref{sec:osnovni-rezultati}. Dodatek pri produktu s potjo $P_n$ sledi iz trivialne spodnje meje $Z(G) \geq 1$ in predpostavke, da je $|G| \leq n$. 
 \end{proof}
 
+V posebnem, če imamo kartezični produkt dveh polnih grafov, lahko zgornjo mejo še malo izboljšamo. Po trditvi~\ref{eq:kartezicni-produkt-zgornja-meja} je zgornja meja za ničelno prisilo grafa $K_m \boxempty K_n$, predpostavimo tudi $m \leq n$, enaka $\min \{(m-1)\cdot n, (n-1) \cdot m\} = \min \{ mn - n , mn - m\} \stackrel{m \leq n}{=} m (n-1) $, torej če v vseh $m$ kopijah grafa $K_n$ pobarvamo vsa vozlišča razen enega. Vendar pa imamo še vedno množico ničelne prisile, če pobarvamo vsa vozlišča v eni kopiji $K_n$ in v $m-2$ kopijah vsa, razen enega, zadnjo kopijo pa pustimo belo. Istoležno vozlišče v prejšnji kopiji bo povzročilo spremembo barve v edinem nepobarvanem vozlišču naslednje kopije, ko pridemo do zadnje kopije, pa bo vsako vozlišče iz prejšnje kopije pobarvalo istoležnega iz zadnje kopije. Dokazali smo:
+\begin{trditev}
+    $Z(K_m \boxempty K_n) \leq n + (n-1)(m-2) = m n - m - n + 2$.
+\end{trditev}
+\hl{TODO: graf za lažjo predstavo}
+
 TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
 TODO: hiperkocke?
 TODO: krepki produkt, vse isto probaj
 TODO: korona
+
 \section{Izračun ničelne prisile}
 \subsection{Preverljivost}
 \subsection{Eksponenten algoritem}
