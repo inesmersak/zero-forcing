@@ -1141,11 +1141,65 @@ Sledi nekaj trivialnih posledic trditve~\ref{trd:kartezicni-produkt-zgornja-meja
     Pri vseh točkah uporabimo zgornjo mejo~\eqref{eq:kartezicni-produkt-zgornja-meja}, dejstvo, da so velikosti grafov $P_n, C_n$ in $K_n$ enake $n$ in rezultate o njihovih ničelnih prisilah iz poglavja~\ref{sec:osnovni-rezultati}. Dodatek pri produktu s potjo $P_n$ sledi iz trivialne spodnje meje $Z(G) \geq 1$ in predpostavke, da je $|G| \leq n$. 
 \end{proof}
 
-V posebnem, če imamo kartezični produkt dveh polnih grafov, lahko zgornjo mejo še malo izboljšamo. Po trditvi~\ref{eq:kartezicni-produkt-zgornja-meja} je zgornja meja za ničelno prisilo grafa $K_m \boxempty K_n$, predpostavimo tudi $m \leq n$, enaka $\min \{(m-1)\cdot n, (n-1) \cdot m\} = \min \{ mn - n , mn - m\} \stackrel{m \leq n}{=} m (n-1) $, torej če v vseh $m$ kopijah grafa $K_n$ pobarvamo vsa vozlišča razen enega. Vendar pa imamo še vedno množico ničelne prisile, če pobarvamo vsa vozlišča v eni kopiji $K_n$ in v $m-2$ kopijah vsa, razen enega, zadnjo kopijo pa pustimo belo. Istoležno vozlišče v prejšnji kopiji bo povzročilo spremembo barve v edinem nepobarvanem vozlišču naslednje kopije, ko pridemo do zadnje kopije, pa bo vsako vozlišče iz prejšnje kopije pobarvalo istoležnega iz zadnje kopije. Dokazali smo:
+V posebnem, če imamo kartezični produkt dveh polnih grafov, lahko zgornjo mejo še malo izboljšamo. Po trditvi~\ref{eq:kartezicni-produkt-zgornja-meja} je zgornja meja za ničelno prisilo grafa $K_m \boxempty K_n$, predpostavimo tudi $m \leq n$, enaka $\min \{(m-1)\cdot n, (n-1) \cdot m\} = \min \{ mn - n , mn - m\} \stackrel{m \leq n}{=} m (n-1) $, torej če v vseh $m$ kopijah grafa $K_n$ pobarvamo vsa vozlišča razen enega. Vendar pa imamo še vedno množico ničelne prisile, če pobarvamo vsa vozlišča v eni kopiji $K_n$ in v $m-2$ kopijah vsa, razen enega (istoležnega v vseh kopijah), kar je ravno množica ničelne prisile znotraj te kopije, zadnjo kopijo pa pustimo belo. Za lažjo predstavo je na sliki~\ref{fig:zf-kartezicni-produkt-polnih} prikazana tako konstruirana množica ničelne prisile za produkt $K_3 \boxempty K_4$.
+
+Poglejmo, da je to res množica ničelne prisile. Popolnoma pobarvana kopija $K_n$ bo povzročila spremembo barve v vseh vozliščih nepobarvane kopije, razen v tistem vozlišču, ki v večini kopij ni pobarvan. Nato lahko znotraj vsake kopije $K_n$ katerokoli pobarvano vozlišče spremeni barvo edinemu nepobarvanemu vozlišču v tej kopiji. Dokazali smo:
 \begin{trditev}
+    \label{trd:kartezicni-produkt-zgornja-meja-polni}
     $Z(K_m \boxempty K_n) \leq n + (n-1)(m-2) = m n - m - n + 2$.
 \end{trditev}
-\hl{TODO: graf za lažjo predstavo}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[yscale=1.5, xscale=1.2]
+        \foreach \i in {1,...,3}
+        {
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \ifthenelse{\i<3}{
+                \node[fill=black] (u\i) at (2*\i,0) {};
+                \node[fill=black] (v\i) at (2*\i,1) {};
+                \node[fill=black] (x\i) at (2*\i+0.5,0.5) {};
+                \ifthenelse{\i=1}{
+                    \node[fill=black] (y\i) at (2*\i+0.5,1.5) {}; 
+                }{
+                    \node (y\i) at (2*\i+0.5,1.5) {}; 
+                }
+            }{
+            \node (u\i) at (2*\i,0) {};
+            \node (v\i) at (2*\i,1) {};
+            \node (x\i) at (2*\i+0.5,0.5) {};
+            \node (y\i) at (2*\i+0.5,1.5) {};
+            }                
+            \end{scope}
+            
+            \path[-,thick,draw]
+            (u\i) edge (v\i)
+            (x\i) edge (y\i)
+            (u\i) edge (x\i)
+            (v\i) edge (y\i)
+            (u\i) edge (y\i)
+            (v\i) edge (x\i);
+            \ifthenelse{\i=1}{}{
+                \tikzmath{\im = int(\i-1);}
+                \path[-,thick,draw]
+                (u\i) edge (u\im)
+                (v\i) edge (v\im)
+                (x\i) edge (x\im)
+                (y\i) edge (y\im);
+               
+            }
+        }
+        \path[-,thick,draw]
+        (u1) edge[bend right=20] (u3)
+        (x1) edge[bend right=12] (x3)
+        (v1) edge[bend left=13] (v3)
+        (y1) edge[bend left=20] (y3);
+    \end{tikzpicture}
+
+    \caption{Prikazan je kartezični produkt $K_3 \boxempty K_4$ in množica ničelne prisile, konstruirana po trditvi~\ref{trd:kartezicni-produkt-zgornja-meja-polni}.}
+    \label{fig:zf-kartezicni-produkt-polnih}
+\end{figure}
+
 
 TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
 TODO: hiperkocke?
