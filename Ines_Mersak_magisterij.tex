@@ -672,6 +672,8 @@ Ideja za imenom ničelne prisile je sledeča. Črna vozlišča predstavljajo tis
     Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake 0, potem je $x = 0$.
 \end{trditev}
 
+\hl{TODO: Kaj velja za ničelno prisilo, če gledamo induciran / vpet / splošen podgraf originalnega grafa.}
+
 
 \section{Osnovni rezultati}
 \label{sec:osnovni-rezultati}
@@ -1281,7 +1283,69 @@ Poglejmo si še zgornjo mejo za krepki produkt poti.
 \end{proof}
 
 TODO: krepki produkt, vse isto probaj
-TODO: korona
+
+Znana je tudi zgornja meja za ničelno prisilo korone dveh splošnih grafov.
+\begin{trditev}
+    Za splošna grafa $G$ in $H$ velja
+    \begin{align*}
+        Z(G \circ H) &\leq Z(H) |G|+ Z(G) |H| - Z(G) Z(H) \\
+        &= Z(H) (|G| - Z(G)) + Z(G) |H|.
+    \end{align*} 
+    V posebnem, če $m \geq 2$, za korono polnih grafov velja $Z(K_m \circ K_n) \leq mn - 1$. 
+\end{trditev}
+\begin{proof}
+    Vzemimo minimalno množico ničelne prisile grafa $G$ in jo označimo z $Z_G$. Pobarvamo vozlišča v vseh tistih kopijah $H$, ki so povezane z vozliščem iz $Z_G$, s tem smo pobarvali $|Z_G| |H| = Z(G) |H|$ vozlišč, saj je $Z_G$ minimalna množica ničelne prisile za $G$. V preostalih $|G| - Z(G)$ kopijah $H$ pa pobarvamo tista vozlišča, ki tvorijo minimalno množico ničelne prisile za $H$. Vse skupaj smo torej pobarvali $Z(H)(|G| - Z(G)) + Z(G) |H|$ vozlišč. Primer tako konstruirane množice je prikazan na sliki~\ref{fig:zf-korona}.
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {};
+        \node (2) at (2,0) {};
+        \node (3) at (3,2) {};
+        \node (4) at (1,3.5) {};
+        \node (5) at (-1,2) {};
+        
+        \node[fill=black] (u1) at ([shift=({-0.5,-1})]1) {};
+        \node (v1) at ([shift=({0.5,-1})]1) {};
+        
+        \node[fill=black] (u2) at ([shift=({-0.5,-1})]2) {};
+        \node (v2) at ([shift=({0.5,-1})]2) {};
+        
+        \node[fill=black] (u3) at ([shift=({1,-0.5})]3) {};
+        \node (v3) at ([shift=({1,0.5})]3) {};
+        
+        \node[fill=black] (u4) at ([shift=({-0.5,1})]4) {};
+        \node[fill=black] (v4) at ([shift=({0.5,1})]4) {};
+        
+        \node[fill=black] (u5) at ([shift=({-1,-0.5})]5) {};
+        \node[fill=black] (v5) at ([shift=({-1,0.5})]5) {};
+        \end{scope}
+        
+        \path[-,thick,draw]
+        (1) edge (2)
+        (2) edge (3)
+        (3) edge (4)
+        (4) edge (5)
+        (5) edge (1);
+        
+        \foreach \i in {1,...,5}
+        {
+            \path[-,thick,draw]
+            (u\i) edge (v\i)
+            (u\i) edge (\i)
+            (v\i) edge (\i);
+        }
+        \end{tikzpicture}
+        \caption{Prikazana je korona $C_5 \circ K_2$ in njegova množica ničelne prisile, konstruirana kot v zgornjem dokazu.}
+        \label{fig:zf-korona}
+    \end{figure}
+    
+    Poglejmo, da smo res konstruirali množico ničelne prisile. Kopije $H$, ki so popolnoma pobarvane, spremenijo barvo svojemu vozlišču iz kopije $G$. Sedaj so v $G$ torej pobarvana vsa vozlišča iz $Z_G$. Ker je $Z_G$ množica ničelne prisile za $G$ in ker so kopije $H$, povezane s temi vozlišči, že črne, ima eno izmed vozlišč v $G$ natanko enega nepobarvanega soseda v $G$. Ko ta počrni, se barva spremeni tudi vsem nepobarvanem vozliščem v njegovi kopiji $H$, saj je bila pred tem v tej kopiji pobarvana ravno množica ničelne prisile. Ker je $Z_G$ množica ničelne prisile, se ta postopek ponavlja, dokler ni pobarvan celoten graf. 
+    
+    Zgornja meja za korono polnih grafov v večino primerih sledi iz dokazane splošne zgornje meje (upoštevamo osnovni rezultat o ničelni prisili za polne grafe~\ref{trd:polni-graf}):
+    \[ Z(K_m \circ K_n) \leq n-1 + (m-1)n = mn - 1, \text{ za } n \geq 2.\]
+    Če pa je $n = 1$, nam zaradi dejstva $Z(K_1) = 1$ splošni dokaz da $1 + (m-1) = m$ namesto v trditvi želene meje $m - 1$. Konstruirajmo množico ničelne prisile velikosti $m-1$ za primer $K_m \circ K_1$ tako, da pobarvamo vse kopije $K_1$, razen ene. Pobarvane kopije $K_1$ povzročijo spremembo vsaka v svojem vozlišču kopije $K_m$, sedaj je pobarvana množica ničelne prisile v $K_m$. Eno izmed pobarvanih vozlišč spremeni barvo edinemu nepobarvanemu v $K_m$, ta pa nato povzroči še spremembo barve svoje kopije $K_1$.
+\end{proof}
 
 \section{Izračun ničelne prisile}
 \subsection{Preverljivost}
