@@ -1195,14 +1195,91 @@ Poglejmo, da je to res množica ničelne prisile. Popolnoma pobarvana kopija $K_
         (v1) edge[bend left=13] (v3)
         (y1) edge[bend left=20] (y3);
     \end{tikzpicture}
-
     \caption{Prikazan je kartezični produkt $K_3 \boxempty K_4$ in množica ničelne prisile, konstruirana po trditvi~\ref{trd:kartezicni-produkt-zgornja-meja-polni}.}
     \label{fig:zf-kartezicni-produkt-polnih}
 \end{figure}
 
-
 TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
 TODO: hiperkocke?
+
+Poglejmo si še zgornjo mejo za krepki produkt poti.
+\begin{trditev}
+    $Z(P_m \boxempty P_n) \leq m + n -1$. 
+\end{trditev}
+\begin{proof}
+    \begin{figure}[h]
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \begin{tikzpicture}[yscale=1.2, xscale=1.5]
+                \tikzmath{\n = 5; \m = 4;}
+                \foreach \j in {1,...,\n}
+                {
+                    \foreach \i in {1,...,\m}
+                    {
+                        \begin{scope}[every node/.style={circle,thick,draw}]
+                        \ifthenelse{\i = 1 \OR \j = \n}{
+                            \node[fill=black] (x\i y\j) at (\i,\j) {};
+                        }{
+                        \node (x\i y\j) at (\i,\j) {};
+                    }
+                    \end{scope}
+                    \tikzmath{\jm = int(\j-1); \im = int(\i-1); \iv = int(\i+1);}
+                    \ifthenelse{\i = 1 \OR \j = 1}{}{
+                        \path[-,thick,draw](x\i y\j) edge (x\im y\jm);
+                    }
+                    \ifthenelse{\i = 1}{}{
+                        \path[-,thick,draw] (x\i y\j) edge (x\im y\j);
+                    }
+                    \ifthenelse{\j = 1 \OR \i = \m}{}{
+                        \path[-,thick,draw] (x\i y\j) edge (x\iv y\jm);
+                    }
+                    \ifthenelse{\j = 1}{}{
+                        \path[-,thick,draw] (x\i y\j) edge (x\i y\jm);
+                    }
+                }
+            }
+            \end{tikzpicture}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \begin{tikzpicture}[yscale=1.2, xscale=1.5]
+                \tikzmath{\n = 5; \m = 4;}
+                \foreach \j in {1,...,\n}
+                {
+                    \foreach \i in {1,...,\m}
+                    {
+                        \begin{scope}[every node/.style={circle,thick,draw}]
+                        \tikzmath{\nm = \n - 2;}
+                        \ifthenelse{\i < 3 \OR \j > \nm}{
+                            \node[fill=black] (x\i y\j) at (\i,\j) {};
+                        }{
+                        \node (x\i y\j) at (\i,\j) {};
+                    }
+                    \end{scope}
+                    \tikzmath{\jm = int(\j-1); \im = int(\i-1); \iv = int(\i+1);}
+                    \ifthenelse{\i = 1 \OR \j = 1}{}{
+                        \path[-,thick,draw](x\i y\j) edge (x\im y\jm);
+                    }
+                    \ifthenelse{\i = 1}{}{
+                        \path[-,thick,draw] (x\i y\j) edge (x\im y\j);
+                    }
+                    \ifthenelse{\j = 1 \OR \i = \m}{}{
+                        \path[-,thick,draw] (x\i y\j) edge (x\iv y\jm);
+                    }
+                    \ifthenelse{\j = 1}{}{
+                        \path[-,thick,draw] (x\i y\j) edge (x\i y\jm);
+                    }
+                }
+            }
+            \end{tikzpicture}
+        \end{subfigure}
+        \caption{Prikazan je krepki produkt $P_4 \boxtimes P_5$, na sliki levo njegova množica ničelne prisile, na sliki desno pa vmesno stanje širjenja barve.}
+        \label{fig:zf-krepki-produkt-poti}
+    \end{figure}
+    
+    Pobarvajmo vsa vozlišča ene izmed robnih kopij $P_m$ in ene izmed robnih kopij $P_n$ (prikazano na sliki~\ref{fig:zf-krepki-produkt-poti} na primeru $P_4 \boxtimes P_5$), začetno množico pobarvanih vozlišč označimo z $Z$. Pobarvali smo ravno $m + n - 1$ vozlišč, saj je eno vozlišče, označimo ga z $u$, skupno obema kopijama. Dokažimo, da je to res množica ničelne prisile. Vozlišče $u$ je edino, ki ima natanko enega nepobarvanega soseda (diagonalnega), ki torej spremeni barvo. Sedaj ima sosed $u$ v kopiji $P_m$ natanko enega nepobarvanega soseda, diagonalnega, ki spremeni barvo, in tako naprej po celotni robni kopiji $P_m$. Simetrično pa se zgodi tudi v robni kopiji $P_n$. Po koncu je pobarvana robna in še sosednja kopija $P_m$ ter robna in sosednja kopija $P_n$, kot prikazano na sliki~\ref{fig:zf-krepki-produkt-poti} desno. Vidimo, da je trenutna situacija zelo podobna začetni. Če pogledamo induciran graf iz vozlišč $V(P_m \boxtimes P_n) \setminus Z$, vidimo, da je izomorfen grafu $P_{m-1} \boxtimes P_{n-1}$, pri čemer sta trenutno pobarvani ravno robna kopija $P_{m-1}$ in robna kopija $P_{n-1}$. Širjenje barve se torej rekurzivno nadaljuje kot prej, na koncu je pobarvan cel graf, začetna množica $Z$ je res množica ničelne prisile. 
+\end{proof}
+
 TODO: krepki produkt, vse isto probaj
 TODO: korona
 
