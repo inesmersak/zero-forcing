@@ -250,6 +250,8 @@ V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa
 
 \emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jih z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. 
 
+Graf $H$ je \emph{podgraf} grafa $G$, če velja $V(H) \subseteq V(G)$ in $E(H) \subseteq E(G)$. $H$ je \emph{vpet} podgraf, če velja $V(H) = V(G)$. $H$ je podgraf, \emph{induciran} z množico vozlišč $V_H \subseteq V(G)$, če velja $E(H) = \{ \{ u,v \} \in E(G) \mid u \in V_H \land v \in V_H \}$. Zapišemo tudi $H = G[V_H]$.
+
 Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina vozlišča} $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov. Največjo stopnjo nekega vozlišča v grafu $G$ bomo označili z $\Delta(G)$, najmanjšo pa z $\delta(G)$. Kadar je očitno, za kateri graf gre, bomo pisali kar $\Delta$ in $\delta$.
 
 \subsection{Produkti grafov}
@@ -654,6 +656,10 @@ Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč 
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
 
+Kaj se zgodi z ničelno prisilo grafa, če odstranimo kakšno povezavo in / ali vozlišče? Če za nek graf $G$ poznamo $Z(G)$, za njegov podgraf v splošnem ne moremo povedati, kakšna bo ničelna prisila. V poglavju~\ref{sec:osnovni-rezultati} npr.~dokažemo, da ima cikel $C_n$ ničelno prisilo 2, polni graf $K_n$ pa $n-1$. V tem primeru (gledamo dovolj velike vrednosti $n$) za vpeti podgraf $C_n$ velja $Z(C_n) \leq Z(K_n)$. Če pa vzamemo kolo $W_n$ in vpet podgraf zvezdo $S_n$, pa velja $n-1 = Z(W_n) \geq Z(W_n) = 3$.
+
+% Kaj je z induciranimi podgrafi? Če vzameš samo presek Z_G in V(H), ni nujno v redu, lahko pride prazna množica. Mogoče še naslednjega, ki se forsira? Tole ima pomoje nekaj veze s path coverjem.
+
 Poglejmo si še, zakaj temu pojmu rečemo ``ničelna prisila''. Najprej definirajmo graf $\G(A)$ simetrične matrike $A$ velikosti $n$ nad poljem~$\F$ (pišemo $A \in Sym_n(\F)$):
 \[ V(\G(A)) = \{1, \ldots n\},\ E(\G(A)) = \{\{i,j\} \mid a_{ij} \neq 0,\ 1 \leq i < j \leq n \}. \]
 \begin{primer}
@@ -671,8 +677,6 @@ Ideja za imenom ničelne prisile je sledeča. Črna vozlišča predstavljajo tis
 \begin{trditev}[{\cite[trditev 2.3]{aim2008minimumrank}}]
     Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake 0, potem je $x = 0$.
 \end{trditev}
-
-\hl{TODO: Kaj velja za ničelno prisilo, če gledamo induciran / vpet / splošen podgraf originalnega grafa.}
 
 
 \section{Osnovni rezultati}
