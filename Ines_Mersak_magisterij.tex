@@ -994,8 +994,6 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
     \hl{TODO: večje enako in posledično enakost}
 \end{proof}
 
-\subsection{Hiperkocke?}
-
 \subsection{Drevesa?}
 
 \section{Ekstremni primeri}
@@ -1148,6 +1146,55 @@ Sledi nekaj trivialnih posledic trditve~\ref{trd:kartezicni-produkt-zgornja-meja
 \end{proof}
 
 V posebnem, če imamo kartezični produkt dveh polnih grafov, lahko zgornjo mejo še malo izboljšamo. Po trditvi~\ref{eq:kartezicni-produkt-zgornja-meja} je zgornja meja za ničelno prisilo grafa $K_m \boxempty K_n$, predpostavimo tudi $m \leq n$, enaka $\min \{(m-1)\cdot n, (n-1) \cdot m\} = \min \{ mn - n , mn - m\} \stackrel{m \leq n}{=} m (n-1) $, torej če v vseh $m$ kopijah grafa $K_n$ pobarvamo vsa vozlišča razen enega. Vendar pa imamo še vedno množico ničelne prisile, če pobarvamo vsa vozlišča v eni kopiji $K_n$ in v $m-2$ kopijah vsa, razen enega (istoležnega v vseh kopijah), kar je ravno množica ničelne prisile znotraj te kopije, zadnjo kopijo pa pustimo belo. Za lažjo predstavo je na sliki~\ref{fig:zf-kartezicni-produkt-polnih} prikazana tako konstruirana množica ničelne prisile za produkt $K_3 \boxempty K_4$.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[yscale=1.5, xscale=1.2]
+    \foreach \i in {1,...,3}
+    {
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \ifthenelse{\i<3}{
+            \node[fill=black] (u\i) at (2*\i,0) {};
+            \node[fill=black] (v\i) at (2*\i,1) {};
+            \node[fill=black] (x\i) at (2*\i+0.5,0.5) {};
+            \ifthenelse{\i=1}{
+                \node[fill=black] (y\i) at (2*\i+0.5,1.5) {}; 
+            }{
+            \node (y\i) at (2*\i+0.5,1.5) {}; 
+        }
+    }{
+    \node (u\i) at (2*\i,0) {};
+    \node (v\i) at (2*\i,1) {};
+    \node (x\i) at (2*\i+0.5,0.5) {};
+    \node (y\i) at (2*\i+0.5,1.5) {};
+}                
+\end{scope}
+
+\path[-,thick,draw]
+(u\i) edge (v\i)
+(x\i) edge (y\i)
+(u\i) edge (x\i)
+(v\i) edge (y\i)
+(u\i) edge (y\i)
+(v\i) edge (x\i);
+\ifthenelse{\i=1}{}{
+    \tikzmath{\im = int(\i-1);}
+    \path[-,thick,draw]
+    (u\i) edge (u\im)
+    (v\i) edge (v\im)
+    (x\i) edge (x\im)
+    (y\i) edge (y\im);
+    
+}
+}
+\path[-,thick,draw]
+(u1) edge[bend right=20] (u3)
+(x1) edge[bend right=12] (x3)
+(v1) edge[bend left=13] (v3)
+(y1) edge[bend left=20] (y3);
+\end{tikzpicture}
+\caption{Prikazan je kartezični produkt $K_3 \boxempty K_4$ in množica ničelne prisile, konstruirana po trditvi~\ref{trd:kartezicni-produkt-zgornja-meja-polni}.}
+\label{fig:zf-kartezicni-produkt-polnih}
+\end{figure}
 
 Poglejmo, da je to res množica ničelne prisile. Popolnoma pobarvana kopija $K_n$ bo povzročila spremembo barve v vseh vozliščih nepobarvane kopije, razen v tistem vozlišču, ki v večini kopij ni pobarvan. Nato lahko znotraj vsake kopije $K_n$ katerokoli pobarvano vozlišče spremeni barvo edinemu nepobarvanemu vozlišču v tej kopiji. Dokazali smo:
 \begin{trditev}
@@ -1155,62 +1202,85 @@ Poglejmo, da je to res množica ničelne prisile. Popolnoma pobarvana kopija $K_
     $Z(K_m \boxempty K_n) \leq n + (n-1)(m-2) = m n - m - n + 2$.
 \end{trditev}
 
+Zgornja meja~\eqref{eq:kartezicni-produkt-zgornja-meja} nam da tudi zgornjo mejo za hiperkocke. \emph{Hiperkocka} velikosti $n+1$ je graf, ki ga dobimo kot kartezični produkt manjše hiperkocke velikosti $n$ in polnega grafa velikosti 2. S simboli $Q_{n+1} = Q_n \boxempty K_2$, pri čemer je $Q_0$ enak $K_1$. Na sliki~\ref{fig:hiperkocke} so prikazane hiperkocke $Q_1$, $Q_2$ in $Q_3$.
 \begin{figure}[h]
-    \centering
-    \begin{tikzpicture}[yscale=1.5, xscale=1.2]
-        \foreach \i in {1,...,3}
+    \begin{subfigure}{0.33\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {};
+        \node (2) at (0,2) {};  
+        \end{scope}
+        
+        \path[-,thick,draw]
+        (1) edge (2);
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.33\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \node (1) at (0,0) {};
+            \node (2) at (2,0) {};
+            \node (3) at (2,2) {};
+            \node (4) at (0,2) {};  
+            \end{scope}
+            
+            \path[-,thick,draw]
+            (1) edge (2)
+            (2) edge (3)
+            (3) edge (4)
+            (4) edge (1);
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[yscale=1.3]
+        \foreach \i in {1,...,2}
         {
             \begin{scope}[every node/.style={circle,thick,draw}]
-            \ifthenelse{\i<3}{
-                \node[fill=black] (u\i) at (2*\i,0) {};
-                \node[fill=black] (v\i) at (2*\i,1) {};
-                \node[fill=black] (x\i) at (2*\i+0.5,0.5) {};
-                \ifthenelse{\i=1}{
-                    \node[fill=black] (y\i) at (2*\i+0.5,1.5) {}; 
-                }{
-                    \node (y\i) at (2*\i+0.5,1.5) {}; 
-                }
-            }{
             \node (u\i) at (2*\i,0) {};
             \node (v\i) at (2*\i,1) {};
             \node (x\i) at (2*\i+0.5,0.5) {};
             \node (y\i) at (2*\i+0.5,1.5) {};
-            }                
             \end{scope}
             
             \path[-,thick,draw]
             (u\i) edge (v\i)
             (x\i) edge (y\i)
             (u\i) edge (x\i)
-            (v\i) edge (y\i)
-            (u\i) edge (y\i)
-            (v\i) edge (x\i);
+            (v\i) edge (y\i);
             \ifthenelse{\i=1}{}{
                 \tikzmath{\im = int(\i-1);}
                 \path[-,thick,draw]
-                (u\i) edge (u\im)
-                (v\i) edge (v\im)
-                (x\i) edge (x\im)
-                (y\i) edge (y\im);
-               
+                    (u\i) edge (u\im)
+                    (v\i) edge (v\im)
+                    (x\i) edge (x\im)
+                    (y\i) edge (y\im);
             }
         }
-        \path[-,thick,draw]
-        (u1) edge[bend right=20] (u3)
-        (x1) edge[bend right=12] (x3)
-        (v1) edge[bend left=13] (v3)
-        (y1) edge[bend left=20] (y3);
-    \end{tikzpicture}
-    \caption{Prikazan je kartezični produkt $K_3 \boxempty K_4$ in množica ničelne prisile, konstruirana po trditvi~\ref{trd:kartezicni-produkt-zgornja-meja-polni}.}
-    \label{fig:zf-kartezicni-produkt-polnih}
+        \end{tikzpicture}
+    \end{subfigure}
+\caption{Na sliki so prikazane hiperkocke $Q_1 = K_2$ (levo), $Q_2 = K_2 \boxempty K_2 \cong C_4$ (v sredini) in $Q_3 = Q_2 \boxempty K_2 = C_4 \boxempty K_2$ (desno).}
+\label{fig:hiperkocke}
 \end{figure}
+\begin{posledica}
+    $Z(Q_n) \leq 2^{n-1}$.
+\end{posledica}
+\begin{proof}
+    Uporabimo splošno zgornjo mejo za kartezični produkt~\eqref{eq:kartezicni-produkt-zgornja-meja} in definicijo hiperkocke. Dobimo
+    \[
+        Z(Q_n) = Z(Q_{n-1} \boxempty K_2) \leq \min \{ 2Z(Q_{n-1}), |Q_{n-1}| \} \leq |Q_{n-1}| = 2^{n-1},
+    \]
+    pri čemer upoštevamo še $|Q_{n}| = 2^n$.
+\end{proof}
+V hiperkocki $Q_n$ je torej dovolj, če pobarvamo eno izmed kopij manjše hiperkocke $Q_{n-1}$ (to je očitno množica ničelne prisile, saj ima vsako vozlišče v kopiji natanko enega nepobarvanega soseda, to je istoležno vozlišče v drugi kopiji).
 
 TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
-TODO: hiperkocke?
 
 Poglejmo si še zgornjo mejo za krepki produkt poti.
 \begin{trditev}
-    $Z(P_m \boxempty P_n) \leq m + n -1$. 
+    $Z(P_m \boxtimes P_n) \leq m + n -1$.
 \end{trditev}
 \begin{proof}
     \begin{figure}[h]
