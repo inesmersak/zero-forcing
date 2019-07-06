@@ -67,14 +67,21 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \usepackage{enumerate}     % več možnosti za sezname
 
 % Za barvanje source kode
-% \usepackage{minted}
-% \renewcommand\listingscaption{Program}
+\usepackage{minted}
+\renewcommand\listingscaption{Program}
 
 % Za pisanje psevdokode
-% \usepackage{algpseudocode}  % za psevdokodo
-% \usepackage{algorithm}
-% \floatname{algorithm}{Algoritem}
-% \renewcommand{\listalgorithmname}{Kazalo algoritmov}
+\usepackage{algpseudocode}  % za psevdokodo
+\usepackage{algorithm}
+\floatname{algorithm}{Algoritem}
+\renewcommand{\listalgorithmname}{Kazalo algoritmov}
+\algnewcommand\algorithmicto{\textbf{to}}
+\algnewcommand\algorithmicin{\textbf{in}}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algrenewtext{For}[3]{\algorithmicfor\ #1 $\gets$ #2\ \algorithmicto\ #3\ \algorithmicdo}
+\algdef{S}[FOR]{ForEach}[2]{\algorithmicforeach\ #1\ \algorithmicin\ #2\ \algorithmicdo}
+\newcommand{\algorithmicbreak}{\textbf{break}}
+\newcommand{\Break}{\State \algorithmicbreak}
 
 % DRUGI TVOJI PAKETI:
 \usepackage[labelfont=it, format=hang]{caption}
@@ -582,6 +589,9 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
     \caption{Na sliki sta prikazana korona $C_5 \circ P_2$ (levo) in $P_2 \circ C_5$ (desno). Že iz velikosti lahko vidimo, da grafa nista izomorfna.}
     \label{fig:korona-poti-cikla}
 \end{figure}
+
+\subsection{Algoritmi na grafih in računska zahtevnost}
+O načinu predstavitve grafov v računalnikih, P in NP množici problemov, NP polnosti in NP težkosti.
 
 \subsection{Ničelna prisila}
 
@@ -1422,11 +1432,79 @@ Znana je tudi zgornja meja za ničelno prisilo korone dveh splošnih grafov.
 \end{proof}
 
 \section{Izračun ničelne prisile}
+V tem poglavju bomo problem ničelne prisile preučili skozi stališče računske zahtevnosti: pogledali si bomo algoritem, ki preveri, ali je dana množica za dan graf res množica ničelne prisile, in s tem dokazali, da problem spada v NP. Analizirali bomo trivialen splošni algoritem za izračun ničelne prisile poljubnega grafa, si pogledali njegove potencialne izboljšave in dokazali NP-polnost problema.
+
 \subsection{Preverljivost}
+Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preveriti želimo, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. Psevdokoda je zapisana v algoritmu~\ref{alg:preveri-zf}.
+\begin{algorithm}[h]
+    \caption{Preveri, ali je dana množica množica ničelne prisile za dan graf.}
+    \label{alg:preveri-zf}
+    \raggedright
+    \textbf{Vhod:} Graf $G = (V,E)$, množica $Z \subseteq V(G)$. \\
+    \textbf{Izhod:} Logična vrednost \texttt{true} ali \texttt{false}, ki pove, ali je $Z$ množica ničelne prisile za $G$.
+    \begin{algorithmic}[1]
+        \Function{preveri}{$G$, $Z$}
+        \ForEach{$u$}{$Z$}
+        \State $barva(u) \gets 0$ \Comment{Barva 0 pomeni, da je vozlišče pobarvano.}
+        \EndFor
+        \ForEach{$u$}{$V \setminus Z$}
+        \State $barva(u) \gets 1$ \Comment{Barva 1 pomeni, da vozlišče ni pobarvano.}
+        \EndFor
+        \State $sprememba \gets true$
+        \While{$sprememba$}
+        \State $sprememba \gets false$
+        \ForEach{$u$}{$V$}
+        \If{$barva(u) = 0$}
+        \State $kandidat \gets null$
+        \ForEach{$v$}{$N(u)$}
+        \If{$kandidat = null$}
+        \State $kandidat \gets v$
+        \Else
+        \State $kandidat \gets null$
+        \Break
+        \EndIf
+        \EndFor
+        \If{$kandidat \neq null$} \Comment{Edini nepobarvan sosed $u$,}
+        \State $barva(kandidat) \gets 0$ \Comment{spremeni barvo.}
+        \State $sprememba \gets true$
+        \EndIf
+        \EndIf
+        \EndFor
+        \EndWhile
+        \ForEach{$u$}{$V$}
+        \If{$barva(u) = 1$}
+        \Return{$false$} \Comment{Obstaja nepobarvano vozlišče.}
+        \EndIf
+        \EndFor
+        \State \Return{$true$} \Comment{Vsa vozlišča so pobarvana.}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf}.
+
+
+%\begin{minted}[mathescape,
+%linenos,
+%numbersep=5pt,
+%gobble=4,
+%frame=lines,
+%framesep=2mm]{csharp}
+%    string title = "This is a Unicode in the sky"
+%    /*
+%    Defined as $\pi=\lim_{n\to\infty}\frac{P_n}{d}$ where $P$ is the perimeter
+%    of an $n$-sided regular polygon circumscribing a
+%    circle of diameter $d$.
+%    */
+%    const double pi = 3.1415926535
+%\end{minted}
 \subsection{Eksponenten algoritem}
+Ta preišče vse možnosti.
+Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
+
 \subsection{NP-polnost}
 \subsection{Dinamično programiranje?}
-\subsection{Aproksimativni algoritmi?}
+\subsection{Aproksimacijski algoritmi?}
 
 
 % Literatura:
