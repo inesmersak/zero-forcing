@@ -1436,7 +1436,7 @@ V tem poglavju bomo problem ničelne prisile preučili skozi stališče računsk
 
 \subsection{Preverljivost}
 Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preveriti želimo, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. Psevdokoda je zapisana v algoritmu~\ref{alg:preveri-zf}.
-\begin{algorithm}[h]
+\begin{algorithm}[!h]
     \caption{Preveri, ali je dana množica množica ničelne prisile za dan graf.}
     \label{alg:preveri-zf}
     \raggedright
@@ -1455,8 +1455,8 @@ Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preve
         \State $sprememba \gets false$
         \ForEach{$u$}{$V$}
         \If{$barva(u) = 0$}
-        \State $kandidat \gets null$
-        \ForEach{$v$}{$N(u)$}
+        \State $kandidat \gets null$ \Comment{Pregledamo, ali ima $u$ natanko enega}
+        \ForEach{$v$}{$N(u)$} \Comment{nepobarvanega soseda.}
         \If{$kandidat = null$}
         \State $kandidat \gets v$
         \Else
@@ -1481,8 +1481,11 @@ Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preve
     \end{algorithmic}
 \end{algorithm}
 
-Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf}.
+Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf}. Označimo velikosti vhodnih podatkov takole: $n = |V|, m = |E|, z = |Z|$. Vrstice 2--7 imajo skupno časovno zahtevnost $O(n)$, prav tako vrstice 29--33. Osredotočimo se na operacije znotraj \texttt{while} zanke, ki poteka od vrstice~9~do~28. Za vsako vozlišče $v \in V$ preverimo, ali je pobarvano, in če je, pregledamo, ali ima natanko enega belega soseda. Pregled se dogaja v vrsticah 14--21, časovna zahtevnost za trenutno vozlišče $u$ je $O(\deg u)$. Vrstice 22--25 imajo časovno zahtevnost $O(1)$, celotna \texttt{for} zanka (11--27) je torej $O(\sum_{v \in V} \deg v + n) = O(m + n)$ (upoštevamo lemo o rokovanju $\sum_{v \in V} \deg v = 2 |E|$). Preštejmo še, koliko korakov naredi \texttt{while} zanka. V vsakem koraku se zgodi vsaj ena sprememba barve (v nasprotnem primeru se zanka ustavi), na začetku pa je pobarvanih $z$ vozlišč, torej se zgodi največ $n - z$ korakov. Celotna \texttt{while} zanka ima torej časovno zahtevnost $O((n-z) (m+n))$, ker pa je v splošnem $1 \leq z \leq n-1$, dobimo $O(n(m+n))$, kar je tudi skupna časovna zahtevnost algoritma.
 
+Poglejmo si še prostorsko zahtevnost. Za shranjevanje barve posameznega vozlišča porabimo $O(n)$ dodatnega prostora, za sledenje, ali se je zgodila kakšna sprememba, in ali imamo za trenutno vozlišče kakšnega belega soseda ($kandidat$), pa $O(1)$ prostora. Skupna prostorska zahtevnost je torej $O(n)$.
+
+Sedaj naredi še malo manj naiven algoritem za preverjanje. Basically nek queue in se stvari širijo ala bfs, pa nek števec za to kok ima še nepobarvanih?
 
 %\begin{minted}[mathescape,
 %linenos,
@@ -1499,7 +1502,7 @@ Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf}.
 %    const double pi = 3.1415926535
 %\end{minted}
 \subsection{Eksponenten algoritem}
-Ta preišče vse možnosti.
+Ta preišče vse možnosti. Odvisen od algoritma za preverjanje.
 Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
 \subsection{NP-polnost}
