@@ -1502,7 +1502,71 @@ Poglejmo si še prostorsko zahtevnost. Za shranjevanje barve posameznega vozliš
 
 (Za pregled nepobarvanih sosedov bi lahko dosegli tudi konstantno prostorsko zahtevnost: namesto funkcije \textsc{najdiBeleSosede} bi pregledali vse sosede in v spremenljivki hranili, ali smo do sedaj že videli kakšnega nepobarvanega. Če bi našli nepobarvano vozlišče in bi v spremenljivki imeli zapisano že neko drugo, bi prenehali s pregledom, saj smo našli več kot enega belega soseda. Če pa v spremenljivki ne bi bilo še nič shranjeno, bi si tja zapisali trenutno vozlišče. Tako bi dosegli skupno prostorsko zahtevnost $O(n)$.)
 
-Sedaj naredi še malo manj naiven algoritem za preverjanje. Basically nek queue in se stvari širijo ala bfs, pa nek števec za to kok ima še nepobarvanih?
+Izkaže se, da lahko algoritem za preverjanje precej izboljšamo v smislu časovne zahtevnosti. Na začetku si pripravimo tabelo, kjer bomo za vsako vozlišče beležili, katero vozlišče je povzročilo spremembo barve. Za vsako vozlišče si shranimo tudi množico belih sosedov, pri čemer upoštevamo začetni $Z$. Za tista črna vozlišča $u$, ki imajo natanko enega belega soseda $v$, vozlišče $v$ zapišemo v podatkovno strukturo vrsta, v tabeli pa označimo, da je spremembo $v$-ja povzročilo vozlišče $u$. 
+
+Če je vrsta prazna, potem se postopek širjenje barve ne more začeti, $Z$ ni množica ničelne prisile. V nasprotnem primeru odstranimo začetni element $u$ iz vrste, mu spremenimo barvo, vsem njegovim sosedom pa odstranimo $u$ iz množice belih sosedov. Če je pri tem v množici belih sosedov katerega izmed črnih vozlišč $v$ ostalo le eno vozlišče $w$, preverimo, ali spremembo barve $w$ ni povzročilo že kakšno drugo vozlišče, in če ne, ga dodamo v vrsto in označimo, da je spremembo $w$ povzročil $v$. 
+
+Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, če so vsa pobarvana, je $Z$ množica ničelne prisile. Postopek je podrobneje opisan v algoritmu~\ref{alg:preveri-zf-izboljsan}, pri čemer uporabljamo pomožni funkciji, opisani v algoritmu~\ref{alg:preveri-zf-naiven}.
+
+\begin{algorithm}[!h]
+    \caption{Preveri, ali je dana množica množica ničelne prisile za dan graf s pomočjo podatkovne strukture vrsta.}
+    \label{alg:preveri-zf-izboljsan}
+    \raggedright
+    \textbf{Vhod:} Graf $G = (V,E)$, množica $Z \subseteq V(G)$. \\
+    \textbf{Izhod:} Logična vrednost \texttt{true} ali \texttt{false}, ki pove, ali je $Z$ množica ničelne prisile za $G$.
+    \begin{algorithmic}[1]
+        \Function{preveriIzboljsan}{$G$, $Z$}
+        \ForEach{$u$}{$Z$}
+        \State $barva(u) \gets 0$ \Comment{Barva 0 pomeni, da je vozlišče pobarvano.}
+        \State $povzroci(u) \gets Z$  \Comment{Označimo, da so to začetna črna vozlišča.}
+        \EndFor
+        \ForEach{$u$}{$V \setminus Z$}
+        \State $barva(u) \gets 1$ \Comment{Barva 1 pomeni, da vozlišče ni pobarvano.}
+        \State $povzroci(u) \gets null$
+        \EndFor
+        \State $Q \gets [\,]$ \Comment{$Q$ postane prazna vrsta.}
+        \ForEach{$u$}{$V$}
+        \State $beliSosedi(u) \gets \textsc{mnozica}(\Call{najdiBeleSosede}{G, u, barva})$
+        \If{$barva(u) = 0 \land \Call{dolzina}{beliSosedi(u)} = 1$}
+        \State $v \gets \Call{odstrani}{beliSosedi(u)}$ \Comment{$v$ je edini bel sosed $u$.}
+        \If{$povzroci(v) = null$}  \Comment{Če spremembe barve $v$ še ni}
+        \State $\Call{dodaj}{Q, v}$ \Comment{povzročilo nobeno drugo vozlišče,}
+        \State $povzroci(v) = u$  \Comment{jo povzroči $u$.}
+        \EndIf
+        \EndIf
+        \EndFor
+        \While{$Q \neq [\,]$} \Comment{Spremembe se dogajajo, dokler $Q$ ni prazna.}
+        \State $u \gets \Call{odstrani}{Q}$  \Comment{Spremembo barve zabeležimo,}
+        \State $barva(u) \gets 0$  \Comment{ko element vzamemo iz vrste.}
+        \ForEach{$v$}{$N(u)$} \Comment{Vsem sosedom odstranimo $u$}
+        \State $\Call{odstrani}{beliSosedi(v), u}$ \Comment{iz množice belih sosedov.}
+        \If{$barva(v) = 0 \land \Call{dolzina}{beliSosedi(v)} = 1$}
+        \State $w \gets \Call{odstrani}{beliSosedi(v)}$
+        \If{$povzroci(w) = null$}
+        \State $\Call{dodaj}{Q, w}$
+        \State $povzroci(w) = v$
+        \EndIf
+        \EndIf
+        \EndFor
+        \EndWhile
+        \State \Return \Call{vsiPobarvani}{$G, barva$}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+V algoritmu~\ref{alg:preveri-zf-izboljsan} uporabljamo podatkovno strukturo množica za shranjevanje belih sosedov nekega vozlišča. Ta ima (med drugim tudi) metodi~\textsc{mnozica}, ki iz dane podatkovne strukture naredi množico, in \textsc{odstrani}, ki odstrani dan element iz množice, če pa ni danega nobenega elementa, odstrani naključen element. Če množico implementiramo z zgoščenimi tabelami, je amortizirana časovna zahtevnost odstranjevanja elementa konstantna.
+
+Poglejmo si še podatkovno strukturo vrsta. Ta deluje po principu ``first in, first out'': element, ki ga prvega dodamo v vrsto, bo to prvi tudi zapustil. V učinkovitih implementacijah vrste (npr.~z dvojno povezanim seznamom) imata tako dodajanje kot odstranjevanje iz vrste konstantno časovno zahtevnost.
+
+Sedaj analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} in pokažimo, da smo v primerjavi z algoritmom~\ref{alg:preveri-zf-naiven} res dosegli izboljšavo.
+\begin{trditev}
+    Časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je $O(n+m)$.
+\end{trditev}
+\begin{proof}
+    TODO
+\end{proof}
+
+Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
 
 %\begin{minted}[mathescape,
 %linenos,
