@@ -1435,10 +1435,12 @@ Znana je tudi zgornja meja za ničelno prisilo korone dveh splošnih grafov.
 V tem poglavju bomo problem ničelne prisile preučili skozi stališče računske zahtevnosti: pogledali si bomo algoritem, ki preveri, ali je dana množica za dan graf res množica ničelne prisile, in s tem dokazali, da problem spada v NP. Analizirali bomo trivialen splošni algoritem za izračun ničelne prisile poljubnega grafa, si pogledali njegove potencialne izboljšave in dokazali NP-polnost problema.
 
 \subsection{Preverljivost}
-Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preveriti želimo, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. Psevdokoda je zapisana v algoritmu~\ref{alg:preveri-zf}.
+Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preveriti želimo, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. Psevdokoda je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji. 
+
+Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``barvanje'' $barva$ poišče vse nepobarvane sosede vozlišča $u$. Uporablja podatkovno strukturo seznam, ki ima metodo \textsc{dodaj} za dodajanje elementa na konec seznama z amortizirano konstantno časovno zahtevnostjo. Funkcija \textsc{vsiPobarvani} sprejme graf $G$ in trenutno ``barvanje'' $barva$  ter vrne logično vrednost \texttt{true} ali \texttt{false}, odvisno od tega, ali so vsa vozlišča v grafu pobarvana.
 \begin{algorithm}[!h]
     \caption{Preveri, ali je dana množica množica ničelne prisile za dan graf.}
-    \label{alg:preveri-zf}
+    \label{alg:preveri-zf-naiven}
     \raggedright
     \textbf{Vhod:} Graf $G = (V,E)$, množica $Z \subseteq V(G)$. \\
     \textbf{Izhod:} Logična vrednost \texttt{true} ali \texttt{false}, ki pove, ali je $Z$ množica ničelne prisile za $G$.
@@ -1455,22 +1457,28 @@ Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preve
         \State $sprememba \gets false$
         \ForEach{$u$}{$V$}
         \If{$barva(u) = 0$}
-        \State $kandidat \gets null$ \Comment{Pregledamo, ali ima $u$ natanko enega}
-        \ForEach{$v$}{$N(u)$} \Comment{nepobarvanega soseda.}
-        \If{$kandidat = null$}
-        \State $kandidat \gets v$
-        \Else
-        \State $kandidat \gets null$
-        \Break
-        \EndIf
-        \EndFor
-        \If{$kandidat \neq null$} \Comment{Edini nepobarvan sosed $u$,}
-        \State $barva(kandidat) \gets 0$ \Comment{spremeni barvo.}
+        \State $sosedi \gets \Call{najdiBeleSosede}{G, u, barva}$
+        \If{$\Call{dolzina}{sosedi} =  1$} \Comment{Edini nepobarvan sosed $u$,}
+        \State $barva(sosedi[0]) \gets 0$ \Comment{spremeni barvo.}
         \State $sprememba \gets true$
         \EndIf
         \EndIf
         \EndFor
         \EndWhile
+        \State \Return \Call{vsiPobarvani}{$G, barva$}
+        \EndFunction
+        \vspace{2mm}
+        \Function{najdiBeleSosede}{$G$, $u$, $barva$}
+        \State {$sosedi \gets [\,]$} \Comment{Seznam belih sosedov $u$.}
+        \ForEach{$v$}{$N(u)$}
+        \If{$barva(v) = 1$}
+        \State $\Call{dodaj}{sosedi, v}$
+        \EndIf
+        \EndFor
+        \State \Return $sosedi$
+        \EndFunction
+        \vspace{1mm}
+        \Function{vsiPobarvani}{$G, barva$}
         \ForEach{$u$}{$V$}
         \If{$barva(u) = 1$}
         \Return{$false$} \Comment{Obstaja nepobarvano vozlišče.}
@@ -1481,9 +1489,18 @@ Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Preve
     \end{algorithmic}
 \end{algorithm}
 
-Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf}. Označimo velikosti vhodnih podatkov takole: $n = |V|, m = |E|, z = |Z|$. Vrstice 2--7 imajo skupno časovno zahtevnost $O(n)$, prav tako vrstice 29--33. Osredotočimo se na operacije znotraj \texttt{while} zanke, ki poteka od vrstice~9~do~28. Za vsako vozlišče $v \in V$ preverimo, ali je pobarvano, in če je, pregledamo, ali ima natanko enega belega soseda. Pregled se dogaja v vrsticah 14--21, časovna zahtevnost za trenutno vozlišče $u$ je $O(\deg u)$. Vrstice 22--25 imajo časovno zahtevnost $O(1)$, celotna \texttt{for} zanka (11--27) je torej $O(\sum_{v \in V} \deg v + n) = O(m + n)$ (upoštevamo lemo o rokovanju $\sum_{v \in V} \deg v = 2 |E|$). Preštejmo še, koliko korakov naredi \texttt{while} zanka. V vsakem koraku se zgodi vsaj ena sprememba barve (v nasprotnem primeru se zanka ustavi), na začetku pa je pobarvanih $z$ vozlišč, torej se zgodi največ $n - z$ korakov. Celotna \texttt{while} zanka ima torej časovno zahtevnost $O((n-z) (m+n))$, ker pa je v splošnem $1 \leq z \leq n-1$, dobimo $O(n(m+n))$, kar je tudi skupna časovna zahtevnost algoritma.
+Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-naiven}. Označimo velikosti vhodnih podatkov takole: $n = |V|, m = |E|, z = |Z|$. 
 
-Poglejmo si še prostorsko zahtevnost. Za shranjevanje barve posameznega vozlišča porabimo $O(n)$ dodatnega prostora, za sledenje, ali se je zgodila kakšna sprememba, in ali imamo za trenutno vozlišče kakšnega belega soseda ($kandidat$), pa $O(1)$ prostora. Skupna prostorska zahtevnost je torej $O(n)$.
+Najprej si poglejmo zahtevnost pomožnih funkcij, \textsc{najdiBeleSosede} in \textsc{vsiPobarvani}.
+Časovna zahtevnost prve je $O(\deg u)$, saj pregledamo vse sosede vozlišča $u$, dodajanje na konec seznama pa je (amortizirane) časovne zahtevnosti $O(1)$. Časovna zahtevnost druge pa je $O(n)$, saj v najslabšem primeru (vsa vozlišča so pobarvana) pregledamo vsa vozlišča.
+
+Sedaj se osredotočimo na glavno funkcijo \textsc{preveri}. Vrstice~2--7 imajo skupno časovno zahtevnost $O(n)$, prav tako vrstica~21. Analizirajmo operacije znotraj \texttt{while} zanke, ki poteka od vrstice~9~do~20. Za vsako vozlišče $u \in V$ preverimo, ali je pobarvano, in če je, s pomočjo pomožne funkcije pregledamo, ali ima natanko enega belega soseda. Vrstice~14--17 so konstantne, zato je časovna zahtevnost za trenutno vozlišče $u$ v zanki $O(\deg u)$. Celotna \texttt{for} zanka (11--19) je torej $O(\sum_{u \in V} \deg u + n) = O(m + n)$ (upoštevamo lemo o rokovanju $\sum_{u \in V} \deg u = 2 |E|$). 
+
+Preštejmo še, koliko korakov naredi \texttt{while} zanka. V vsakem koraku se zgodi vsaj ena sprememba barve (v nasprotnem primeru se zanka ustavi), na začetku pa je pobarvanih $z$ vozlišč, torej se zgodi največ $n - z$ korakov. Celotna \texttt{while} zanka ima torej časovno zahtevnost $O((n-z) (m+n))$, ker pa je v splošnem $1 \leq z \leq n-1$, dobimo $O(n(m+n))$, kar je tudi skupna časovna zahtevnost algoritma~\ref{alg:preveri-zf-naiven}.
+
+Poglejmo si še prostorsko zahtevnost. Za shranjevanje barve posameznega vozlišča porabimo $O(n)$ dodatnega prostora, za sledenje, ali se je zgodila kakšna sprememba, $O(1)$ prostora, za lokalno shranjevanje sosedov trenutnega vozlišča v vrstici~13 pa $O(\deg u)$, skupno torej največ $O(m)$. Skupna prostorska zahtevnost je torej $O(n + m)$.
+
+(Za pregled nepobarvanih sosedov bi lahko dosegli tudi konstantno prostorsko zahtevnost: namesto funkcije \textsc{najdiBeleSosede} bi pregledali vse sosede in v spremenljivki hranili, ali smo do sedaj že videli kakšnega nepobarvanega. Če bi našli nepobarvano vozlišče in bi v spremenljivki imeli zapisano že neko drugo, bi prenehali s pregledom, saj smo našli več kot enega belega soseda. Če pa v spremenljivki ne bi bilo še nič shranjeno, bi si tja zapisali trenutno vozlišče. Tako bi dosegli skupno prostorsko zahtevnost $O(n)$.)
 
 Sedaj naredi še malo manj naiven algoritem za preverjanje. Basically nek queue in se stvari širijo ala bfs, pa nek števec za to kok ima še nepobarvanih?
 
