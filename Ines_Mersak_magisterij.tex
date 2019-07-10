@@ -1525,7 +1525,7 @@ Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, č
         \State $povzroci(u) \gets null$
         \EndFor
         \State $Q \gets [\,]$ \Comment{$Q$ postane prazna vrsta.}
-        \ForEach{$u$}{$V$}
+        \ForEach{$u$}{$V$}  \Comment{Predprocesiranje.}
         \State $beliSosedi(u) \gets \textsc{mnozica}(\Call{najdiBeleSosede}{G, u, barva})$
         \If{$barva(u) = 0 \land \Call{dolzina}{beliSosedi(u)} = 1$}
         \State $v \gets \Call{odstrani}{beliSosedi(u)}$ \Comment{$v$ je edini bel sosed $u$.}
@@ -1536,8 +1536,8 @@ Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, č
         \EndIf
         \EndFor
         \While{$Q \neq [\,]$} \Comment{Spremembe se dogajajo, dokler $Q$ ni prazna.}
-        \State $u \gets \Call{odstrani}{Q}$  \Comment{Spremembo barve zabeležimo,}
-        \State $barva(u) \gets 0$  \Comment{ko element vzamemo iz vrste.}
+        \State $u \gets \Call{odstrani}{Q}$  \Comment{Ko element vzamemo iz vrste,}
+        \State $barva(u) \gets 0$  \Comment{zabeležimo spremembo barve.}
         \ForEach{$v$}{$N(u)$} \Comment{Vsem sosedom odstranimo $u$}
         \State $\Call{odstrani}{beliSosedi(v), u}$ \Comment{iz množice belih sosedov.}
         \If{$barva(v) = 0 \land \Call{dolzina}{beliSosedi(v)} = 1$}
@@ -1554,7 +1554,9 @@ Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, č
     \end{algorithmic}
 \end{algorithm}
 
-V algoritmu~\ref{alg:preveri-zf-izboljsan} uporabljamo podatkovno strukturo množica za shranjevanje belih sosedov nekega vozlišča. Ta ima (med drugim tudi) metodi~\textsc{mnozica}, ki iz dane podatkovne strukture naredi množico, in \textsc{odstrani}, ki odstrani dan element iz množice, če pa ni danega nobenega elementa, odstrani naključen element. Če množico implementiramo z zgoščenimi tabelami, je amortizirana časovna zahtevnost odstranjevanja elementa konstantna.
+\hl{TODO: manjši bug v predprocesiranju (14), ko odstranimo element iz belihSosedov, kasneje ga pa še enkrat. Mogoče samo vrni ali nekaj takega?}
+
+V algoritmu~\ref{alg:preveri-zf-izboljsan} uporabljamo podatkovno strukturo množica za shranjevanje belih sosedov nekega vozlišča. Ta ima (med drugim tudi) metodi~\textsc{mnozica}, ki iz dane podatkovne strukture naredi množico, in \textsc{odstrani}, ki odstrani dan element iz množice, če pa ni danega nobenega elementa, odstrani naključen element. Če množico implementiramo z zgoščenimi tabelami, je amortizirana časovna zahtevnost odstran\-jevanja elementa konstantna.
 
 Poglejmo si še podatkovno strukturo vrsta. Ta deluje po principu ``first in, first out'': element, ki ga prvega dodamo v vrsto, bo to prvi tudi zapustil. V učinkovitih implementacijah vrste (npr.~z dvojno povezanim seznamom) imata tako dodajanje kot odstranjevanje iz vrste konstantno časovno zahtevnost.
 
@@ -1563,10 +1565,17 @@ Sedaj analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} in pokaž
     Časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je $O(n+m)$.
 \end{trditev}
 \begin{proof}
-    TODO
+    Vrstice~2--9 imajo skupno časovno zahtevnost $O(n)$, vrstica~10 pa konstantno. Analizirajmo predprocesiranje, ki se dogaja na vrsticah~11--20. Za vsako vozlišče poiščemo vse nepobarvane sosede in jih pretvorimo v množico. Vemo, da ima \textsc{najdiBeleSosede} časovno zahtevnost $O(\deg u)$, pretvorba v množico pa je linearna v številu elementov seznama, ki ga pretvarjamo. Skupna časovna zahtevnost vrstice~12 je torej $O(\deg u)$. V vrsticah~13--19, če je vozlišče~$u$ pobarvano in ima natanko enega belega soseda $v$, preverimo, ali je spremembo barve $v$ povzročilo že katero drugo vozlišče, in če ni, dodamo $v$ v vrsto. Celoten postopek traja konstantno časa, saj je dodajanje v vrsto operacija s konstantno časovno zahtevnostjo.
+    Predprocesiranje ima torej skupno zahtevnost $O(n+m)$, saj za vsako vozlišče~$u$ potrebujemo $O(\deg u + 1)$.
+    
+    Sedaj si poglejmo notranjost \texttt{while} zanke na vrsticah~22--33. Odstranjevanje iz vrste ima konstantno časovno zahtevnost. Nato za vsakega soseda vozlišča $u$ odstranimo $u$ iz njihove množice belih sosedov, časovna zahtevnost odstranjevanja je konstantna, če je kakšnemu sosedu pri tem preostal samo en bel sosed, naredimo isto, kot pri predprocesiranju -- vrstice~26--32 so enake vrsticam~13--19 in torej imajo konstantno časovno zahtevnost. En korak \texttt{while} zanke ima torej za vozlišče $u$ časovno zahtevnost $O(\deg u + 1)$.
+    
+    Zanka ima toliko korakov, kolikor elementov dodamo v vrsto. Ker v vrsto dodajamo še nepobarvana vozlišča (in se ta v vrsti nikoli ne ponovijo, saj s pomočjo $povzroci$ beležimo, ali so že dodana), jih lahko dodamo največ $n-z$, v najslabšem primeru $n-1$, torej kar $O(n)$. Skupna časovna zahtevnost zanke je torej $O(n + m)$, tako kot tudi predprocesiranja, torej je to tudi časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
 \end{proof}
 
-Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
+Debate da nam povzroči vrne tudi forcanja.
+
+Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}. Tradeoff rešitev s counterjem vs z množicami. Implementacija v praksi, verjetno ne bo tako, kot je teoretično.
 
 %\begin{minted}[mathescape,
 %linenos,
