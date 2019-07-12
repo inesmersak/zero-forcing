@@ -667,6 +667,9 @@ Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč 
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
 
+\hl{TODO: Če imamo MNP in dodamo kakšno vozlišče, je to še vedno MNP. Potem se skliči na to pri eksponentnem algoritmu.}
+\hl{TODO: V posebnem je tudi unija dveh MNP MNP. Presek ni, protiprimer cikel.}
+
 Kaj se zgodi z ničelno prisilo grafa, če odstranimo kakšno povezavo in / ali vozlišče? Če za nek graf $G$ poznamo $Z(G)$, za njegov podgraf v splošnem ne moremo povedati, kakšna bo ničelna prisila. V poglavju~\ref{sec:osnovni-rezultati} npr.~dokažemo, da ima cikel $C_n$ ničelno prisilo 2, polni graf $K_n$ pa $n-1$. V tem primeru (gledamo dovolj velike vrednosti $n$) za vpeti podgraf $C_n$ velja $Z(C_n) \leq Z(K_n)$. Če pa vzamemo kolo $W_n$ in vpet podgraf zvezdo $S_n$, pa velja $n-1 = Z(W_n) \geq Z(W_n) = 3$.
 
 % Kaj je z induciranimi podgrafi? Če vzameš samo presek Z_G in V(H), ni nujno v redu, lahko pride prazna množica. Mogoče še naslednjega, ki se forsira? Tole ima pomoje nekaj veze s path coverjem.
@@ -1561,15 +1564,15 @@ Poglejmo si še podatkovno strukturo vrsta. Ta deluje po principu ``first in, fi
 
 Sedaj analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} in pokažimo, da smo v primerjavi z algoritmom~\ref{alg:preveri-zf-naiven} res dosegli izboljšavo.
 \begin{trditev}
-    Časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je $O(n+m)$.
+    Časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je $O(m+n)$.
 \end{trditev}
 \begin{proof}
     Vrstice~2--9 imajo skupno časovno zahtevnost $O(n)$, vrstica~10 pa konstantno. Analizirajmo predprocesiranje, ki se dogaja na vrsticah~11--20. Za vsako vozlišče poiščemo vse nepobarvane sosede in jih pretvorimo v množico. Vemo, da ima \textsc{najdiBeleSosede} časovno zahtevnost $O(\deg u)$, pretvorba v množico pa je linearna v številu elementov seznama, ki ga pretvarjamo. Skupna časovna zahtevnost vrstice~12 je torej $O(\deg u)$. V vrsticah~13--19, če je vozlišče~$u$ pobarvano in ima natanko enega belega soseda $v$, preverimo, ali je spremembo barve $v$ povzročilo že katero drugo vozlišče, in če ni, dodamo $v$ v vrsto. Celoten postopek traja konstantno časa, saj je dodajanje v vrsto operacija s konstantno časovno zahtevnostjo.
-    Predprocesiranje ima torej skupno zahtevnost $O(n+m)$, saj za vsako vozlišče~$u$ potrebujemo $O(\deg u + 1)$.
+    Predprocesiranje ima torej skupno zahtevnost $O(m+n)$, saj za vsako vozlišče~$u$ potrebujemo $O(\deg u + 1)$.
     
     Sedaj si poglejmo notranjost \texttt{while} zanke na vrsticah~22--33. Odstranjevanje iz vrste ima konstantno časovno zahtevnost. Nato za vsakega soseda vozlišča $u$ odstranimo $u$ iz njihove množice belih sosedov, časovna zahtevnost odstranjevanja je konstantna, če je kakšnemu sosedu pri tem preostal samo en bel sosed, naredimo isto, kot pri predprocesiranju -- vrstice~26--32 so enake vrsticam~13--19 in torej imajo konstantno časovno zahtevnost. En korak \texttt{while} zanke ima torej za vozlišče $u$ časovno zahtevnost $O(\deg u + 1)$.
     
-    Zanka ima toliko korakov, kolikor elementov dodamo v vrsto. Ker v vrsto dodajamo še nepobarvana vozlišča (in se ta v vrsti nikoli ne ponovijo, saj s pomočjo $povzroci$ beležimo, ali so že dodana), jih lahko dodamo največ $n-z$, v najslabšem primeru $n-1$, torej kar $O(n)$. Skupna časovna zahtevnost zanke je torej $O(n + m)$, tako kot tudi predprocesiranja, torej je to tudi časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
+    Zanka ima toliko korakov, kolikor elementov dodamo v vrsto. Ker v vrsto dodajamo še nepobarvana vozlišča (in se ta v vrsti nikoli ne ponovijo, saj s pomočjo $povzroci$ beležimo, ali so že dodana), jih lahko dodamo največ $n-z$, v najslabšem primeru $n-1$, torej kar $O(n)$. Skupna časovna zahtevnost zanke je torej $O(m+n)$, tako kot tudi predprocesiranja, torej je to tudi časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
 \end{proof}
 
 Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}. Shranjevanje barv porabi $O(n)$ prostora, prav tako podatek, kdo povzroči spremembo barve v vozliščih, zapisan v $povzroci$. (Lahko bi si tudi samo zapisali, ali je vozlišče že dodano v vrsto, vendar s spremenljivko $povzroci$ dobimo še dodaten podatek; z majhno modifikacijo lahko algoritem vrne zaporedje sprememb barve vozlišč in kdo jih je povzročil, pri tem pa ostane red prostorske zahtevnosti enak.) Za shranjevanje belih sosedov nekega vozlišča $u$ porabimo $O(\deg u)$, skupaj torej $O(m+n)$ prostora. Ostane še vrsta, v katero vemo, da dodamo največ $O(n)$ vozlišč, torej potrebujemo toliko tudi prostora. Skupna prostorska zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je torej $O(m+n)$.
@@ -1613,6 +1616,9 @@ Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če im
     \end{algorithmic}
 \end{algorithm}
 
+Analizirajmo zahtevnost algoritma~\ref{alg:eksponentni-izracun-zf}. Za vsak element potenčne množice~$V$ pokličemo \textsc{preveriIzboljsan}, ki ima časovno zahtevnost $O(m+n)$. Vseh elementov je $2^n$, skupna časovna zahtevnost algoritma je torej $O(2^n(m+n))$. Prostorska zahtevnost algoritma pa je $O(m+n)$, saj je to prostorska zahtevnost funkcije  \textsc{preveriIzboljsan}, ki edina porabi nekaj dodatnega prostora (ki ga po izhodu iz funkcije tudi sprosti), preostanek algoritma pa porabi konstantno prostora.
+
+Razmislimo, ali lahko algoritem~\ref{alg:eksponentni-izracun-zf} kako izboljšamo. Hitro opazimo, da nam pravzaprav ni treba pregledati čisto vseh podmnožic. (Komentar: ni čisto isto, a gremo od dol ali od gor, od gor lahko takoj breakamo, če kakšno najdemo. Also, lahko pa samo podmnožice neke veljavne MNP pregledujemo.)
 
 Lahko izboljšamo z bisekcijo?
 
