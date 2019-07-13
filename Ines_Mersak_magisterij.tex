@@ -686,6 +686,7 @@ Iz trditve~\ref{trd:nadmnozica-zfs-je-zfs} vidimo, da za dve množici ničelne p
 
 Velja pa tudi naslednja posledica trditve~\ref{trd:nadmnozica-zfs-je-zfs}:
 \begin{posledica}
+    \label{posl:ne-obstaja-manjsi-zfs}
     Če za graf $G$ ne obstaja množica ničelne prisile velikosti $z_1$, kjer $1 < z_1 < n-1$, potem tudi ne obstaja množica ničelne prisile velikosti $z_2 < z_1$.
 \end{posledica}
 \begin{proof}
@@ -1638,17 +1639,27 @@ Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če im
     \end{algorithmic}
 \end{algorithm}
 
-Analizirajmo zahtevnost algoritma~\ref{alg:eksponentni-izracun-zf}. Za vsak element potenčne množice~$V$ pokličemo \textsc{preveriIzboljsan}, ki ima časovno zahtevnost $O(m+n)$. Vseh elementov je $2^n$, skupna časovna zahtevnost algoritma je torej $O(2^n(m+n))$. Prostorska zahtevnost algoritma pa je $O(m+n)$, saj je to prostorska zahtevnost funkcije  \textsc{preveriIzboljsan}, ki edina porabi nekaj dodatnega prostora (ki ga po izhodu iz funkcije tudi sprosti), preostanek algoritma pa porabi konstantno prostora.
+Analizirajmo zahtevnost algoritma~\ref{alg:eksponentni-izracun-zf}. Za vsak element potenčne množice~$V$ pokličemo \textsc{preveriIzboljsan}, ki ima časovno zahtevnost $O(m+n)$. Vseh elementov je $2^n$, skupna časovna zahtevnost algoritma je torej $O(2^n(m+n))$. (Časovna zahtevnost bila še slabša, če bi uporabili osnovni algoritem za preverjanje.)
+Prostorska zahtevnost algoritma pa je $O(m+n)$, saj je to prostorska zahtevnost funkcije  \textsc{preveriIzboljsan}, ki edina porabi nekaj dodatnega prostora (ki ga po izhodu iz funkcije tudi sprosti), preostanek algoritma pa porabi konstantno prostora.
 
-Razmislimo, ali lahko algoritem~\ref{alg:eksponentni-izracun-zf} kako izboljšamo. Hitro opazimo, da nam pravzaprav ni treba pregledati čisto vseh podmnožic. (Komentar: ni čisto isto, a gremo od dol ali od gor, od gor lahko takoj breakamo, če kakšno najdemo. Also, lahko pa samo podmnožice neke veljavne MNP pregledujemo.)
+Razmislimo, ali lahko algoritem~\ref{alg:eksponentni-izracun-zf} kako izboljšamo. Hitro opazimo, da nam pravzaprav ni treba pregledati čisto vseh podmnožic. Če jih uredimo naraščajoče po velikosti, potem lahko s pregledovanjem končamo, čim najdemo eno, ki je množica ničelne prisile (ker vemo, da so vse kasnejše podmnožice, ki jih še nismo pregledali, kvečjemu večje ali enake po velikosti). Podobno, lahko jih uredimo padajoče, in s pregledovanjem končamo, čim za neko velikost ne najdemo več množice ničelne prisile. (Da potem ne obstaja kakšna manjša množica ničelne prisile, vemo zaradi posledice~\ref{posl:ne-obstaja-manjsi-zfs}.)
 
-Lahko izboljšamo z bisekcijo?
+Za oba vrstna reda obstajajo primeri, kjer moramo v najslabšem primeru še vedno pregledati vse možnosti. Prav tako sta pristopa ekvivalentna v splošnem primeru, kjer ne vemo nič o številu ničelne prisile: za grafe z majhnim številom bo sicer bolje deloval naraščajoči vrstni red, za grafe z velikim številom padajoči, gledano skupno (čez vse grafe) pa bo število operacij zaradi simetrije enako, saj je število podmnožic velikosti $i$ enako številu podmnožic velikosti $n-i$, $\binom{n}{i} = \binom{n}{n-i}$.
 
-Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
+Vendar pa lahko število pregledanih možnosti v primeru padajočega vrstnega reda še malo izboljšamo. Čim za velikost $i$ najdemo neko množico ničelne prisile, vemo $Z(G) \leq i$, zato lahko začnemo pregledovati množice velikosti $i-1$. V najslabšem primeru moramo sicer še vedno pregledati vse podmnožice neke velikosti, preden lahko nadaljujemo z manjšimi.
+
+Še ena ideja za izboljšavo temelji na trditvi~\ref{trd:nadmnozica-zfs-je-zfs}, ki pravi, da lahko neki množici ničelne prisile dodamo nekaj vozlišč, pa bo še vedno množica ničelne prisile. Začnemo s padajočim vrstnim redom in poiščemo vse množice ničelne prisile velikosti $n-2$, označimo jih z $\mathcal{Z}_{n-2}$. (Vemo, da so vse podmnožice velikosti $n-1$ množice ničelne prisile, zato začnemo kar z $n-2$.) Nato preiščemo samo tiste velikosti $n-3$, ki so podmnožice katere izmed množic v $\mathcal{Z}_{n-2}$. Nadaljujemo, dokler še najdemo kakšno množico ničelne prisile.
+Tako res ne izpustimo nobene množice ničelne prisile, kar nam zagotovi kontrapozicija posledice~\ref{posl:ne-obstaja-manjsi-zfs}: če obstaja neka množica ničelne prisile velikosti $z_2$, obstaja tudi množica ničelne prisile velikosti $z_1$ za vsak $z_2 \leq z_1 \leq n-1$.
+V primerjavi s prejšnjim pristopom porabimo nekaj več prostora, ker moramo shraniti množice ničelne prisile, poleg tega ne moremo prekiniti z iskanjem, čim najdemo neko množico ničelne prisile trenutne velikosti, nam pa možnosti zato zožijo množice ničelne prisile prejšnje velikosti.
+
+Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo). Vemo, da vedno obstaja množica ničelne prisile velikosti $n-1$. Preverimo vse množice velikosti~1. Če je katera od njih množica ničelne prisile, smo končali, saj vemo, da je $Z(G) = 1$. V nasprotnem primeru pogledamo množice velikosti~$\lfloor \frac{n}{2} \rfloor$; če najdemo kakšno množico ničelne prisile, postopek iskanja ponovimo na intervalu~$[1,\lfloor \frac{n}{2} \rfloor]$, v nasprotnem primeru pa na intervalu~$[\lfloor \frac{n}{2} \rfloor + 1, n-1]$. \hl{TODO: Časovna zahtevnost še vedno eksponentna.}
+
+\hl{TODO: implementacija + primerjava vseh petih.}
 
 \subsection{NP-polnost}
 \subsection{Dinamično programiranje?}
 \subsection{Aproksimacijski algoritmi?}
+Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
 
 % Literatura:
