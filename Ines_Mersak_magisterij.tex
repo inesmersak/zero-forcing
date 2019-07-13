@@ -667,10 +667,32 @@ Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč 
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
 
-\hl{TODO: Če imamo MNP in dodamo kakšno vozlišče, je to še vedno MNP. Potem se skliči na to pri eksponentnem algoritmu.}
-\hl{TODO: V posebnem je tudi unija dveh MNP MNP. Presek ni, protiprimer cikel.}
+Če imamo dano množico ničelne prisile $Z$ za nek graf $G$ in v $Z$ dodamo še kakšno vozlišče, se izkaže, da je to še vedno množica ničelne prisile grafa $G$.
+\begin{trditev}
+    \label{trd:nadmnozica-zfs-je-zfs}
+    Za graf $G$ je dana množica ničelne prisile $Z_1$. Potem za $Z_2 \subseteq V$ velja:
+    \[ Z_1 \subseteq Z_2 \implies Z_2 \text{ je množica ničelne prisile} \]
+\end{trditev}
+\begin{proof}
+    Imejmo množico ničelne prisile $Z_1$ in tako podmnožico $Z_2$ vozlišč $G$, da velja $Z_1 \subseteq Z_2$. Naj bo $z_1 = |Z_1|$ in $z_2 = |Z_2|$. Označimo zaporedje sprememb barv vozlišč, če so na začetku pobarvana vozlišča iz $Z_1$, takole: $u_1 \rightarrow v_1, u_2 \rightarrow v_2 \ldots$, pri čemer $u_i \rightarrow v_i$ pomeni, da je $u_i$ povzročil spremembo barve vozlišča $v_i$, in $i$ teče od 1 do $n - z_1$, saj je $Z_1$ množica ničelne prisile in mora biti na koncu pobarvan cel graf. Očitno je, da so vozlišča v zaporedju, ki spremenijo barvo, enolična, torej $v_i \neq v_j$ za $i \neq j$. Če sedaj na začetku pobarvamo vozlišča iz $Z_2$ in gremo po zaporedju sprememb barv za $Z_1$, imamo za spremembo $u_i \rightarrow v_i$ dve možnosti:
+    \begin{itemize}
+        \item $v_i$ še ni pobarvan in je edini bel sosed $u_i$ (na začetku smo dodali več črnih vozlišč, torej se je število belih sosedov vozlišč kvečjemu zmanjšalo, ne povečalo), v tem primeru se zgodi sprememba barve kot originalno;
+        \item $v_i$ je že pobarvan, kar se lahko zgodi le, če $v_i \in Z_2 \setminus Z_1$, saj smo sledili spremembam barve za $Z_1$, kjer se $v_i$ pojavi samo enkrat; sprememba barve se ne zgodi.
+    \end{itemize}
+Druga možnost se zgodi natanko $z_2 - z_1$-krat, toliko sprememb torej ``zavržemo'', ostale pa se zgodijo kot originalno. Teh je torej $n - z_1 -(z_2 - z_1) = n - z_2$, na začetku smo pobarvali $z_2$ vozlišč, torej je zdaj skupaj pobarvanih $z_2 + n - z_2 = n$ vozlišč, $Z_2$ je torej množica ničelne prisile.
+\end{proof}
 
-Kaj se zgodi z ničelno prisilo grafa, če odstranimo kakšno povezavo in / ali vozlišče? Če za nek graf $G$ poznamo $Z(G)$, za njegov podgraf v splošnem ne moremo povedati, kakšna bo ničelna prisila. V poglavju~\ref{sec:osnovni-rezultati} npr.~dokažemo, da ima cikel $C_n$ ničelno prisilo 2, polni graf $K_n$ pa $n-1$. V tem primeru (gledamo dovolj velike vrednosti $n$) za vpeti podgraf $C_n$ velja $Z(C_n) \leq Z(K_n)$. Če pa vzamemo kolo $W_n$ in vpet podgraf zvezdo $S_n$, pa velja $n-1 = Z(W_n) \geq Z(W_n) = 3$.
+Iz trditve~\ref{trd:nadmnozica-zfs-je-zfs} vidimo, da za dve množici ničelne prisile $Z_1, Z_2$ grafa $G$ velja, da je njuna unija $Z_1 \cup Z_2$ tudi množica ničelne prisile za $G$. To pa ne velja za presek: če vzamemo graf $K_2$, z vozliščema 1 in 2, sta $Z_1 = \{1\}$ in $Z_2 = \{2\}$ množici ničelne prisile, njun presek, prazna množica, pa očitno ni množica ničelne prisile za $K_2$.
+
+Velja pa tudi naslednja posledica trditve~\ref{trd:nadmnozica-zfs-je-zfs}:
+\begin{posledica}
+    Če za graf $G$ ne obstaja množica ničelne prisile velikosti $z_1$, kjer $1 < z_1 < n-1$, potem tudi ne obstaja množica ničelne prisile velikosti $z_2 < z_1$.
+\end{posledica}
+\begin{proof}
+    Fiksirajmo $z_1$ in $z_2 \leq z_1$. Dokažimo, da če ne velja desna stran implikacije, tudi leva ne velja. Naj torej obstaja množica ničelne prisile velikosti $z_2$. Po trditvi~\ref{trd:nadmnozica-zfs-je-zfs} ji lahko dodajamo vozlišča grafa $G$, dokler ne bo velikosti $z_1$, pa bo še vedno množica ničelne prisile. Sledi torej, da obstaja množica ničelne prisile velikosti $z_1$ in dokaz je končan. 
+\end{proof}
+
+Kaj se zgodi z ničelno prisilo grafa, če odstranimo kakšno povezavo in / ali vozlišče? Če za nek graf $G$ poznamo $Z(G)$, za njegov podgraf v splošnem ne moremo povedati, kakšna bo ničelna prisila. V poglavju~\ref{sec:osnovni-rezultati} npr.~dokažemo, da ima cikel $C_n$ ničelno prisilo 2, polni graf $K_n$ pa $n-1$. V tem primeru (gledamo dovolj velike vrednosti $n$) za vpeti podgraf $C_n$ velja $Z(C_n) \leq Z(K_n)$. Če pa vzamemo kolo $W_n$ in vpet podgraf zvezdo $S_n$, pa velja $n-1 = Z(S_n) \geq Z(W_n) = 3$.
 
 % Kaj je z induciranimi podgrafi? Če vzameš samo presek Z_G in V(H), ni nujno v redu, lahko pride prazna množica. Mogoče še naslednjega, ki se forsira? Tole ima pomoje nekaj veze s path coverjem.
 
