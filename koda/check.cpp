@@ -1,6 +1,10 @@
-#include<assert.h>
-#include<iostream>
-#include<vector>
+#include <assert.h>
+#include <chrono>
+#include <iostream>
+#include <queue>
+#include <thread>
+#include <unordered_set>
+#include <vector>
 #include "Graph.hpp"
 #include "utils.hpp"
 
@@ -31,13 +35,56 @@ bool check_zero_forcing_set_naive(const Graph& graph, const vector<int>& zfs) {
     return all_vertices_coloured(colouring);
 }
 
+bool check_zero_forcing_set_queue_set(const Graph& graph, const vector<int>& zfs) {
+    vector<int> colouring(graph.vertices_num(), 1);
+    vector<int> forces(graph.vertices_num(), -2);  // -2 means the vertex hasn't been forced yet
+    for (int u : zfs) {
+        assert(u >= 0  && "zero-forcing set should contain vertex labels greater or equal to 0");
+        assert(u < graph.vertices_num() && "zero-forcing set should contain vertex labels smaller than graph size");
+        colouring[u] = 0;  // 0 means the vertex is coloured / black
+        forces[u] = -1;  // u is in starting set
+    }
+
+    queue<int> q;
+    vector<unordered_set<int>> white_neighbours;
+    // Preprocessing
+    for (int u=0; u < graph.vertices_num(); ++u) {
+        auto neighbours = find_white_neighbours(graph, u, colouring);
+        white_neighbours.emplace_back(neighbours.begin(), neighbours.end());
+        if (colouring[u] == 0 && white_neighbours[u].size() == 1) {
+            int v = pop(white_neighbours[u]);
+            if (forces[v] == -2) {
+                q.push(v);
+                forces[v] = u;
+            }
+        }
+    }
+
+    while (q.size() > 0) {
+        int u = q.front();
+        q.pop();
+        colouring[u] = 0;
+        for (int v : graph.adjacency_lists[u]) {
+            white_neighbours[v].erase(u);
+            if (colouring[v] == 0 && white_neighbours[v].size() == 1) {
+                int w = pop(white_neighbours[v]);
+                if (forces[w] == -2) {
+                    q.push(w);
+                    forces[w] = v;
+                }
+            }
+        }
+    }
+
+    return all_vertices_coloured(colouring);
+}
+
 int main () {
-    Graph K5 = Graph::complete_graph(5);
+    Graph K5 = timeit(Graph::complete_graph, 5e3);
     Graph C4 = Graph::cycle(4);
     Graph P6 = Graph::path(6);
 
-    cout << K5 << C4 << P6; 
-    cout << check_zero_forcing_set_naive(K5, vector<int> {1,2,3,4});
+    bool r = timeit(check_zero_forcing_set_naive, K5, vector<int> {1,2,3,4});
 
     return 0;
 }
