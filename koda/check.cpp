@@ -8,9 +8,6 @@
 #include "Graph.hpp"
 #include "utils.hpp"
 
-#define prn(x) { std::cerr << #x << " = " << (x) << std::endl; }
-
-
 bool check_zero_forcing_set_naive(const Graph& graph, const vector<int>& zfs) {
     vector<int> colouring(graph.vertices_num(), 1);
     for (int u : zfs) {
@@ -80,11 +77,28 @@ bool check_zero_forcing_set_queue_set(const Graph& graph, const vector<int>& zfs
 }
 
 int main () {
-    Graph K5 = timeit(Graph::complete_graph, 5e3);
+/*     Graph K5 = Graph::complete_graph(24);
     Graph C4 = Graph::cycle(4);
     Graph P6 = Graph::path(6);
 
-    bool r = timeit(check_zero_forcing_set_naive, K5, vector<int> {1,2,3,4});
+    bool r = timeit(check_zero_forcing_set_naive, K5, vector<int> {1,2,3,4}); */
+
+    double p = 0.6;
+    vector<int> Ns = {10, 22, 46, 100, 215, 464, 1000, 2154, 4642, 10000};
+    vector<Graph> graphs;
+    vector<vector<int>> zfs;
+    for (int N : Ns) {
+        graphs.push_back(Graph::random_erdos_renyi(N, p));
+        zfs.push_back(generate_random_zfs(N));
+    }
+
+    for (int i=0; i < Ns.size(); ++i) {
+        cout << "---------------------\n";
+        cout << "Graph size: " << Ns[i];
+        /* cout << graphs[i]; */
+        timeit(check_zero_forcing_set_naive, graphs[i], zfs[i]);
+        timeit(check_zero_forcing_set_queue_set, graphs[i], zfs[i]);
+    }
 
     return 0;
 }

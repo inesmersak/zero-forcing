@@ -23,6 +23,7 @@ public:
     static Graph complete_graph(int N);
     static Graph cycle(int N);
     static Graph path(int N);
+    static Graph random_erdos_renyi(int N, double p);
 
     vector<vector<int>> adjacency_lists;
     int vertices_num() const { return N; }

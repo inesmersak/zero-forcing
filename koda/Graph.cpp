@@ -1,4 +1,7 @@
-#include<algorithm>
+#include <algorithm>
+#include <assert.h>
+#include <chrono>
+#include <random>
 #include "Graph.hpp"
 
 
@@ -50,5 +53,21 @@ Graph Graph::path(int N) {
     for (int i=0; i < N-1; ++i) {
         edges.emplace_back(i, i+1);
     }
+    return Graph(N, edges);
+}
+
+Graph Graph::random_erdos_renyi(int N, double p) {
+    assert(p > 0 && "p should be greater than zero");
+    assert(p < 1 && "p should be smaller than one");
+    vector<Edge> edges;
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    mt19937 gen(seed);
+    uniform_real_distribution<double> dist(0.0, 1.0);
+    for (int i=0; i < N; ++i) {
+        for (int j=i+1; j < N; ++j) {
+            if (dist(gen) <= p) edges.emplace_back(i, j);
+        }
+    }
+
     return Graph(N, edges);
 }
