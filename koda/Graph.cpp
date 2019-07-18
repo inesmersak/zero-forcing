@@ -16,14 +16,15 @@ Graph::Graph(int p_N, const vector<Edge>& edges) : N(p_N) {
 }
 
 ostream& operator<<(ostream& out, const Graph& graph) {
-    cout << "Graph (N=" << graph.N << ", M=" << graph.M << "): \n";
+    out << "Graph (N=" << graph.N << ", M=" << graph.M << "): \n";
     for (size_t i = 0; i < graph.adjacency_lists.size(); ++i) {
-        cout << i << " <--> ";
+        out << i << " <--> ";
         for (int n: graph.adjacency_lists[i]) {
-            cout << n << " ";
+            out << n << " ";
         }
-        cout << "\n";
+        out << "\n";
     }
+    return out;
 }
 
 Graph Graph::complete_graph(int N) {
