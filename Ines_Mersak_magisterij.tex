@@ -89,6 +89,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \usetikzlibrary{math}
 \usepackage{mathtools}
 \usepackage{soulutf8}
+\usepackage{booktabs}
 
 \setlength{\overfullrule}{50pt} % označi predlogo vrstico
 \pagestyle{plain}               % samo številka strani na dnu, nobene glave / noge
@@ -591,8 +592,38 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
 \end{figure}
 
 \subsection{Algoritmi na grafih in računska zahtevnost}
-O načinu predstavitve grafov v računalnikih, P in NP množici problemov, NP polnosti in NP težkosti.
-Nekaj o tem, da so vozlišča ponavadi tudi kar indeksi, zato se bolj kot ne vse dela z arrayi ali seznami.
+Ker si bomo v delu pogledali tudi nekaj algoritmov, ki imajo za vhodni podatek graf, si na kratko oglejmo načine predstavitve grafov v računalnikih in zahtevnosti operacij pri različnih predstavitvah. 
+
+Predpostavljali bomo, da so oznake vozlišč grafa $G$ velikosti $n$ kar cela števila od 0 do $n-1$ (v večini programskih jezikov indeks v seznamih in podobnih podatkovnih strukturah teče od 0 naprej). Zaradi takih oznak pri delu z grafi lahko uporabljamo eno bolj preprostih podatkovnih struktur, seznam, saj si podatek o $i$-tem vozlišču (npr.~barvo) shranimo pod indeks~$i$. Če so oznake kaj drugega in jih bomo kasneje potrebovali, jih lahko preslikamo v števila od 0 do $n-1$ in si v seznam na $i$-to mesto shranimo prejšnjo oznako vozlišča. 
+
+Prvi način predstavitve je matrika sosednosti. Ta vsebuje ničle na tistih indeksih $(i,j)$,za katere velja, da vozlišči $i$ in $j$ nista sosednji, in enke za tista vozlišča, ki so sosednja. Na diagonali so torej vedno ničle, saj graf ne vsebuje zank, v primeru neusmerjenega grafa pa je matrika še simetrična. Predstavimo jo s seznamom seznamov, $i$-ti element zunanjega seznama je $i$-ta vrstica matrike, torej porabimo $O(n^2)$ prostora. Kakšna je zahtevnost pogostih operacij nad grafom? Da ugotovimo, ali sta vozlišči $i$ in $j$ sosednji, porabimo $O(1)$, saj moramo le preveriti, ali je element v $i$-ti vrstici na $j$-tem indeksu ena, in je dostop do elementa seznama prek indeksa časovne zahtevnosti $O(1)$. Enako časovno zahtevnost ima iz istega razloga tudi dodajanje ali odstranjevanje povezave. Če želimo poiskati vse sosede vozlišča $i$, porabimo $O(n)$, saj moramo preveriti celotno $i$-to vrstico. Če želimo dodati ali odstraniti vozlišče, potrebujemo $O(2n)$ operacij (gremo čez en stolpec in eno vrstico), pri čemer pri odstranjevanju v večini primerih porabimo še več, saj brisanje elementa iz seznama v najslabšem primeru traja $O(n)$, medtem ko je dodajanje na konec seznama amortizirano $O(1)$.
+
+Graf lahko predstavimo tudi s seznamom sosedov: za vsako vozlišče naštejemo njegove sosede. V tem primeru prav tako uporabimo seznam seznamov, pri čemer se na indeksu~$i$ zunanjega seznama nahaja seznam sosedov vozlišča $i$. Pri tem porabimo $O(n+m)$ prostora, kjer je $m = |E|$ število povezav grafa. Če nas zanima, ali sta vozlišči $i$ in $j$ sosednji, moramo pregledati celoten seznam sosedov vozlišča~$i$, torej je časovna zahtevnost enaka $O(\deg i)$. Če je seznam urejen, lahko uporabimo binarno iskanje, ki ima logaritmično časovno zahtevnost, torej $O(\log \deg i)$. Odstranjevanje povezave med vozliščema $i$ in $j$ traja $O(2 \deg i + 2 \deg j)$, saj moramo v seznamu sosedov obeh poiskati in odstraniti drugo vozlišče, pri iskanju moramo v najslabšem primeru preiskati cel seznam sosedov, pri odstranjevanju pa ga prekopirati eno v levo. V najslabšem primeru traja celotna operacija $O(4n)$ (če je seznam sosedov urejen, pa $O(2\log n + 2n)$). Dodajanje povezave $ij$ traja $O(1)$, če nam vrstni red seznama sosedov ni pomemben. Če pa nam je vrstni red pomemben, lahko na seznamu sosedov $i$ in $j$ uporabimo binarno iskanje, da najdemo pravo mesto. V tem primeru porabimo $O(\log \deg i + \deg i)$ za eno vozlišče, saj ima dodajanje v seznam dolžine $p$ časovno zahtevnost $O(p)$, v najslabšem primeru skupaj torej $O(2 \log n + 2 n)$. Da najdemo vse sosede nekega vozlišča, moramo le pogledati na $i$-to mesto zunanjega seznama, torej ima operacija konstantno časovno zahtevnost. Če želimo dodati vozlišče, moramo dodati seznam z njegovimi sosedi na konec zunanjega seznama in njegovo oznako na konec nekaterih seznamov sosedov, kar traja $O(n)$. Za odstranjevanje vozlišča pa moramo odstraniti njegov seznam sosedov in vozlišče odstraniti iz vseh ostalih seznamov sosedov. Za prvo porabimo $O(n)$, za drugo pa $O(n^2)$, skupna časovna zahtevnost je torej $O(n^2)$.
+
+Seznam sosedov lahko implementiramo tudi kot seznam množic. Če so te implementirane z zgoščenimi tabelami, to pomeni, da imajo preverjanje, ali je element v množici, dodajanje in odstranjevanje v povprečju konstantno časovno zahtevnost. Ali sta vozlišči sosednji, lahko zato ugotovimo v konstantnem času, prav toliko porabimo tudi za odstranjevanje povezave in dodajanje povezave. Dodajanje vozlišča je še vedno $O(n)$, odstranjevanje pa prav tako postane $O(n)$. 
+
+Primerjava vseh treh predstavitev je predstavljena v tabeli~\ref{tab:primerjava-predstavitev}.
+TODO diskusija o tem, katero kdaj izbrati. 
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        & matrika sosednosti & seznam sosedov (s) & seznam sosedov (m) \\ \midrule
+        prostor & $O(n^2)$ & $O(n + m)$ & $O(n + m)$ \\
+        $i \sim j$ & $O(1)$ & $O(n)$ & $O(1)$ \\
+        dodaj $e = ij$ & $O(1)$ & $O(1)$ & $O(1)$ \\
+        odstrani $e = ij$ & $O(1)$ & $O(n)$ & $O(1)$ \\
+        vsi sosedi $i$ & $O(n)$ & $O(1)$ & $O(1)$\\
+        dodaj $i$ & $O(2n)$ & $O(n)$ & $O(n)$ \\
+        odstrani $i$ & $O(n^2)$ & $O(n^2)$ & $O(n)$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{TODO}
+    \label{tab:primerjava-predstavitev}
+\end{table}
+
+O P in NP množici problemov, NP polnosti in NP težkosti.
 
 \subsection{Ničelna prisila}
 
@@ -1581,7 +1612,7 @@ Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, č
     \end{algorithmic}
 \end{algorithm}
 
-V algoritmu~\ref{alg:preveri-zf-izboljsan} uporabljamo podatkovno strukturo množica za shranjevanje belih sosedov nekega vozlišča. Uporabimo metodi~\textsc{mnozica}, ki iz dane podatkovne strukture naredi množico, in \textsc{odstrani}, ki odstrani dan element iz množice, če pa ni danega nobenega elementa, odstrani in vrne naključen element; če danega elementa ni v množici oziroma je množica prazna, pa ne odstrani ničesar. Če množico implementiramo z zgoščenimi tabelami, je amortizirana časovna zahtevnost odstran\-jevanja elementa konstantna.
+V algoritmu~\ref{alg:preveri-zf-izboljsan} uporabljamo podatkovno strukturo množica za shranjevanje belih sosedov nekega vozlišča. Uporabimo metodi~\textsc{mnozica}, ki iz dane podatkovne strukture naredi množico, in \textsc{odstrani}, ki odstrani dan element iz množice, če pa ni danega nobenega elementa, odstrani in vrne naključen element; če danega elementa ni v množici oziroma je množica prazna, pa ne odstrani ničesar. Če množico implementiramo z zgoščenimi tabelami, je v povprečju časovna zahtevnost odstran\-jevanja elementa konstantna.
 
 Poglejmo si še podatkovno strukturo vrsta. Ta deluje po principu ``first in, first out'': element, ki ga prvega dodamo v vrsto, bo to prvi tudi zapustil. V učinkovitih implementacijah vrste (npr.~z dvojno povezanim seznamom) imata tako dodajanje kot odstranjevanje iz vrste konstantno časovno zahtevnost.
 
