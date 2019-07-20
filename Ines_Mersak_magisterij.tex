@@ -591,7 +591,7 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
     \label{fig:korona-poti-cikla}
 \end{figure}
 
-\subsection{Algoritmi na grafih in računska zahtevnost}
+\subsection{Predstavitve grafov in računska zahtevnost}
 Ker si bomo v delu pogledali tudi nekaj algoritmov, ki imajo za vhodni podatek graf, si na kratko oglejmo načine predstavitve grafov v računalnikih in zahtevnosti operacij pri različnih predstavitvah. 
 
 Predpostavljali bomo, da so oznake vozlišč grafa $G$ velikosti $n$ kar cela števila od 0 do $n-1$ (v večini programskih jezikov indeks v seznamih in podobnih podatkovnih strukturah teče od 0 naprej). Zaradi takih oznak pri delu z grafi lahko uporabljamo eno bolj preprostih podatkovnih struktur, seznam, saj si podatek o $i$-tem vozlišču (npr.~barvo) shranimo pod indeks~$i$. Če so oznake kaj drugega in jih bomo kasneje potrebovali, jih lahko preslikamo v števila od 0 do $n-1$ in si v seznam na $i$-to mesto shranimo prejšnjo oznako vozlišča. 
@@ -602,8 +602,8 @@ Graf lahko predstavimo tudi s seznamom sosedov: za vsako vozlišče naštejemo n
 
 Seznam sosedov lahko implementiramo tudi kot seznam množic. Če so te implementirane z zgoščenimi tabelami, to pomeni, da imajo preverjanje, ali je element v množici, dodajanje in odstranjevanje v povprečju konstantno časovno zahtevnost. Ali sta vozlišči sosednji, lahko zato ugotovimo v konstantnem času, prav toliko porabimo tudi za odstranjevanje povezave in dodajanje povezave. Dodajanje vozlišča je še vedno $O(n)$, odstranjevanje pa prav tako postane $O(n)$. 
 
-Primerjava vseh treh predstavitev je predstavljena v tabeli~\ref{tab:primerjava-predstavitev}.
-TODO diskusija o tem, katero kdaj izbrati. 
+Vse tri predstavitve lahko primerjamo v tabeli~\ref{tab:primerjava-predstavitev}.
+Na prvi pogled se zdi, da bi bilo vedno najbolj optimalno izbrati seznam sosedov, implementiran z množicami. Vendar pa je treba upoštevati, da dodajanje, iskanje in odstranjevanje iz množice v povprečju sicer je konstantne časovne zahtevnosti, je pa ta konstanta večja kot npr.~pri dodajanju na konec seznama. Tako je predstavitev najbolj smiselno izbrati glede na to, katere operacije bomo potrebovali in koliko prostora imamo na voljo oziroma kako velike grafe želimo obravnavati. 
 
 \begin{table}[h]
     \centering
@@ -619,7 +619,7 @@ TODO diskusija o tem, katero kdaj izbrati.
         odstrani $i$ & $O(n^2)$ & $O(n^2)$ & $O(n)$ \\
         \bottomrule
     \end{tabular}
-    \caption{TODO}
+    \caption{Prikazana je primerjava časovnih zahtevnosti nekaterih pogostih operacij na grafih med tremi predstavitvami: matrika sosednosti (2.~stolpec), seznam sosedov, implementiran s seznamom (3.~stolpec) in seznam sosedov, implementiran z množico (4.~stolpec).}
     \label{tab:primerjava-predstavitev}
 \end{table}
 
