@@ -120,6 +120,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \renewcommand{\P}{\ensuremath{\mathsf{P}}}
 \newcommand{\NP}{\ensuremath{\mathsf{NP}}}
 \newcommand{\NPC}{\ensuremath{\mathsf{NPC}}}
+\newcommand{\ZFOdl}{\textsf{ZF-Odl}}
 
 \DeclareMathOperator{\boxempty}{\Box}
 
@@ -671,6 +672,8 @@ $\NP$-polnost problema pa lahko dokažemo tudi tako, da ga zožimo na nek podpro
 Ti dve tehniki bomo uporabili v podpoglavju~\ref{subsec:np-polnost}.
 
 Do zdaj smo govorili samo o težavnosti odločitvenih problemov, kaj pa, če imamo nek splošen računski problem? Formalno definiramo, da je računski problem \emph{$\NP$-težek}, če bi obstoj polinomskega algoritma impliciral, da je $\P = \NP$. Tako sem spadajo tudi vsi $\NP$-polni (odločitveni) problemi. Če imamo nek optimizacijski problem, kot ga bomo srečali v tem delu, ga lahko prevedemo na odločitven problem; če je ta $\NP$-poln, potem je originalni problem $\NP$-težek.
+
+\hl{TODO: ekivalentna definicija NP s certifikatom}
 
 \subsection{Ničelna prisila}
 
@@ -1737,6 +1740,19 @@ Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo)
 \subsection{NP-polnost}
 \label{subsec:np-polnost}
 
+V prejšnjem podpoglavju smo si pogledali algoritem z eksponentno časovno zahtevnostjo za reševanje problema števila ničelne prisile za splošen graf. Ali lahko najdemo hitrejši, polinomski algoritem? V tem poglavju bomo dokazali, da je problem števila ničelne prisile $\NP$-težek; če bi torej obstajal polinomski algoritem za naš problem, bi sledilo $P = NP$.
+
+Formalno zapišimo naš optimizacijski problem, označimo ga z \textsf{ZF-Opt}:
+\[ \text{za dan graf } G\colon \min |Z|,\ Z \text{ množica ničelne prisile } G .\]
+Na odločitveni problem (označimo ga z \ZFOdl) ga prevedemo, če se namesto minimizacije velikosti množice ničelne prisile vprašamo: ali za dan graf $G$ in dano število $k \in \N$ obstaja množica ničelne prisile velikosti $k$? Če je ta odločitveni problem $\NP$-poln, potem je \textsf{ZF-Opt} problem $\NP$-težek -- če ne poznamo polinomskega algoritma, ali obstaja množica ničelne prisile neke velikosti, potem tudi ne poznamo polinomskega algoritma, ki nam bi vrnil najmanjšo. 
+
+Dokazali bomo sledeč izrek:
+\begin{izrek}
+    Problem \ZFOdl\ je $\NP$-poln za ravninske grafe z utežmi. \hl{TODO}
+\end{izrek}
+Spomnimo se definicije $\NP$-polnosti~(\ref{}): veljati mora, da je odločitveni problem v $\NP$ in, da se da vsak problem iz $\NP$ v polinomskem času prevesti na tega. Da je \ZFOdl v $NP$, vemo
+
+dokaz v NP s certifikatom, ki je polinomske dolžine in preverljiv v polinomskem času
 
 \subsection{Dinamično programiranje?}
 \subsection{Aproksimacijski algoritmi?}
