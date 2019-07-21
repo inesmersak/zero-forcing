@@ -117,6 +117,9 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \newcommand{\Q}{\mathbb Q}
 \newcommand{\F}{\mathbb F}
 \renewcommand{\G}{\mathcal{G}}
+\renewcommand{\P}{\ensuremath{\mathsf{P}}}
+\newcommand{\NP}{\ensuremath{\mathsf{NP}}}
+\newcommand{\NPC}{\ensuremath{\mathsf{NPC}}}
 
 \DeclareMathOperator{\boxempty}{\Box}
 
@@ -592,11 +595,13 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
 \end{figure}
 
 \subsection{Predstavitve grafov in računska zahtevnost}
+\label{subsec:pred-graf-rz}
+
 Ker si bomo v delu pogledali tudi nekaj algoritmov, ki imajo za vhodni podatek graf, si na kratko oglejmo načine predstavitve grafov v računalnikih in zahtevnosti operacij pri različnih predstavitvah. 
 
 Predpostavljali bomo, da so oznake vozlišč grafa $G$ velikosti $n$ kar cela števila od 0 do $n-1$ (v večini programskih jezikov indeks v seznamih in podobnih podatkovnih strukturah teče od 0 naprej). Zaradi takih oznak pri delu z grafi lahko uporabljamo eno bolj preprostih podatkovnih struktur, seznam, saj si podatek o $i$-tem vozlišču (npr.~barvo) shranimo pod indeks~$i$. Če so oznake kaj drugega in jih bomo kasneje potrebovali, jih lahko preslikamo v števila od 0 do $n-1$ in si v seznam na $i$-to mesto shranimo prejšnjo oznako vozlišča. 
 
-Prvi način predstavitve je matrika sosednosti. Ta vsebuje ničle na tistih indeksih $(i,j)$,za katere velja, da vozlišči $i$ in $j$ nista sosednji, in enke za tista vozlišča, ki so sosednja. Na diagonali so torej vedno ničle, saj graf ne vsebuje zank, v primeru neusmerjenega grafa pa je matrika še simetrična. Predstavimo jo s seznamom seznamov, $i$-ti element zunanjega seznama je $i$-ta vrstica matrike, torej porabimo $O(n^2)$ prostora. Kakšna je zahtevnost pogostih operacij nad grafom? Da ugotovimo, ali sta vozlišči $i$ in $j$ sosednji, porabimo $O(1)$, saj moramo le preveriti, ali je element v $i$-ti vrstici na $j$-tem indeksu ena, in je dostop do elementa seznama prek indeksa časovne zahtevnosti $O(1)$. Enako časovno zahtevnost ima iz istega razloga tudi dodajanje ali odstranjevanje povezave. Če želimo poiskati vse sosede vozlišča $i$, porabimo $O(n)$, saj moramo preveriti celotno $i$-to vrstico. Če želimo dodati ali odstraniti vozlišče, potrebujemo $O(2n)$ operacij (gremo čez en stolpec in eno vrstico), pri čemer pri odstranjevanju v večini primerih porabimo še več, saj brisanje elementa iz seznama v najslabšem primeru traja $O(n)$, medtem ko je dodajanje na konec seznama amortizirano $O(1)$.
+Prvi način predstavitve je matrika sosednosti. Ta vsebuje ničle na tistih indeksih $(i,j)$, za katere velja, da vozlišči $i$ in $j$ nista sosednji, in enke za tista vozlišča, ki so sosednja. Na diagonali so torej vedno ničle, saj graf ne vsebuje zank, v primeru neusmerjenega grafa pa je matrika še simetrična. Predstavimo jo s seznamom seznamov, $i$-ti element zunanjega seznama je $i$-ta vrstica matrike, torej porabimo $O(n^2)$ prostora. Kakšna je zahtevnost pogostih operacij nad grafom? Da ugotovimo, ali sta vozlišči $i$ in $j$ sosednji, porabimo $O(1)$, saj moramo le preveriti, ali je element v $i$-ti vrstici na $j$-tem indeksu ena, in je dostop do elementa seznama prek indeksa časovne zahtevnosti $O(1)$. Enako časovno zahtevnost ima iz istega razloga tudi dodajanje ali odstranjevanje povezave. Če želimo poiskati vse sosede vozlišča $i$, porabimo $O(n)$, saj moramo preveriti celotno $i$-to vrstico. Če želimo dodati ali odstraniti vozlišče, potrebujemo $O(2n)$ operacij (gremo čez en stolpec in eno vrstico), pri čemer pri odstranjevanju v večini primerih porabimo še več, saj brisanje elementa iz seznama v najslabšem primeru traja $O(n)$, medtem ko je dodajanje na konec seznama amortizirano $O(1)$.
 
 Graf lahko predstavimo tudi s seznamom sosedov: za vsako vozlišče naštejemo njegove sosede. V tem primeru prav tako uporabimo seznam seznamov, pri čemer se na indeksu~$i$ zunanjega seznama nahaja seznam sosedov vozlišča $i$. Pri tem porabimo $O(n+m)$ prostora, kjer je $m = |E|$ število povezav grafa. Če nas zanima, ali sta vozlišči $i$ in $j$ sosednji, moramo pregledati celoten seznam sosedov vozlišča~$i$, torej je časovna zahtevnost enaka $O(\deg i)$. Če je seznam urejen, lahko uporabimo binarno iskanje, ki ima logaritmično časovno zahtevnost, torej $O(\log \deg i)$. Odstranjevanje povezave med vozliščema $i$ in $j$ traja $O(2 \deg i + 2 \deg j)$, saj moramo v seznamu sosedov obeh poiskati in odstraniti drugo vozlišče, pri iskanju moramo v najslabšem primeru preiskati cel seznam sosedov, pri odstranjevanju pa ga prekopirati eno v levo. V najslabšem primeru traja celotna operacija $O(4n)$ (če je seznam sosedov urejen, pa $O(2\log n + 2n)$). Dodajanje povezave $ij$ traja $O(1)$, če nam vrstni red seznama sosedov ni pomemben. Če pa nam je vrstni red pomemben, lahko na seznamu sosedov $i$ in $j$ uporabimo binarno iskanje, da najdemo pravo mesto. V tem primeru porabimo $O(\log \deg i + \deg i)$ za eno vozlišče, saj ima dodajanje v seznam dolžine $p$ časovno zahtevnost $O(p)$, v najslabšem primeru skupaj torej $O(2 \log n + 2 n)$. Da najdemo vse sosede nekega vozlišča, moramo le pogledati na $i$-to mesto zunanjega seznama, torej ima operacija konstantno časovno zahtevnost. Če želimo dodati vozlišče, moramo dodati seznam z njegovimi sosedi na konec zunanjega seznama in njegovo oznako na konec nekaterih seznamov sosedov, kar traja $O(n)$. Za odstranjevanje vozlišča pa moramo odstraniti njegov seznam sosedov in vozlišče odstraniti iz vseh ostalih seznamov sosedov. Za prvo porabimo $O(n)$, za drugo pa $O(n^2)$, skupna časovna zahtevnost je torej $O(n^2)$.
 
@@ -623,11 +628,53 @@ Na prvi pogled se zdi, da bi bilo vedno najbolj optimalno izbrati seznam sosedov
     \label{tab:primerjava-predstavitev}
 \end{table}
 
-O P in NP množici problemov, NP polnosti in NP težkosti.
+V delu se bomo dotaknili tudi težavnosti odločitvenih problemov, zato si poglejmo nekaj osnovnih definicij računske zahtevnosti.
+\begin{definicija}
+    \begin{enumerate}
+        \item Odločitveni problem $\Pi$ spada v razred \P, pišemo $\Pi \in \P$, če ga lahko rešimo z determinističnim Turingovim strojem s polinomsko časovno zahtevnostjo.
+        \item Odločitveni problem $\Pi$ spada v razred \NP, pišemo $\Pi \in \NP$, če ga lahko rešimo z nedeterminističnim Turingovim strojem s polinomsko časovno zahtevnostjo.
+    \end{enumerate}
+\end{definicija}
+Povedano drugače, v razred $\P$ spadajo tisti problemi, za katere poznamo algoritem, ki najde rešitev v polinomskem času. Po drugi strani v $\NP$ spadajo tisti problemi, za katere poznamo algoritem, ki v polinomskem času preveri, ali je dana rešitev pravilna. 
+
+Hitro vidimo, da velja $\P \subseteq \NP$. Če za problem poznamo algoritem, ki najde rešitev v polinomskem času, potem moramo poznati tudi algoritem, ki v polinomskem času preveri pravilnost te rešitve, saj sicer ne moremo biti gotovi, da nam prvi algoritem res vrne rešitev problema. (Isto lahko vidimo tudi iz zgornjih definicij obeh razredov, saj je deterministični Turingov stroj posebna različica nedeterminističnega Turingovega stroja.)
+
+Ali velja tudi $\NP \subseteq \P$ in posledično $\P = \NP$? To bi pomenilo, da je vsak problem, katerega rešitev lahko preverimo v polinomskem času, tudi rešljiv v polinomskem času. Odgovor na vprašanje ni znan, veliko matematikov pa predvideva, da je nikalen, saj po nekaj desetletjih preučevanja težkih problem znotraj $\NP$, rečemo jim tudi $\NP$-polni, znanih naj bi jih bilo več kot 3000~\cite{wikiPvsNP}, nihče ni uspel najti polinomskega algoritma za kateregakoli izmed njih.
+
+\begin{definicija}
+    Odločitveni problem $\Pi$ je \emph{$\NP$-poln}, pišemo $\Pi \in \NPC$, če velja:
+    \begin{enumerate}
+        \item $\Pi \in \NP$,
+        \item vsak problem $\Pi' \in \NP$ lahko v polinomskem času prevedemo na $\Pi$.
+    \end{enumerate}
+\end{definicija}
+Polinomska prevedljivost problema $\Pi'$ na problem $\Pi$ pomeni, da je reševanje $\Pi'$ lažje (oziroma kvečjemu polinomsko težje) od reševanja problema $\Pi$. Povedano drugače, nek algoritem, ki reši problem $\Pi$ lahko uporabimo kot del relativno preprostega algoritma, ki reši $\Pi'$. 
+
+Povedali smo že, da za probleme v $\NPC$ ne poznamo polinomskih algoritmov. Če bi tak algoritem za nek $\NP$-poln problem obstajal, bi sledilo $\P = \NP$:
+\begin{trditev}
+    Naj bo $\Pi \in \NPC$. Potem velja:
+    \[ \Pi \in \P \iff \P = \NP. \]
+\end{trditev}
+\begin{proof}
+    Implikacija v levo je očitna: če $\P = \NP$, potem $\Pi \in \NPC \implies \Pi \in \NP = \P$.
+    Poglejmo še implikacijo v desno. Ker $\Pi \in \NPC$, pomeni, da lahko vsak problem v $\NP$ v polinomskem času prevedemo na $\Pi$. Ker $\Pi \in \P$, imamo polinomski algoritem za reševanje $\Pi$, torej lahko v polinomskem času rešimo tudi vse ostale probleme iz $\NP$, torej za vsak problem iz $\NP$ sledi da je tudi iz $\P$. Velja torej $\NP \subseteq \P$ in skupaj z $\P \subseteq \NP$ sledi $\P = \NP$.
+\end{proof}
+
+Problemi, ki so $\NP$-polni, so iz teorije grafov na primer problem vozliščnega pokritja, obstoja Hamiltonskega cikla in popolnega trirazsežnega prirejanja. Če želimo dokazati, da je nek problem $\NP$-poln, se tega lahko lotimo s pomočjo naslednje leme:
+\begin{lema}
+    Naj bo $\Pi' \in \NPC$, $\Pi \in \NP$ in naj bo $\Pi'$ v polinomskem času prevedljiv na problem $\Pi$. Potem velja $\Pi \in \NPC$.
+\end{lema}
+\begin{proof}
+    Ker je $\Pi' \in \NPC$, lahko vsak problem iz $\NP$ v polinomskem času prevedemo na $\Pi'$. Ker lahko $\Pi'$ v polinomskem času prevedemo na $\Pi$, lahko po tranzitivnosti relacije prevedljivosti vsak problem iz $\NP$ prevedemo na $\Pi$ v polinomskem času, torej velja $\Pi \in \NPC$.
+\end{proof}
+$\NP$-polnost problema pa lahko dokažemo tudi tako, da ga zožimo na nek podproblem, za katerega vemo, da je $\NP$-poln. (Če je podproblem težek, potem je gotovo težek tudi širši problem.)
+Ti dve tehniki bomo uporabili v podpoglavju~\ref{subsec:np-polnost}.
+
+Do zdaj smo govorili samo o težavnosti odločitvenih problemov, kaj pa, če imamo nek splošen računski problem? Formalno definiramo, da je računski problem \emph{$\NP$-težek}, če bi obstoj polinomskega algoritma impliciral, da je $\P = \NP$. Tako sem spadajo tudi vsi $\NP$-polni (odločitveni) problemi. Če imamo nek optimizacijski problem, kot ga bomo srečali v tem delu, ga lahko prevedemo na odločitven problem; če je ta $\NP$-poln, potem je originalni problem $\NP$-težek.
 
 \subsection{Ničelna prisila}
 
-Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, in jih demonstrirajmo na preprostih primerih.
+Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, njihove osnovne lastnosti in jih demonstrirajmo na preprostih primerih.
 
 \begin{definicija}
     \emph{Množica ničelne prisile} $Z$ grafa $G$ je podmnožica vozlišč tega grafa, takšna, da velja: če na začetku s črno barvo pobarvamo vsa vozlišča iz $Z$, potem pa sledimo pravilu, da vsako črno vozlišče $u$ z natanko enim belim sosedom $v$ prisili vozlišče $v$, da spremeni barvo v črno, in postopek ponavljamo, dokler se še dogajajo kakšne spremembe, morajo biti po koncu postopka vsa vozlišča grafa $G$ pobarvana črno.
@@ -1688,6 +1735,9 @@ Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo)
 \hl{TODO: implementacija + primerjava vseh petih.}
 
 \subsection{NP-polnost}
+\label{subsec:np-polnost}
+
+
 \subsection{Dinamično programiranje?}
 \subsection{Aproksimacijski algoritmi?}
 Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
