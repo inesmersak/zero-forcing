@@ -120,6 +120,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \renewcommand{\P}{\ensuremath{\mathsf{P}}}
 \newcommand{\NP}{\ensuremath{\mathsf{NP}}}
 \newcommand{\NPC}{\ensuremath{\mathsf{NPC}}}
+\newcommand{\DHC}{\ensuremath{\mathsf{DHC}}}
 \newcommand{\ZFOdl}{\textsf{ZF-Odl}}
 
 \DeclareMathOperator{\boxempty}{\Box}
@@ -636,13 +637,17 @@ V delu se bomo dotaknili tudi težavnosti odločitvenih problemov, zato si pogle
         \item Odločitveni problem $\Pi$ spada v razred \NP, pišemo $\Pi \in \NP$, če ga lahko rešimo z nedeterminističnim Turingovim strojem s polinomsko časovno zahtevnostjo.
     \end{enumerate}
 \end{definicija}
-Povedano drugače, v razred $\P$ spadajo tisti problemi, za katere poznamo algoritem, ki najde rešitev v polinomskem času. Po drugi strani v $\NP$ spadajo tisti problemi, za katere poznamo algoritem, ki v polinomskem času preveri, ali je dana rešitev pravilna. 
+Povedano drugače, v razred $\P$ spadajo tisti problemi, za katere poznamo algoritem, ki najde rešitev v polinomskem času. Po drugi strani v $\NP$ spadajo tisti problemi, za katere poznamo algoritem, ki v polinomskem času preveri, ali je dana rešitev pravilna. Spodnja definicija razreda $NP$ je namreč ekvivalentna zgornji \hl{TODO citat}:
+\begin{definicija}
+    Problem $\Pi$ je v $\NP$, če obstaja certifikat, polinomske dolžine glede na vhodne podatke, za rešitev in obstaja polinomski algoritem (preverjevalec), ki vrne ``da'', če certifikat za konkreten primer problema dokaže, da je odgovor na problem ``da'', in ``ne'' sicer.
+\end{definicija}
 
 Hitro vidimo, da velja $\P \subseteq \NP$. Če za problem poznamo algoritem, ki najde rešitev v polinomskem času, potem moramo poznati tudi algoritem, ki v polinomskem času preveri pravilnost te rešitve, saj sicer ne moremo biti gotovi, da nam prvi algoritem res vrne rešitev problema. (Isto lahko vidimo tudi iz zgornjih definicij obeh razredov, saj je deterministični Turingov stroj posebna različica nedeterminističnega Turingovega stroja.)
 
 Ali velja tudi $\NP \subseteq \P$ in posledično $\P = \NP$? To bi pomenilo, da je vsak problem, katerega rešitev lahko preverimo v polinomskem času, tudi rešljiv v polinomskem času. Odgovor na vprašanje ni znan, veliko matematikov pa predvideva, da je nikalen, saj po nekaj desetletjih preučevanja težkih problem znotraj $\NP$, rečemo jim tudi $\NP$-polni, znanih naj bi jih bilo več kot 3000~\cite{wikiPvsNP}, nihče ni uspel najti polinomskega algoritma za kateregakoli izmed njih.
 
 \begin{definicija}
+    \label{def:np-poln}
     Odločitveni problem $\Pi$ je \emph{$\NP$-poln}, pišemo $\Pi \in \NPC$, če velja:
     \begin{enumerate}
         \item $\Pi \in \NP$,
@@ -1738,19 +1743,27 @@ Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo)
 \subsection{NP-polnost}
 \label{subsec:np-polnost}
 
-V prejšnjem podpoglavju smo si pogledali algoritem z eksponentno časovno zahtevnostjo za reševanje problema števila ničelne prisile za splošen graf. Ali lahko najdemo hitrejši, polinomski algoritem? V tem poglavju bomo dokazali, da je problem števila ničelne prisile $\NP$-težek; če bi torej obstajal polinomski algoritem za naš problem, bi sledilo $P = NP$.
+V prejšnjem podpoglavju smo si pogledali algoritem z eksponentno časovno zahtevnostjo za reševanje problema števila ničelne prisile za splošen graf. Ali lahko najdemo hitrejši, polinomski algoritem? V tem poglavju bomo dokazali, da je problem števila ničelne prisile $\NP$-težek; če bi torej obstajal polinomski algoritem za naš problem, bi sledilo $\P = \NP$. Poglavje pretežno sledi dokazu iz~\cite{aazami2008hardness}.
 
 Formalno zapišimo naš optimizacijski problem, označimo ga z \textsf{ZF-Opt}:
 \[ \text{za dan graf } G\colon \min |Z|,\ Z \text{ množica ničelne prisile } G .\]
-Na odločitveni problem (označimo ga z \ZFOdl) ga prevedemo, če se namesto minimizacije velikosti množice ničelne prisile vprašamo: ali za dan graf $G$ in dano število $k \in \N$ obstaja množica ničelne prisile velikosti $k$? Če je ta odločitveni problem $\NP$-poln, potem je \textsf{ZF-Opt} problem $\NP$-težek -- če ne poznamo polinomskega algoritma, ali obstaja množica ničelne prisile neke velikosti, potem tudi ne poznamo polinomskega algoritma, ki nam bi vrnil najmanjšo. 
+Na odločitveni problem (označimo ga z \ZFOdl) ga prevedemo, če se namesto minimizacije velikosti množice ničelne prisile vprašamo: ali za dan graf $G$ in dano število $k \in \N$ obstaja množica ničelne prisile velikosti manjše ali enake $k$? Če je ta odločitveni problem $\NP$-poln, potem je \textsf{ZF-Opt} problem $\NP$-težek -- če ne poznamo polinomskega algoritma, ali obstaja množica ničelne prisile neke velikosti ali manj, potem tudi ne poznamo polinomskega algoritma, ki nam bi vrnil najmanjšo. 
+
+\hl{TODO: vse od tu naprej rabi review, prestrukturiranje, prepis in kakšen dodatek.}
+
+Definirajmo ničelno prisilo za graf $G$ z utežmi. Vsakemu vozlišču priredimo neko utež s pomočjo funkcije $w\colon V(G) \rightarrow \R$. Namesto velikosti $z$ množice ničelne prisile~$Z$ bomo sedaj upoštevali težo: $w(Z) = \sum_{i=1}^{z} w(u_i)$, število ničelne prisile sedaj definiramo kot
+\[ Z(G, w) = \min\{ w(Z) \mid Z \text{ množica ničelne prisile} \} .\]
 
 Dokazali bomo sledeč izrek:
-\begin{izrek}
-    Problem \ZFOdl\ je $\NP$-poln za ravninske grafe z utežmi. \hl{TODO}
+\begin{izrek}[\cite{aazami2008hardness}]
+    Problem \ZFOdl\ je $\NP$-poln za ravninske grafe z utežmi, tudi če so uteži kvečjemu 0 ali 1.
 \end{izrek}
-Spomnimo se definicije $\NP$-polnosti~(\ref{}): veljati mora, da je odločitveni problem v $\NP$ in, da se da vsak problem iz $\NP$ v polinomskem času prevesti na tega. Da je \ZFOdl v $NP$, vemo
+Spomnimo se definicije $\NP$-polnosti~(\ref{def:np-poln}): veljati mora, da je odločitveni problem v $\NP$ in da lahko vsak problem iz $\NP$ v polinomskem času prevedemo na tega. \hl{TODO: če je neka zožitev problema NP-polna, je tudi splošen problem NP-poln.} \ZFOdl\ za ravninske grafe z utežmi je v $\NP$, saj obstaja certifikat -- ta je kar množica ničelne prisile, teže manjše ali enake $k$ -- ki je polinomske dolžine glede na vhodne podatke ($O(n)$) in je preverljiv v polinomskem času (uporabimo algoritem~\ref{alg:preveri-zf-izboljsan}). 
 
-dokaz v NP s certifikatom, ki je polinomske dolžine in preverljiv v polinomskem času
+Sedaj bomo $\NP$-polnost dokazali tako, da bomo že znan $\NP$-poln problem usmerjenega Hamiltonovega cikla, označimo z $\DHC$, prevedli na našega. Po tranzitivnosti, ker lahko vsak problem v $\NP$ prevedemo na $\DHC$ in lahko tega prevedemo na \ZFOdl, lahko vsak problem iz $\NP$ prevedemo na \ZFOdl\ in naš dokaz je končan. Brez dokaza navedimo
+\begin{izrek}[\cite{plesnik1979np}]
+    Problem usmerjenega Hamiltonovega cikla $\DHC$ je $\NP$-poln tudi, če ga zožimo na 3-regularne ravninske grafe, kjer ima vsako vozlišče 2 vhodni in 1 izhodno ali pa 1 vhodno in 2 izhodni povezavi.
+\end{izrek}
 
 %\subsection{Dinamično programiranje?}
 %\subsection{Aproksimacijski algoritmi?}
