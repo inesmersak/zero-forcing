@@ -201,20 +201,20 @@ Zahvaljujem se \dots
 
 \section*{Program dela}
 \addcontentsline{toc}{section}{Program dela} % dodajmo v kazalo
-Mentor naj napiše program dela skupaj z osnovno literaturo. Na literaturo se
-lahko sklicuje kot~\cite{lebedev2009introduction}, \cite{gurtin1982introduction},
-\cite{zienkiewicz2000finite}, \cite{STtemplate}.
+Mentor naj napiše program dela skupaj z osnovno literaturo.% Na literaturo se
+%lahko sklicuje kot~\cite{lebedev2009introduction}, \cite{gurtin1982introduction},
+%\cite{zienkiewicz2000finite}, \cite{STtemplate}.
 
 \section*{Osnovna literatura}
 Literatura mora biti tukaj posebej samostojno navedena (po pomembnosti) in ne
 le citirana. V tem razdelku literature ne oštevilčimo po svoje, ampak uporabljamo
 okolje itemize in ukaz plancite, saj je celotna literatura oštevilčena na koncu.
-\begin{itemize}
-  \plancite{lebedev2009introduction}
-  \plancite{gurtin1982introduction}
-  \plancite{zienkiewicz2000finite}
-  \plancite{STtemplate}
-\end{itemize}
+%\begin{itemize}
+%  \plancite{lebedev2009introduction}
+%  \plancite{gurtin1982introduction}
+%  \plancite{zienkiewicz2000finite}
+%  \plancite{STtemplate}
+%\end{itemize}
 
 \vspace{2cm}
 \hspace*{\fill} Podpis mentorja: \phantom{prostor za podpis}
@@ -672,8 +672,6 @@ $\NP$-polnost problema pa lahko dokažemo tudi tako, da ga zožimo na nek podpro
 Ti dve tehniki bomo uporabili v podpoglavju~\ref{subsec:np-polnost}.
 
 Do zdaj smo govorili samo o težavnosti odločitvenih problemov, kaj pa, če imamo nek splošen računski problem? Formalno definiramo, da je računski problem \emph{$\NP$-težek}, če bi obstoj polinomskega algoritma impliciral, da je $\P = \NP$. Tako sem spadajo tudi vsi $\NP$-polni (odločitveni) problemi. Če imamo nek optimizacijski problem, kot ga bomo srečali v tem delu, ga lahko prevedemo na odločitven problem; če je ta $\NP$-poln, potem je originalni problem $\NP$-težek.
-
-\hl{TODO: ekivalentna definicija NP s certifikatom}
 
 \subsection{Ničelna prisila}
 
@@ -1394,7 +1392,7 @@ Zgornja meja~\eqref{eq:kartezicni-produkt-zgornja-meja} nam da tudi zgornjo mejo
 \end{proof}
 V hiperkocki $Q_n$ je torej dovolj, če pobarvamo eno izmed kopij manjše hiperkocke $Q_{n-1}$ (to je očitno množica ničelne prisile, saj ima vsako vozlišče v kopiji natanko enega nepobarvanega soseda, to je istoležno vozlišče v drugi kopiji).
 
-TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
+% TODO: polni, cikel, pot s polnim, ciklom, potjo - ali imamo kakšne boljše meje
 
 Poglejmo si še zgornjo mejo za krepki produkt poti.
 \begin{trditev}
@@ -1474,7 +1472,7 @@ Poglejmo si še zgornjo mejo za krepki produkt poti.
     Pobarvajmo vsa vozlišča ene izmed robnih kopij $P_m$ in ene izmed robnih kopij $P_n$ (prikazano na sliki~\ref{fig:zf-krepki-produkt-poti} na primeru $P_4 \boxtimes P_5$), začetno množico pobarvanih vozlišč označimo z $Z$. Pobarvali smo ravno $m + n - 1$ vozlišč, saj je eno vozlišče, označimo ga z $u$, skupno obema kopijama. Dokažimo, da je to res množica ničelne prisile. Vozlišče $u$ je edino, ki ima natanko enega nepobarvanega soseda (diagonalnega), ki torej spremeni barvo. Sedaj ima sosed $u$ v kopiji $P_m$ natanko enega nepobarvanega soseda, diagonalnega, ki spremeni barvo, in tako naprej po celotni robni kopiji $P_m$. Simetrično pa se zgodi tudi v robni kopiji $P_n$. Po koncu je pobarvana robna in še sosednja kopija $P_m$ ter robna in sosednja kopija $P_n$, kot prikazano na sliki~\ref{fig:zf-krepki-produkt-poti} desno. Vidimo, da je trenutna situacija zelo podobna začetni. Če pogledamo induciran graf iz vozlišč $V(P_m \boxtimes P_n) \setminus Z$, vidimo, da je izomorfen grafu $P_{m-1} \boxtimes P_{n-1}$, pri čemer sta trenutno pobarvani ravno robna kopija $P_{m-1}$ in robna kopija $P_{n-1}$. Širjenje barve se torej rekurzivno nadaljuje kot prej, na koncu je pobarvan cel graf, začetna množica $Z$ je res množica ničelne prisile. 
 \end{proof}
 
-TODO: krepki produkt, vse isto probaj
+% TODO: krepki produkt, vse isto probaj
 
 Znana je tudi zgornja meja za ničelno prisilo korone dveh splošnih grafov.
 \begin{trditev}
@@ -1754,9 +1752,9 @@ Spomnimo se definicije $\NP$-polnosti~(\ref{}): veljati mora, da je odločitveni
 
 dokaz v NP s certifikatom, ki je polinomske dolžine in preverljiv v polinomskem času
 
-\subsection{Dinamično programiranje?}
-\subsection{Aproksimacijski algoritmi?}
-Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
+%\subsection{Dinamično programiranje?}
+%\subsection{Aproksimacijski algoritmi?}
+%Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
 
 % Literatura:

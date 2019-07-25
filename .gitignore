@@ -228,3 +228,4 @@ koda/.vscode/
 
 # cpp binaries
 koda/*.exe
+koda/*.s
