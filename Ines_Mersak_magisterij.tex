@@ -1762,8 +1762,75 @@ Spomnimo se definicije $\NP$-polnosti~(\ref{def:np-poln}): veljati mora, da je o
 
 Sedaj bomo $\NP$-polnost dokazali tako, da bomo že znan $\NP$-poln problem usmerjenega Hamiltonovega cikla, označimo z $\DHC$, prevedli na našega. Po tranzitivnosti, ker lahko vsak problem v $\NP$ prevedemo na $\DHC$ in lahko tega prevedemo na \ZFOdl, lahko vsak problem iz $\NP$ prevedemo na \ZFOdl\ in naš dokaz je končan. Brez dokaza navedimo
 \begin{izrek}[\cite{plesnik1979np}]
-    Problem usmerjenega Hamiltonovega cikla $\DHC$ je $\NP$-poln tudi, če ga zožimo na 3-regularne ravninske grafe, kjer ima vsako vozlišče 2 vhodni in 1 izhodno ali pa 1 vhodno in 2 izhodni povezavi.
+    \label{izr:dhc}
+    Problem usmerjenega Hamiltonovega cikla $\DHC$ je $\NP$-poln tudi, če ga zožimo na 3-regularne ravninske grafe, kjer ima vsako vozlišče dve vhodni in eno izhodno ali pa eno vhodno in dve izhodni povezavi.
 \end{izrek}
+
+Imejmo ravninski usmerjen graf $G$, ki je vhodni podatek za problem $\DHC$, in naj za stopnjo njegovih vozlišč veljajo pogoji iz izreka~\ref{izr:dhc}. Imamo torej dva tipa vozlišč: tipa $\alpha$ so vsa tista, ki imajo eno vhodno in dve izhodni povezavi, tipa $\beta$ pa tista, ki imajo dve vhodni in eno izhodno povezavo (prikazano na sliki~\ref{fig:np-alfa-beta-vozlisce}). Označimo število vozlišč tipa $\alpha$ z $n_\alpha$. Konstruirali bomo neusmerjen graf $H$ z utežmi na vozliščih 0 ali 1, da bo veljalo:
+\[ G\text{ ima Hamiltonov cikel} \iff H \text{ ima množico ničelne prisile teže} \leq n_\alpha + 1 .\]
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+        \tikzmath{\u = 2;}
+        \begin{scope}[every node/.style={circle,thick,draw}]
+            \node[draw=none] (inv) at (0, \u) {};
+            \node[label={$v$}] (v) at (\u, \u) {};
+            \node[label=right:{$u$}] (u) at (2*\u, \u+1) {};
+            \node[label=right:{$w$}] (w) at (2*\u, 1) {};
+        \end{scope}
+
+        \path[->,thick,draw]
+        (inv) edge (v)
+        (v) edge node[above] {$e$}  (u)
+        (v) edge node[below] {$f$}  (w);
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+        \tikzmath{\u = 2;}
+        \begin{scope}[every node/.style={circle,thick,draw}]
+            \node[draw=none] (invt) at (0, \u+1) {};
+            \node[draw=none] (invb) at (0, 1) {};
+            \node[label={$v$}] (v) at (\u, \u) {};
+            \node[label={$u$}] (u) at (2*\u, \u) {};
+        \end{scope}
+
+        \path[->,thick,draw]
+        (invt) edge (v)
+        (invb) edge (v)
+        (v) edge node[above] {$e$} (u);
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Predstavljena sta tipa vozlišč~$\alpha$ (levo) z eno vhodno in dvema izhodnima povezavama  ter $\beta$ (desno) z dvema vhodnima in eno izhodno povezavo.}
+    \label{fig:np-alfa-beta-vozlisce}
+\end{figure}
+Nov graf bomo zgradili s pomočjo komponent -- imeli bomo komponento tipa~$\alpha$ in tipa~$\beta$, vsaka bo nadomestila izhodne povezave vozlišče istoimenskega tipa. Najprej si poglejmo $\beta$~komponento, saj je ta uporabljena v komponenti~$\alpha$. Izhodno povezavo $vu$ vozlišča $v$ tipa $\beta$ nadomestimo s komponento, prikazano na sliki~\ref{fig:np-beta-komp}: med $v$ in $u$ torej dodamo še dve vozlišči $v_0$ in $v_1$ ter vozlišča povežemo v neusmerjeno pot, pri tem pa povezavo med $v$ in $u$ spremenimo v neusmerjeno. Pri tem vozlišču $v_0$ dodelimo utež 0, ostalim pa utež 1. 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+    \tikzmath{\u = 2;}
+    \begin{scope}[every node/.style={circle,thick,draw}]
+        \node[label=below:{$v$}] (v) at (0, 0) {};
+        \node[dashed,label=below:{$v_0$}] (v0) at (\u, 0) {};
+        \node[label=below:{$v_1$}] (v1) at (2*\u, 0) {};
+        \node[label=below:{$u$}] (u) at (3*\u, 0) {};
+    \end{scope}
+
+    \path[-,thick,draw]
+    (v) edge (v0)
+    (v0) edge (v1)
+    (v1) edge (u)
+    (v) edge[bend left] (u);
+    \end{tikzpicture}
+
+    \caption{Prikazana je komponenta tipa~$\beta$, s katero nadomestimo izhodno povezavo $vu$ vozlišča $v$ tipa $\beta$. S črtkano črto so označena vozlišča z utežjo~0, s polno pa tista z utežjo 1.}
+    \label{fig:np-beta-komp}
+\end{figure}
+
+Brez škode za splošnost lahko privzamemo, da bo vozlišče $v_0$ del minimalne množice ničelne prisile, saj ne prispeva k njeni teži. $v_0$ in $v_1$ sta sosednja le vozliščem znotraj komponente, zato za spremembo barve cele komponente (cikel) mora biti obarvano še eno vozlišče, sprememba barve pa mora priti iz preostanka grafa. Recimo, da je nekje na sredini postopka barvanja vozlišče $v$ že pobarvano, $v_1$ in $u$ pa še ne. $v_0$ ima torej samo enega nepobarvanega soseda in pobarva $v_1$, ta pa lahko pobarva $u$. Kaj pa, če je pobarvano vozlišče $u$? V tem primeru imata tako $u$ kot $v_0$ po dva nepobarvana soseda in barva se ne širi. Naša neusmerjena komponenta torej nekako simulira širjenje barve v usmerjenem grafu, saj mora biti vozlišče $v$ pobarvano pred $u$-jem.
 
 %\subsection{Dinamično programiranje?}
 %\subsection{Aproksimacijski algoritmi?}
