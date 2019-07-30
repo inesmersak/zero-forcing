@@ -124,6 +124,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \newcommand{\ZFOdl}{\textsf{ZF-Odl}}
 
 \DeclareMathOperator{\boxempty}{\Box}
+\DeclareMathOperator{\fms}{fms}
 
 % bold matematika znotraj \textbf{ }, tudi v naslovih, kot \omega spodaj
 \makeatletter \g@addto@macro\bfseries{\boldmath} \makeatother
@@ -1743,11 +1744,94 @@ Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo)
 \subsection{NP-polnost}
 \label{subsec:np-polnost}
 
-V prejšnjem podpoglavju smo si pogledali algoritem z eksponentno časovno zahtevnostjo za reševanje problema števila ničelne prisile za splošen graf. Ali lahko najdemo hitrejši, polinomski algoritem? V tem poglavju bomo dokazali, da je problem števila ničelne prisile $\NP$-težek; če bi torej obstajal polinomski algoritem za naš problem, bi sledilo $\P = \NP$. Poglavje pretežno sledi dokazu iz~\cite{aazami2008hardness}.
+V prejšnjem podpoglavju smo si pogledali algoritem z eksponentno časovno zahtevnostjo za reševanje problema števila ničelne prisile za splošen graf. Ali lahko najdemo hitrejši, polinomski algoritem? V tem poglavju bomo naredili pregled rezultatov o kompleksnosti problema števila ničelne prisile in videli, da je $\NP$-težek; če bi torej obstajal polinomski algoritem za naš problem, bi sledilo $\P = \NP$. 
 
 Formalno zapišimo naš optimizacijski problem, označimo ga z \textsf{ZF-Opt}:
 \[ \text{za dan graf } G\colon \min |Z|,\ Z \text{ množica ničelne prisile } G .\]
 Na odločitveni problem (označimo ga z \ZFOdl) ga prevedemo, če se namesto minimizacije velikosti množice ničelne prisile vprašamo: ali za dan graf $G$ in dano število $k \in \N$ obstaja množica ničelne prisile velikosti manjše ali enake $k$? Če je ta odločitveni problem $\NP$-poln, potem je \textsf{ZF-Opt} problem $\NP$-težek -- če ne poznamo polinomskega algoritma, ali obstaja množica ničelne prisile neke velikosti ali manj, potem tudi ne poznamo polinomskega algoritma, ki nam bi vrnil najmanjšo. 
+
+$\NP$-polnost problema \ZFOdl\ so v~\cite{fallat2016complexity} dokazali s pomočjo enega izmed problemov iskanja v grafih, natančneje hitrega mešanega iskanja. Vsi problemi iskanja v grafih so zastavljeni približno tako: v grafu obstaja \emph{ubežnik}, ki se lahko skriva na vozliščih ali povezavah, in se lahko premika vzdolž poti v grafu, ki ne vsebujejo \emph{iskalcev}. Iskalci se lahko na nek način, odvisen od tipa problema, premikajo po grafu in s tem povezave in vozlišča proglasijo za \emph{preiskane}. Podobno kot pri pravem lovu na ubežnika je cilj iskalcev, da ga ``stisnejo v kot'', oziroma bolj formalno, da preiščejo cel graf tako, da se na koncu ubežnik ne more premakniti več nikamor. Za nek dan graf $G$ nas zanima, koliko iskalcev moramo postaviti na vozlišča grafa, da lahko preiščejo cel graf. 
+
+Podrobneje si poglejmo, kako izgleda \emph{hitro mešano iskanje} (prvič definirano v~\cite{yang2013fast}). Ubežnik se lahko skriva na vozliščih ali povezavah, kadarkoli se lahko premakne vzdolž katerekoli poti v grafu, ki ne vsebuje iskalcev. Povezava (ali vozlišče) je \emph{okužena}, če se tam morda skriva ubežnik; če pa vemo, da se tam ne more skrivati, je povezava (ali vozlišče) \emph{preiskana}. Z iskalci želimo pregledati vse povezave na tak način, da se kasneje ubežnik ne more premakniti nazaj tja: po zadnji potezi morajo biti vse povezave preiskane. Z iskalcem lahko na vsakem koraku naredimo eno izmed naslednjega:
+\begin{enumerate}
+    \item \emph{zdrsnemo} iz trenutnega vozlišča $u$ po povezavi $v$ do vozlišča $v$, če je vozlišče $v$ okuženo in so vse druge povezave, katerih je $u$ krajišče, preiskane;
+    \item ga \emph{premaknemo} na okuženo vozlišče.
+\end{enumerate}
+Pri tem upoštevamo, da je na vsakem vozlišču lahko največ en iskalec. Povezavo proglasimo za preiskano, ko po njej zdrsi ali se na obeh krajiščih povezave nahaja iskalec. Če so preiskane vse povezave grafa, pravimo, da je graf preiskan (in ubežnik je ujet).
+
+Za ta problem lahko sedaj definiramo število hitrega mešanega iskanja in si ogledamo njegovo vrednost na dveh preprostih primerih, poti in ciklu.
+\begin{definicija}
+    \emph{Število hitrega mešanega iskanja}, označimo $\fms{(G)}$, je najmanjše število iskalcev, ki jih moramo uporabiti, da lahko preiščemo cel graf $G$ (da so po zadnji potezi preiskane vse povezave).
+\end{definicija}
+\begin{primer}
+    \label{prim:fms}
+    \begin{figure}[h]
+        \begin{subfigure}{0.5\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=1.2]
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \foreach \i in {1,...,5}
+            {
+                \ifthenelse{\i>1} {
+                    \node (\i) at (\i,0) {}; } {
+                    \node[label={$u$}] (\i) at (\i,0) {}; }
+            }
+            \end{scope}
+
+            \foreach \i in {2,...,5}
+            {
+                \tikzmath{\im = int(\i-1);}
+                \ifthenelse{\NOT \i=4} {
+                    \path[-,thick,draw]
+                    (\im) edge (\i); }{
+                    \path[dashed,draw]
+                    (\im) edge (\i); }
+            }
+            \end{tikzpicture}
+        \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \begin{tikzpicture}[scale=0.6, rotate=180]
+            \tikzmath{\n = 7; \r = 2.5;}
+            \begin{scope}[every node/.style={circle,thick,draw}]
+            \foreach \i in {1,...,\n}
+            {
+                \ifthenelse{\i>1} {
+                    \node (\i) at ({360/\n * (\i - 1)}: \r) {}; } {
+                    \node[label=left:{$u$}] (\i) at ({360/\n * (\i - 1)}: \r) {}; }
+            }
+            \end{scope}
+
+            \foreach \i in {1,...,\n}
+            {
+                \tikzmath{\im = int(mod(\i,\n)+1);}
+                \ifthenelse{\NOT \i=4} {
+                    \path[-,thick,draw]
+                    (\im) edge (\i); }{
+                    \path[dashed,draw]
+                    (\im) edge (\i); }
+            }
+            \end{tikzpicture}
+        \end{subfigure}
+        \caption{Prikazana sta grafa $P_n$ (levo) in $C_n$ (desno), za katera velja $\fms{(P_n)} = 1$ in $\fms{(C_n)}=2$.}
+        \label{fig:fms-pot-cikel}
+    \end{figure}
+    Iščemo število hitrega mešanega iskanja za pot $P_n$ (na sliki~\ref{fig:fms-pot-cikel} levo). Recimo, da začnemo z enim iskalcem, ki ga na začetku postavimo v levo krajišče~$u$. Iskalec lahko zdrsi eno v desno, saj ima trenutno vozlišče samo eno okuženo povezavo, ki s tem postane preiskana. Tako lahko nadaljuje vsako potezo, saj je povezava levo od njega preiskana, desno od njega pa (edina) okužena. (Opazimo, da so povezave levo od iskalca nedosegljive za ubežnika, saj mu na poti stoji iskalec.) En iskalec je torej dovolj, da preiščemo cel graf, velja $\fms{(P_n)} = 1$.
+
+    Kaj pa, če postavimo enega iskalca v vozlišče $u$ na ciklu $C_n$ (na sliki~\ref{fig:fms-pot-cikel} desno)? Ta ne more začeti drseti, saj ima dve okuženi povezavi. Recimo, da ga začnemo premikati po okuženih vozliščih gor. Potem povezave, ki jih je že obiskal, po definiciji niso preiskane, kar vidimo tudi iz tega, lahko ubežnik pride do njih po drugi polovici cikla. En iskalec torej ne bo dovolj, saj mu ubežnik lahko vedno pobegne ``malo naprej po ciklu''. Če pa dodamo še enega iskalca v vozlišče, sosednje $u$, je vmesna povezava preiskana. Zato lahko začne vsak iskalec drseti po ciklu v svojo smer, slej ko prej torej preiščeta vse povezave in s tem cel graf. Velja $\fms{(C_n)} = 2$.
+\end{primer}
+
+Opazimo lahko, da se vrednosti v primeru~\ref{prim:fms} ujemata z vrednostmi števila ničelne prisile za ti dve družini grafov. Pravzaprav lahko vidimo, da je pravilo, kdaj je vozlišče preiskano, na nek način ekvivalentno pravilu za spremembo barve vozlišča: iskalec zdrsi po povezavi (iz preiskanega vozlišča $u$ v okuženo vozlišče, ki postane preiskano) samo, če so vse ostale povezave neokužene oziroma preiskane -- podobno, kot črno vozlišče $u$ povzroči spremembo barve v nekem belem vozlišču samo, če so vsi ostali njegovi sosedi črne barve. Intuitivno se zdi, da sta števili morda povezani; brez dokaza navedimo
+\begin{izrek}[{\cite[izrek 3.1]{fallat2016complexity}}]
+    \label{izr:fms-je-zfs}
+    Za poljuben graf $G$ velja $\fms{(G) = Z(G)}$.
+\end{izrek}
+
+Zahtevnost izračuna števila hitrega mešanega iskanja je obravnavana v~\cite{yang2013fast}, kjer je dokazano, da je problem hitrega mešanega iskanja (ali za dan graf $G$ velja $\fms{(G)} \leq k$) $\NP$-poln. Iz izreka~\ref{izr:fms-je-zfs} torej sledi $\NP$-polnost problema \ZFOdl.
+
+\hl{TODO: malo slabo si napisala primer in razlago pred tem, bolj poudarek, da ostale povezave ne smejo biti okužene, ko iskalec drsi.}
+
+\hl{TODO: Brimkov: connected zero forcing še vedno NP-polno}
 
 \hl{TODO: vse od tu naprej rabi review, prestrukturiranje, prepis in kakšen dodatek.}
 
@@ -1832,9 +1916,14 @@ Nov graf bomo zgradili s pomočjo komponent -- imeli bomo komponento tipa~$\alph
 
 Brez škode za splošnost lahko privzamemo, da bo vozlišče $v_0$ del minimalne množice ničelne prisile, saj ne prispeva k njeni teži. $v_0$ in $v_1$ sta sosednja le vozliščem znotraj komponente, zato za spremembo barve cele komponente (cikel) mora biti obarvano še eno vozlišče, sprememba barve pa mora priti iz preostanka grafa. Recimo, da je nekje na sredini postopka barvanja vozlišče $v$ že pobarvano, $v_1$ in $u$ pa še ne. $v_0$ ima torej samo enega nepobarvanega soseda in pobarva $v_1$, ta pa lahko pobarva $u$. Kaj pa, če je pobarvano vozlišče $u$? V tem primeru imata tako $u$ kot $v_0$ po dva nepobarvana soseda in barva se ne širi. Naša neusmerjena komponenta torej nekako simulira širjenje barve v usmerjenem grafu, saj mora biti vozlišče $v$ pobarvano pred $u$-jem.
 
-%\subsection{Dinamično programiranje?}
-%\subsection{Aproksimacijski algoritmi?}
+\subsection{Pregled algoritmov za specifične družine grafov}
+%Greedy nekam?
 %Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
+
+\section{Pregled ostalih rezultatov ničelne prisile}
+\subsection{Boljše zgornje in spodnje meje}
+
+\subsection{Povezave z drugimi grafovskimi parametri}
 
 
 % Literatura:
