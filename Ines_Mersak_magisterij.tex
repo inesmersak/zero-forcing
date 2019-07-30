@@ -1826,12 +1826,25 @@ Opazimo lahko, da se vrednosti v primeru~\ref{prim:fms} ujemata z vrednostmi št
     \label{izr:fms-je-zfs}
     Za poljuben graf $G$ velja $\fms{(G) = Z(G)}$.
 \end{izrek}
+\begin{posledica}
+    \ZFOdl\ je $\NP$-poln.
+\end{posledica}
+\begin{proof}
+     V~\cite{yang2013fast} je dokazano, da je problem hitrega mešanega iskanja (ali za dan graf $G$ velja $\fms{(G)} \leq k$) $\NP$-poln. Iz izreka~\ref{izr:fms-je-zfs} torej sledi $\NP$-polnost problema \ZFOdl.
+\end{proof}
 
-Zahtevnost izračuna števila hitrega mešanega iskanja je obravnavana v~\cite{yang2013fast}, kjer je dokazano, da je problem hitrega mešanega iskanja (ali za dan graf $G$ velja $\fms{(G)} \leq k$) $\NP$-poln. Iz izreka~\ref{izr:fms-je-zfs} torej sledi $\NP$-polnost problema \ZFOdl.
+V~\cite{brimkov2017complexity} je obravnavana zahtevnost izračuna ožjega problema, \emph{povezane ničelne prisile}, pri kateri mora induciran graf nad vozlišči množice ničelne prisile tvoriti povezan graf.
+\begin{definicija}
+    Število povezane ničelne prisile je definirano kot
+    \[ Z_c(G) = \min\{|Z| \mid Z \text{ množica ničelne prisile in } G[Z] \text{ povezan} \} \]
+\end{definicija}
+Iz definicij je razvidno, da velja $Z(G) \leq Z_c(G)$. V splošnem iz $\NP$-polnosti širšega problema ne sledi $\NP$-polnost ožjega, saj zoženje morda poenostavi problem. V primeru povezane ničelne prisile pa se izkaže, da je tudi ožji problem (njegova odločitvena različica) $\NP$-poln:
+\begin{izrek}[{\cite[izrek 3]{brimkov2017complexity}}]
+    Če \ZFOdl\ zožimo samo na tiste množice ničelne prisile, ki inducirajo povezan podgraf, je problem še vedno $\NP$-poln.
+\end{izrek}
+Poglejmo si hiter oris dokaza zgornjega izreka. Spomnimo se definicije $\NP$-polnosti~(\ref{def:np-poln}): veljati mora, da je odločitveni problem v $\NP$ in da lahko vsak problem iz $\NP$ v polinomskem času prevedemo na tega. Povezana različica \ZFOdl\ je v $\NP$, saj obstaja certifikat -- ta je kar množica ničelne prisile $Z$, velikosti manjše ali enake $k$ -- ki je polinomske dolžine glede na vhodne podatke ($O(n)$) in je preverljiv v polinomskem času (uporabimo algoritem~\ref{alg:preveri-zf-izboljsan} in BFS za preverjanje povezanosti induciranega podgrafa $G[Z]$).
 
-\hl{TODO: malo slabo si napisala primer in razlago pred tem, bolj poudarek, da ostale povezave ne smejo biti okužene, ko iskalec drsi.}
-
-\hl{TODO: Brimkov: connected zero forcing še vedno NP-polno}
+Sedaj $\NP$-polnost dokažemo tako, da že znan $\NP$-poln problem \ZFOdl\ prevedemo na povezanega: vhodni podatek, graf $G = (V,E)$, modificiramo tako, da mu dodamo še eno vozlišče $v$, s katerim povežemo vsa vozlišča iz $V$, nato pa dodamo še dve vozlišči, ki ju povežemo z $v$. Nov graf označimo z $G'$. Sedaj trdimo, da ima $G$ množico ničelne prisile velikosti manjše ali enake~$k$ natanko tedaj, ko ima $G'$ povezano množico ničelne prisile velikosti manjše ali enake $k + 2$. Podrobnosti dokaza te ekvivalence so zapisane v~\cite{brimkov2017complexity}. Opazimo še, da je naša prevedba res polinomske časovne zahtevnosti glede na vhodne podatke \ZFOdl.
 
 \hl{TODO: vse od tu naprej rabi review, prestrukturiranje, prepis in kakšen dodatek.}
 
