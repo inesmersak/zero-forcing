@@ -1846,88 +1846,16 @@ Poglejmo si hiter oris dokaza zgornjega izreka. Spomnimo se definicije $\NP$-pol
 
 Sedaj $\NP$-polnost dokažemo tako, da že znan $\NP$-poln problem \ZFOdl\ prevedemo na povezanega: vhodni podatek, graf $G = (V,E)$, modificiramo tako, da mu dodamo še eno vozlišče $v$, s katerim povežemo vsa vozlišča iz $V$, nato pa dodamo še dve vozlišči, ki ju povežemo z $v$. Nov graf označimo z $G'$. Sedaj trdimo, da ima $G$ množico ničelne prisile velikosti manjše ali enake~$k$ natanko tedaj, ko ima $G'$ povezano množico ničelne prisile velikosti manjše ali enake $k + 2$. Podrobnosti dokaza te ekvivalence so zapisane v~\cite{brimkov2017complexity}. Opazimo še, da je naša prevedba res polinomske časovne zahtevnosti glede na vhodne podatke \ZFOdl.
 
-\hl{TODO: vse od tu naprej rabi review, prestrukturiranje, prepis in kakšen dodatek.}
-
-Definirajmo ničelno prisilo za graf $G$ z utežmi. Vsakemu vozlišču priredimo neko utež s pomočjo funkcije $w\colon V(G) \rightarrow \R$. Namesto velikosti $z$ množice ničelne prisile~$Z$ bomo sedaj upoštevali težo: $w(Z) = \sum_{i=1}^{z} w(u_i)$, število ničelne prisile sedaj definiramo kot
+Poglejmo si še eno različico ničelne prisile, kjer za vhod dobimo utežen graf $G$.
+Vsakemu vozlišču priredimo neko utež s pomočjo funkcije $w\colon V(G) \rightarrow \R$. Namesto velikosti $z$ množice ničelne prisile~$Z$ bomo sedaj upoštevali težo: $w(Z) = \sum_{i=1}^{z} w(u_i)$, število ničelne prisile sedaj definiramo kot
 \[ Z(G, w) = \min\{ w(Z) \mid Z \text{ množica ničelne prisile} \} .\]
 
-Dokazali bomo sledeč izrek:
 \begin{izrek}[\cite{aazami2008hardness}]
     Problem \ZFOdl\ je $\NP$-poln za ravninske grafe z utežmi, tudi če so uteži kvečjemu 0 ali 1.
 \end{izrek}
-Spomnimo se definicije $\NP$-polnosti~(\ref{def:np-poln}): veljati mora, da je odločitveni problem v $\NP$ in da lahko vsak problem iz $\NP$ v polinomskem času prevedemo na tega. \hl{TODO: če je neka zožitev problema NP-polna, je tudi splošen problem NP-poln.} \ZFOdl\ za ravninske grafe z utežmi je v $\NP$, saj obstaja certifikat -- ta je kar množica ničelne prisile, teže manjše ali enake $k$ -- ki je polinomske dolžine glede na vhodne podatke ($O(n)$) in je preverljiv v polinomskem času (uporabimo algoritem~\ref{alg:preveri-zf-izboljsan}). 
+Posledično sledi tudi $\NP$-polnost uteženega problema za splošne grafe. To ni presenetljivo, saj je \ZFOdl\ za neutežene grafe ožji problem (predstavljamo si lahko, da imajo vse uteži vrednosti 1), za katerega vemo, da je $\NP$-poln, torej mora tak biti tudi širši problem. Ker je bila $\NP$-polnost uteženega problema dokazana 8~let pred neuteženim, pa je dokaz ponovno narejen s pomočjo polinomske prevedbe že znanega $\NP$-polnega problema, usmerjenega Hamiltonskega cikla, na naš problem. (Da je problem v $\NP$, pa pokažemo enako, kot za primer povezane ničelne prisile.)
 
-Sedaj bomo $\NP$-polnost dokazali tako, da bomo že znan $\NP$-poln problem usmerjenega Hamiltonovega cikla, označimo z $\DHC$, prevedli na našega. Po tranzitivnosti, ker lahko vsak problem v $\NP$ prevedemo na $\DHC$ in lahko tega prevedemo na \ZFOdl, lahko vsak problem iz $\NP$ prevedemo na \ZFOdl\ in naš dokaz je končan. Brez dokaza navedimo
-\begin{izrek}[\cite{plesnik1979np}]
-    \label{izr:dhc}
-    Problem usmerjenega Hamiltonovega cikla $\DHC$ je $\NP$-poln tudi, če ga zožimo na 3-regularne ravninske grafe, kjer ima vsako vozlišče dve vhodni in eno izhodno ali pa eno vhodno in dve izhodni povezavi.
-\end{izrek}
 
-Imejmo ravninski usmerjen graf $G$, ki je vhodni podatek za problem $\DHC$, in naj za stopnjo njegovih vozlišč veljajo pogoji iz izreka~\ref{izr:dhc}. Imamo torej dva tipa vozlišč: tipa $\alpha$ so vsa tista, ki imajo eno vhodno in dve izhodni povezavi, tipa $\beta$ pa tista, ki imajo dve vhodni in eno izhodno povezavo (prikazano na sliki~\ref{fig:np-alfa-beta-vozlisce}). Označimo število vozlišč tipa $\alpha$ z $n_\alpha$. Konstruirali bomo neusmerjen graf $H$ z utežmi na vozliščih 0 ali 1, da bo veljalo:
-\[ G\text{ ima Hamiltonov cikel} \iff H \text{ ima množico ničelne prisile teže} \leq n_\alpha + 1 .\]
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}{0.5\textwidth}
-        \centering
-        \begin{tikzpicture}[scale=0.9]
-        \tikzmath{\u = 2;}
-        \begin{scope}[every node/.style={circle,thick,draw}]
-            \node[draw=none] (inv) at (0, \u) {};
-            \node[label={$v$}] (v) at (\u, \u) {};
-            \node[label=right:{$u$}] (u) at (2*\u, \u+1) {};
-            \node[label=right:{$w$}] (w) at (2*\u, 1) {};
-        \end{scope}
-
-        \path[->,thick,draw]
-        (inv) edge (v)
-        (v) edge node[above] {$e$}  (u)
-        (v) edge node[below] {$f$}  (w);
-        \end{tikzpicture}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \begin{tikzpicture}[scale=0.9]
-        \tikzmath{\u = 2;}
-        \begin{scope}[every node/.style={circle,thick,draw}]
-            \node[draw=none] (invt) at (0, \u+1) {};
-            \node[draw=none] (invb) at (0, 1) {};
-            \node[label={$v$}] (v) at (\u, \u) {};
-            \node[label={$u$}] (u) at (2*\u, \u) {};
-        \end{scope}
-
-        \path[->,thick,draw]
-        (invt) edge (v)
-        (invb) edge (v)
-        (v) edge node[above] {$e$} (u);
-        \end{tikzpicture}
-    \end{subfigure}
-    \caption{Predstavljena sta tipa vozlišč~$\alpha$ (levo) z eno vhodno in dvema izhodnima povezavama  ter $\beta$ (desno) z dvema vhodnima in eno izhodno povezavo.}
-    \label{fig:np-alfa-beta-vozlisce}
-\end{figure}
-Nov graf bomo zgradili s pomočjo komponent -- imeli bomo komponento tipa~$\alpha$ in tipa~$\beta$, vsaka bo nadomestila izhodne povezave vozlišče istoimenskega tipa. Najprej si poglejmo $\beta$~komponento, saj je ta uporabljena v komponenti~$\alpha$. Izhodno povezavo $vu$ vozlišča $v$ tipa $\beta$ nadomestimo s komponento, prikazano na sliki~\ref{fig:np-beta-komp}: med $v$ in $u$ torej dodamo še dve vozlišči $v_0$ in $v_1$ ter vozlišča povežemo v neusmerjeno pot, pri tem pa povezavo med $v$ in $u$ spremenimo v neusmerjeno. Pri tem vozlišču $v_0$ dodelimo utež 0, ostalim pa utež 1. 
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}[scale=0.9]
-    \tikzmath{\u = 2;}
-    \begin{scope}[every node/.style={circle,thick,draw}]
-        \node[label=below:{$v$}] (v) at (0, 0) {};
-        \node[dashed,label=below:{$v_0$}] (v0) at (\u, 0) {};
-        \node[label=below:{$v_1$}] (v1) at (2*\u, 0) {};
-        \node[label=below:{$u$}] (u) at (3*\u, 0) {};
-    \end{scope}
-
-    \path[-,thick,draw]
-    (v) edge (v0)
-    (v0) edge (v1)
-    (v1) edge (u)
-    (v) edge[bend left] (u);
-    \end{tikzpicture}
-
-    \caption{Prikazana je komponenta tipa~$\beta$, s katero nadomestimo izhodno povezavo $vu$ vozlišča $v$ tipa $\beta$. S črtkano črto so označena vozlišča z utežjo~0, s polno pa tista z utežjo 1.}
-    \label{fig:np-beta-komp}
-\end{figure}
-
-Brez škode za splošnost lahko privzamemo, da bo vozlišče $v_0$ del minimalne množice ničelne prisile, saj ne prispeva k njeni teži. $v_0$ in $v_1$ sta sosednja le vozliščem znotraj komponente, zato za spremembo barve cele komponente (cikel) mora biti obarvano še eno vozlišče, sprememba barve pa mora priti iz preostanka grafa. Recimo, da je nekje na sredini postopka barvanja vozlišče $v$ že pobarvano, $v_1$ in $u$ pa še ne. $v_0$ ima torej samo enega nepobarvanega soseda in pobarva $v_1$, ta pa lahko pobarva $u$. Kaj pa, če je pobarvano vozlišče $u$? V tem primeru imata tako $u$ kot $v_0$ po dva nepobarvana soseda in barva se ne širi. Naša neusmerjena komponenta torej nekako simulira širjenje barve v usmerjenem grafu, saj mora biti vozlišče $v$ pobarvano pred $u$-jem.
 
 \subsection{Pregled algoritmov za specifične družine grafov}
 %Greedy nekam?
