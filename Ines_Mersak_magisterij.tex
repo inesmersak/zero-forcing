@@ -1870,7 +1870,30 @@ Avtor v~\cite[izrek~2.3.8]{aazami2008hardness} za utežen problem dokaže tudi, 
 %Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
 \section{Pregled ostalih rezultatov ničelne prisile}
-\subsection{Boljše zgornje in spodnje meje}
+V tem poglavju naredimo hiter pregled ostalih rezultatov, povezanih s pojmom ničelne prisile. V prvem podpoglavju se osredotočimo na boljše zgornje in spodnje meje za grafe, ki ustrezajo nekaterim pogojem glede največje in najmanjše stopnje vozlišča, v drugem podpoglavju pa si ogledamo, kako je ničelna prisila povezana z nekaterimi drugimi parametri na grafih, kot so  \hl{TODO}.
+
+\subsection{Boljša zgornja in spodnja meja}
+Poglejmo si posplošitev ničelne prisile, ki je bila uvedena v~\cite{amos2015kforcing} in s pomočjo katere so bile v~\cite{amos2015kforcing, gentner2018bounds} dokazane boljše zgornje meje za osnovno ničelno prisilo.
+\begin{definicija}
+    \emph{Število $k$-prisile} grafa $G$ za pozitivno celo število $k$, označimo $F_k(G)$, je velikost najmanjše take množice $Z \subseteq V$, da velja: če na začetku s črno pobarvamo vozlišča iz $Z$, ostala pa so bela, in upoštevamo pravilo, da črno vozlišče z največ $k$ belimi sosedi povzroči spremembo barve vseh teh, je po koncu postopka pobarvan cel graf $G$. Vse take množice $Z$, kjer je po koncu širjenje barve pobarvan cel graf, pravimo množice $k$-prisile.
+\end{definicija}
+
+Ničelna prisila je poseben primer $k$-prisile za $k=1$. Na podoben način kot~\eqref{eq:trv-spodnja-meja} lahko sklepamo spodnjo mejo za $k$-prisilo:
+\[ F_k(G) \geq \min\{1, \delta - k + 1\} .\]
+Če imamo namreč graf z najmanjšo stopnjo $\delta$ in poskusimo sestaviti množico $k$-prisile velikosti $\delta - k$, za neko črno vozlišče $u$ torej vemo, da ima vsaj $\delta$ sosedov in da jih je pobarvanih največ $\delta - k - 1$, torej je najmanj $k + 1$ sosedov belih in širjenje barve se ne more začeti.
+
+Poglejmo si vrednosti števila $k$-prisile za nekaj osnovnih družin grafov. Za pot očitno velja $F_k(P_n) = Z(P_n) = 1$, saj je to najmanjša možna velikost množice $k$-prisile. Za $k \geq 2$ je tudi za cikel dovolj, če začetna množica vsebuje samo eno vozlišče, saj ima to vozlišče dva bela soseda, ki za $k \geq 2$ oba postaneta črna, nato pa se širjenje barve nadaljuje kot pri ničelni prisili. Velja torej
+\[ F_k(C_n) =
+\begin{cases}
+    2, & k = 1; \\
+    1, & \text{sicer.}
+\end{cases}
+\]
+Za polni graf pa velja $F_k(K_n) = n-k$, saj ima neko (vsako) črno vozlišče torej $k$ belih sosedov in jim spremeni barvo.
+
+Očitno je neka množica $k$-prisile $Z$ tudi množica $(k+1)$-prisile: če lahko za začetno množico $Z$ s pravilom, da črno vozlišče s $k$ belimi sosedi spremeni barvo vsem tem, pobarvamo cel graf, ga lahko še toliko bolj, če ima lahko črno vozlišče iz pravila širjenja barve še enega belega soseda več. Vsaka množica $k$-prisile je tudi množica $(k+1)$-prisile, obratno pa seveda ni nujno res; ker iščemo minimum in je množic $k$-prisile torej manj, velja
+\[ F_{k}(G) \geq F_{k+1}(G). \]
+za nek graf $G$.
 
 \subsection{Povezave z drugimi grafovskimi parametri}
 
