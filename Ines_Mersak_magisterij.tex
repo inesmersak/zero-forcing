@@ -602,10 +602,11 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
 Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, njihove osnovne lastnosti in jih demonstrirajmo na preprostih primerih.
 
 \begin{definicija}
-    \emph{Množica ničelne prisile} $Z$ grafa $G$ je podmnožica vozlišč tega grafa, takšna, da velja: če na začetku s črno barvo pobarvamo vsa vozlišča iz $Z$, potem pa sledimo pravilu, da vsako črno vozlišče $u$ z natanko enim belim sosedom $v$ prisili vozlišče $v$, da spremeni barvo v črno, in postopek ponavljamo, dokler se še dogajajo kakšne spremembe, morajo biti po koncu postopka vsa vozlišča grafa $G$ pobarvana črno.
+    \emph{Množica ničelne prisile} $Z$ grafa $G$ je podmnožica vozlišč tega grafa, takšna, da velja: če na začetku s črno barvo pobarvamo vsa vozlišča iz $Z$, potem pa sledimo pravilu, da vsako črno vozlišče $u$ z natanko enim belim sosedom $v$ povzroči, da vozlišče $v$ spremeni barvo v črno (označimo $u \rightarrow v$), in postopek ponavljamo, dokler se še dogajajo kakšne spremembe, morajo biti po koncu postopka vsa vozlišča grafa $G$ pobarvana črno.
 \end{definicija}
 
 \begin{primer}
+    \label{prim:osnovni-zf}
     Za graf na sliki~\ref{fig:osnovni-primer-prisile} je množica ničelne prisile na primer $Z = \{ 1, 5\}$. 
     \begin{figure}[h]
         \centering
@@ -669,6 +670,13 @@ Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč 
     
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
+
+Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$. Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če ta ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
+\begin{trditev}[{\cite[trditev~2.10]{barioli2010zero}}]
+    Za velikost minimalnega pokritja splošnega grafa $G$ s potmi $P(G)$ velja
+    \[ P(G) \leq Z(G) .\]
+\end{trditev}
+Poglejmo si, kako izgleda veriga sprememb na grafu s slike~\ref{fig:osnovni-primer-prisile} iz primera~\ref{prim:osnovni-zf}, pri čemer vzemimo množico ničelne prisile $Z_3 = \{1,5\}$. Če se dogovorimo, da v primeru večih možnih povzročiteljev spremembe prevlada vozlišče z manjšo oznako, dobimo verigi $5 \rightarrow 4 \rightarrow 3$ in $1 \rightarrow 2$.
 
 Če imamo dano množico ničelne prisile $Z$ za nek graf $G$ in v $Z$ dodamo še kakšno vozlišče, se izkaže, da je to še vedno množica ničelne prisile grafa $G$.
 \begin{trditev}
