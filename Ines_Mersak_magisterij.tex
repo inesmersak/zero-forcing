@@ -1879,7 +1879,11 @@ Poglejmo si posplošitev ničelne prisile, ki je bila uvedena v~\cite{amos2015kf
 \end{definicija}
 
 Ničelna prisila je poseben primer $k$-prisile za $k=1$. Na podoben način kot~\eqref{eq:trv-spodnja-meja} lahko sklepamo spodnjo mejo za $k$-prisilo:
-\[ F_k(G) \geq \min\{1, \delta - k + 1\} .\]
+\begin{equation}
+    F_k(G) \geq \min\{1, \delta - k + 1\} .
+    \label{eq:kprisila-trv-spodnja-meja}
+\end{equation}
+
 Če imamo namreč graf z najmanjšo stopnjo $\delta$ in poskusimo sestaviti množico $k$-prisile velikosti $\delta - k$, za neko črno vozlišče $u$ torej vemo, da ima vsaj $\delta$ sosedov in da jih je pobarvanih največ $\delta - k - 1$, torej je najmanj $k + 1$ sosedov belih in širjenje barve se ne more začeti.
 
 Poglejmo si vrednosti števila $k$-prisile za nekaj osnovnih družin grafov. Za pot očitno velja $F_k(P_n) = Z(P_n) = 1$, saj je to najmanjša možna velikost množice $k$-prisile. Za $k \geq 2$ je tudi za cikel dovolj, če začetna množica vsebuje samo eno vozlišče, saj ima to vozlišče dva bela soseda, ki za $k \geq 2$ oba postaneta črna, nato pa se širjenje barve nadaljuje kot pri ničelni prisili. Velja torej
@@ -1894,6 +1898,35 @@ Za polni graf pa velja $F_k(K_n) = n-k$, saj ima neko (vsako) črno vozlišče t
 Očitno je neka množica $k$-prisile $Z$ tudi množica $(k+1)$-prisile: če lahko za začetno množico $Z$ s pravilom, da črno vozlišče s $k$ belimi sosedi spremeni barvo vsem tem, pobarvamo cel graf, ga lahko še toliko bolj, če ima lahko črno vozlišče iz pravila širjenja barve še enega belega soseda več. Vsaka množica $k$-prisile je tudi množica $(k+1)$-prisile, obratno pa seveda ni nujno res; ker iščemo minimum in je množic $k$-prisile torej manj, velja
 \[ F_{k}(G) \geq F_{k+1}(G). \]
 za nek graf $G$.
+
+Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing}, in si poglejmo, kako se poenostavijo v primeru ničelne prisile.
+
+\begin{izrek}{\cite[izrek 3.4]{amos2015kforcing}}
+    Naj bo $k$ pozitivno celo število. Imejmo graf $G$ z $n \geq 2$ in naj za stopnje vozlišč velja $\Delta \geq k, \delta \geq 1$. Potem za število $k$-prisile velja naslednja zgornja meja
+    \[ F_k(G) \leq \frac{(\Delta - k + 1)n}{\Delta - k + 1 + \min\{\delta,k\}}. \]
+\end{izrek}
+
+\begin{posledica}
+    Naj bo $k$ pozitivno celo število. Imejmo graf $G$ z $n \geq 2$ in naj za najmanjšo stopnjo vozlišča velja $\delta \geq k$. Potem za število $k$-prisile velja naslednja zgornja meja
+    \[ F_k(G) \leq \frac{(\Delta - k + 1) n}{\Delta + 1}, \]
+    ki je tesna.
+\end{posledica}
+\begin{proof}
+    Tesnost zgornje meje dobimo, če vzamemo polni graf $K_{\Delta + 1}$, $\Delta \geq k$, ki je $\Delta$-regularen graf (vsa vozlišča so stopnje $\Delta$). Če vstavimo, dobimo
+    \[ F_k(K_{\Delta + 1}) \leq \frac{(\Delta - k + 1) (\Delta + 1)}{\Delta + 1} = \Delta - k +1, \]
+    hkrati pa iz $\delta = \Delta$, $\Delta \geq k$ in~\eqref{eq:kprisila-trv-spodnja-meja} sledi
+    \[ F_k(K_{\Delta + 1}) \geq \Delta - k +1, \]
+    torej velja enakost in zgornja meja je tesna.
+\end{proof}
+
+\begin{posledica}
+    Za graf $G$ z vsaj 2 vozliščema in najmanjšo stopnjo $\delta \geq 1$ (nimamo izoliranih vozlišč) za ničelno prisilo velja naslednja zgornja meja
+    \begin{equation}
+        Z(G) = F_1(G) \leq \frac{\Delta}{\Delta + 1} n,
+        \label{eq:zgornja-meja-zf}
+    \end{equation}
+    ki je tesna za $K_{\Delta + 1}$ z $\Delta \geq 1$.
+\end{posledica}
 
 \subsection{Povezave z drugimi grafovskimi parametri}
 
