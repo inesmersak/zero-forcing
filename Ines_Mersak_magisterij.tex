@@ -1959,13 +1959,78 @@ pri čemer smo upoštevali trivialni neenakosti $1 - k \leq -2$ (pri prvi zgornj
         \label{eq:zgornja-meja-zf-povezan}
         Z(G) = F_1(G) \leq \frac{(\Delta - 2)n + 2}{\Delta - 1},
     \end{equation}
-    meja je tesna za $K_{\Delta + 1}$ in $K_{\Delta, \Delta}$ za $\Delta \geq 2$.
+    meja je tesna za $K_{\Delta + 1}$, $K_{\Delta, \Delta}$ za $\Delta \geq 2$ in cikel $C_n$.
 \end{posledica}
 \begin{proof}
     Tesnost meje za $K_{\Delta + 1}$ smo dokazali zgoraj. Za $K_{\Delta, \Delta}$ dobimo
     \[ Z(K_{\Delta, \Delta}) \leq \frac{(\Delta - 2)2\Delta + 2}{\Delta - 1} = \frac{2(\Delta^2 - 2 \Delta + 1)}{\Delta - 1} = \frac{2(\Delta- 1)^2}{\Delta - 1} = 2 (\Delta-1), \]
     iz trditve~\ref{trd:polni-dvodelni-graf} pa vemo, da je $Z(K_{\Delta, \Delta}) = 2\Delta - 2$, torej je meja tesna.
+
+    Poglejmo si še, kaj dobimo za $C_n$, kjer je $\Delta= 2$:
+    \[ Z(C_n) \leq \frac{(2 - 2)n + 2}{2 - 1} = 2, \]
+    torej je meja tesna tudi za cikel.
 \end{proof}
+
+Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za katere je meja~\eqref{eq:zgornja-meja-zf-povezan} dosežena~\cite{lu2016proof}. V~\cite{gentner2018bounds} je dokazano, da lahko mejo precej izboljšamo, če izključimo te in še kakšne grafe; znebimo se lahko zadnjega člena $\frac{2}{\Delta - 1}$.
+\begin{izrek}{{\cite[izrek 4]{gentner2018bounds}}}
+    \label{izr:zgornja-meja-gentner}
+    Za povezan graf $G$ z največjo stopnjo $\Delta \geq 3$ velja
+    \[ Z(G) \leq \frac{\Delta-2}{\Delta-1} n \]
+    natanko tedaj, ko $G$ ni eden izmed $K_{\Delta + 1}, K_{\Delta, \Delta}, K_{\Delta-1, \Delta}, G_1, G_2$, kjer sta $G_1$ in $G_2$ grafa, prikazana na sliki~\ref{fig:g1g2}.
+\end{izrek}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {};
+        \node (2) at (1,0) {};
+        \node (3) at (3,0) {};
+        \node (4) at (2,2) {};
+        \node (5) at (2,-2) {};
+        \end{scope}
+
+        \path[-,thick,draw]
+        (1) edge (4)
+        (1) edge (5)
+        (2) edge (3)
+        (2) edge (4)
+        (2) edge (5)
+        (3) edge (4)
+        (3) edge (5);
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,3) {};
+        \node (2) at (6,3) {};
+        \node (3) at (0,-3) {};
+        \node (4) at (6,-3) {};
+        \node (c1) at (3,1.5) {};
+        \node (c2) at (3,0) {};
+        \node (c3) at (3,-1.5) {};
+        \end{scope}
+
+        \path[-,thick,draw]
+        (1) edge (2)
+        (3) edge (4);
+
+        \foreach \i in {1,...,4} {
+            \foreach \j in {1,...,3} {
+                \path[-,thick,draw] (\i) edge (c\j);
+            }
+        }
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Prikazana sta grafa $G_1$ (levo) in $G_2$ (desno), za katera zgornja meja iz izreka~\ref{izr:zgornja-meja-gentner} ne velja.}
+    \label{fig:g1g2}
+\end{figure}
+
+\hl{TODO: spodnja meja (v povezavi z ožino).}
+
 \subsection{Povezave z drugimi grafovskimi parametri}
 
 
