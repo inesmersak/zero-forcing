@@ -953,6 +953,7 @@ Poln dvodelni graf $K_{m,n}$ je tak graf na $m+n$ vozliščih, kjer lahko množi
     \label{fig:polni-dvodelni-graf}
 \end{figure}
 \begin{trditev}
+    \label{trd:polni-dvodelni-graf}
     $Z(K_{m,n}) = m + n - 2$.
 \end{trditev}
 \begin{proof}
@@ -1903,7 +1904,10 @@ Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing
 
 \begin{izrek}{\cite[izrek 3.4]{amos2015kforcing}}
     Naj bo $k$ pozitivno celo število. Imejmo graf $G$ z $n \geq 2$ in naj za stopnje vozlišč velja $\Delta \geq k, \delta \geq 1$. Potem za število $k$-prisile velja naslednja zgornja meja
-    \[ F_k(G) \leq \frac{(\Delta - k + 1)n}{\Delta - k + 1 + \min\{\delta,k\}}. \]
+    \begin{equation}
+        \label{eq:kprisila-zgornja-meja}
+        F_k(G) \leq \frac{(\Delta - k + 1)n}{\Delta - k + 1 + \min\{\delta,k\}}
+    \end{equation}
 \end{izrek}
 
 \begin{posledica}
@@ -1922,12 +1926,46 @@ Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing
 \begin{posledica}
     Za graf $G$ z vsaj 2 vozliščema in najmanjšo stopnjo $\delta \geq 1$ (nimamo izoliranih vozlišč) za ničelno prisilo velja naslednja zgornja meja
     \begin{equation}
-        Z(G) = F_1(G) \leq \frac{\Delta}{\Delta + 1} n,
         \label{eq:zgornja-meja-zf}
+        Z(G) = F_1(G) \leq \frac{\Delta}{\Delta + 1} n,
     \end{equation}
     ki je tesna za $K_{\Delta + 1}$ z $\Delta \geq 1$.
 \end{posledica}
 
+Za primera $k=1$ in $k=2$ pa obstaja še boljša meja, če predpostavimo povezanost grafa $G$. Graf je \emph{$k$-povezan}, če ima več kot $k$ vozlišč in ob odstranitvi poljubne podmnožice manj kot $k$ vozlišč preostanek inducira povezan podgraf.
+\begin{izrek}{\cite[izrek 4.4]{amos2015kforcing}}
+    Naj bo $k$ pozitivno celo število. Imejmo $k$-povezan graf $G$ z $n > k$ in $\Delta \geq 2$. Potem velja
+    \begin{equation}
+        \label{eq:kprisila-zgornja-meja-povezan}
+        F_k(G) \leq \frac{(\Delta - 2)n + 2}{\Delta + k -2},
+    \end{equation}
+    meja je tesna.
+\end{izrek}
+Tesnost meje ponovno vidimo, če vzamemo graf $K_{\Delta + 1}$ z $\Delta \geq k$ in je $k=1$ ali $k=2$. Dobimo
+\[  F_k(G) \leq \frac{(\Delta - 2)(\Delta + 1) + 2}{\Delta + k -2} = \frac{\Delta^2 - \Delta}{\Delta + k -2} = \frac{\Delta(\Delta - 1)}{\Delta + k -2}, \]
+za $k = 1$ torej dobimo $\Delta$, kar vemo, da je enako $Z(K_{\Delta + 1})$, za $k = 2$ pa $\Delta - 1$, kar je enako $F_2(K_{\Delta + 1})$, meji sta v teh primerih tesni.
+
+Če je $k \geq 3$, potem nam~\eqref{eq:kprisila-zgornja-meja} da boljšo mejo kot~\eqref{eq:kprisila-zgornja-meja-povezan}:
+\begin{align*}
+\frac{(\Delta - k + 1)n}{\Delta - k + 1 + \min\{\delta,k\}} &\leq \frac{(\Delta - 2)n}{\Delta - k + 1 + k}
+\leq \frac{(\Delta - 2)n}{\Delta + 1} \leq \frac{(\Delta - 2)n}{\Delta + k - 2} \\
+&\leq \frac{(\Delta - 2)n + 2}{\Delta + k - 2},
+\end{align*}
+pri čemer smo upoštevali trivialni neenakosti $1 - k \leq -2$ (pri prvi zgornji neenakosti) in $k - 2 \geq 1$ (pri tretji zgornji neenakosti) za $k \geq 3$ ter dejstvo, da iz $k$-povezanosti grafa sledi $\delta \geq k$ (v nasprotnem primeru bi poiskali vozlišče z minimalno stopnjo $\delta < k$, odstranili vse njegove sosede in dobili izolirano vozlišče, induciran podgraf preostanka ne bi bil povezan, torej bi imeli protislovje s predpostavko $k$-povezanosti).
+
+\begin{posledica}
+    Za povezan graf $G$ z $\Delta \geq 2$ velja
+    \begin{equation}
+        \label{eq:zgornja-meja-zf-povezan}
+        Z(G) = F_1(G) \leq \frac{(\Delta - 2)n + 2}{\Delta - 1},
+    \end{equation}
+    meja je tesna za $K_{\Delta + 1}$ in $K_{\Delta, \Delta}$ za $\Delta \geq 2$.
+\end{posledica}
+\begin{proof}
+    Tesnost meje za $K_{\Delta + 1}$ smo dokazali zgoraj. Za $K_{\Delta, \Delta}$ dobimo
+    \[ Z(K_{\Delta, \Delta}) \leq \frac{(\Delta - 2)2\Delta + 2}{\Delta - 1} = \frac{2(\Delta^2 - 2 \Delta + 1)}{\Delta - 1} = \frac{2(\Delta- 1)^2}{\Delta - 1} = 2 (\Delta-1), \]
+    iz trditve~\ref{trd:polni-dvodelni-graf} pa vemo, da je $Z(K_{\Delta, \Delta}) = 2\Delta - 2$, torej je meja tesna.
+\end{proof}
 \subsection{Povezave z drugimi grafovskimi parametri}
 
 
