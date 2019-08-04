@@ -106,6 +106,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \newtheorem{izrek}[definicija]{Izrek}
 \newtheorem{trditev}[definicija]{Trditev}
 \newtheorem{posledica}[definicija]{Posledica}
+\newtheorem{domneva}[definicija]{Domneva}
 
 \numberwithin{equation}{section}  % števec za enačbe zgleda kot (2.7) in se resetira v vsakem poglavju
 
@@ -1971,7 +1972,7 @@ pri čemer smo upoštevali trivialni neenakosti $1 - k \leq -2$ (pri prvi zgornj
     torej je meja tesna tudi za cikel.
 \end{proof}
 
-Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za katere je meja~\eqref{eq:zgornja-meja-zf-povezan} dosežena~\cite{lu2016proof}. V~\cite{gentner2018bounds} je dokazano, da lahko mejo precej izboljšamo, če izključimo te in še kakšne grafe; znebimo se lahko zadnjega člena $\frac{2}{\Delta - 1}$.
+Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za katere je meja~\eqref{eq:zgornja-meja-zf-povezan} dosežena~\cite{lu2016proof, gentner2016extremal}. V~\cite{gentner2018bounds} je dokazano, da lahko mejo precej izboljšamo, če izključimo te in še kakšne grafe; znebimo se lahko zadnjega člena $\frac{2}{\Delta - 1}$.
 \begin{izrek}{{\cite[izrek 4]{gentner2018bounds}}}
     \label{izr:zgornja-meja-gentner}
     Za povezan graf $G$ z največjo stopnjo $\Delta \geq 3$ velja
@@ -2003,7 +2004,7 @@ Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za 
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \begin{tikzpicture}[scale=0.7]
+        \begin{tikzpicture}[scale=0.65]
         \begin{scope}[every node/.style={circle,thick,draw}]
         \node (1) at (0,3) {};
         \node (2) at (6,3) {};
@@ -2029,7 +2030,20 @@ Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za 
     \label{fig:g1g2}
 \end{figure}
 
-\hl{TODO: spodnja meja (v povezavi z ožino).}
+Poglejmo še rezultate za spodnjo mejo ničelne prisile.
+\begin{trditev}{{\cite[izrek 3]{davila2014bounds}}}
+    Imejmo graf $G$ z ožino $g \geq 5$ in najmanjšo stopnjo vozlišča $\delta \geq 2$. Potem za ničelno prisilo velja spodnja meja
+    \[ Z(G) \geq 2 \delta - 2.  \]
+\end{trditev}
+Pri tem je \emph{ožina} dolžina najkrajšega cikla v grafu, trditev torej obravnava grafe, ki ne vsebujejo trikotnikov ali kvadratov. Ta meja je v~\cite{davila2014bounds} izboljšana za grafe, ki imajo kakšno prerezno vozlišče ali povezavo. V istem članku avtorji postavijo splošno domnevo glede spodnje meje:
+\begin{domneva}
+    \label{domn:spodnja-meja}
+    Naj bo $G$ graf z ožino $g \geq 3$ in najmanjšo stopnjo $\delta \geq 2$. Potem velja
+    \[ Z(G) \geq (g-3)(\delta -2) + \delta. \]
+\end{domneva}
+Domnevo tudi dokažejo za grafe z ožino $g > 6$ in dovolj velik $\delta$, neodvisen od~$n$. Za $g=3$ dobimo $Z(G) \geq \delta$, kar je že znana spodnja meja~\eqref{eq:trv-spodnja-meja}. Za $g = 4$ je spodnja meja dokazana v~\cite{gentner2016extremal}: za grafe brez trikotnikov dokažejo, da je spodnja meja res $Z(G) \geq 2\delta - 2$. Za $g = 5$ in $g = 6$ je domneva dokazana v~\cite{gentner2018bounds}. V~\cite{davila2018forcing} jo dokažejo še za vrednosti $g \in \{7, 8, 9, 10\}$ ne glede na velikost najmanjše stopnje $\delta \geq 2$. Domneva je dokončno dokazana v~\cite{davila2018lower}, kjer podajo dokaz za $g \geq 5$. 
+\hl{TODO: spodnja meja je tesna ... v temu clanku ki dokonca dokaz}
+
 
 \subsection{Povezave z drugimi grafovskimi parametri}
 
