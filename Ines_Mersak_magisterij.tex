@@ -267,7 +267,7 @@ V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa
 
 Graf $H$ je \emph{podgraf} grafa $G$, če velja $V(H) \subseteq V(G)$ in $E(H) \subseteq E(G)$. $H$ je \emph{vpet} podgraf, če velja $V(H) = V(G)$. $H$ je podgraf, \emph{induciran} z množico vozlišč $V_H \subseteq V(G)$, če velja $E(H) = \{ \{ u,v \} \in E(G) \mid u \in V_H \land v \in V_H \}$. Zapišemo tudi $H = G[V_H]$.
 
-Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina vozlišča} $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov. Največjo stopnjo nekega vozlišča v grafu $G$ bomo označili z $\Delta(G)$, najmanjšo pa z $\delta(G)$. Kadar je očitno, za kateri graf gre, bomo pisali kar $\Delta$ in $\delta$.
+Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina} $N(u)$ vozlišča $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{zaprta soseščina} $N[u]$ poleg sosedov vsebuje še samo vozlišče $u$, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov (oziroma velikost njegove soseščine). Največjo stopnjo nekega vozlišča v grafu $G$ bomo označili z $\Delta(G)$, najmanjšo pa z $\delta(G)$. Kadar je očitno, za kateri graf gre, bomo pisali kar $\Delta$ in $\delta$. Če velja $\delta(G) = \Delta(G)$, rečemo, da je graf $G$ \emph{regularen}.
 
 \subsection{Produkti grafov}
 V delu si bomo ogledali tudi rezultate za nekatere produkte grafov, zato jih najprej definirajmo in ilustrirajmo s primeri.
@@ -2004,7 +2004,7 @@ Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za 
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \begin{tikzpicture}[scale=0.65]
+        \begin{tikzpicture}[scale=0.6]
         \begin{scope}[every node/.style={circle,thick,draw}]
         \node (1) at (0,3) {};
         \node (2) at (6,3) {};
@@ -2042,10 +2042,50 @@ Pri tem je \emph{ožina} dolžina najkrajšega cikla v grafu, trditev torej obra
     \[ Z(G) \geq (g-3)(\delta -2) + \delta. \]
 \end{domneva}
 Domnevo tudi dokažejo za grafe z ožino $g > 6$ in dovolj velik $\delta$, neodvisen od~$n$. Za $g=3$ dobimo $Z(G) \geq \delta$, kar je že znana spodnja meja~\eqref{eq:trv-spodnja-meja}. Za $g = 4$ je spodnja meja dokazana v~\cite{gentner2016extremal}: za grafe brez trikotnikov dokažejo, da je spodnja meja res $Z(G) \geq 2\delta - 2$. Za $g = 5$ in $g = 6$ je domneva dokazana v~\cite{gentner2018bounds}. V~\cite{davila2018forcing} jo dokažejo še za vrednosti $g \in \{7, 8, 9, 10\}$ ne glede na velikost najmanjše stopnje $\delta \geq 2$. Domneva je dokončno dokazana v~\cite{davila2018lower}, kjer podajo dokaz za $g \geq 5$. 
-\hl{TODO: spodnja meja je tesna ... v temu clanku ki dokonca dokaz}
+Poleg tega je spodnja meja tesna za nekatere družine grafov, npr.~cikle in polne dvodelne grafe, pa tudi za nekatere specifične grafe, med drugimi tudi za Petersenov graf~\cite{davila2014bounds}.
 
 
 \subsection{Povezave z drugimi grafovskimi parametri}
+
+Poglejmo si še, kakšne povezave ima ničelna prisila z drugimi grafovskimi pojmi, kot so npr.~dominacija in neodvisna množica.
+
+\subsubsection{Dominacija}
+
+\emph{Dominacijska množica} $D$ grafa $G$ je taka podmnožica vozlišč, da za vsako vozlišče grafa velja, da je v $D$ ali je sosednje vozlišču iz $D$ (pravimo, da je vsako vozlišče \emph{dominirano}). Velikost najmanjše dominacijske množice je \emph{dominacijsko število} $\gamma(G)$ grafa $G$.
+Če dodamo še pravilo, da je vozlišče dominirano tudi, če je edini nedominirani sosed nekega dominiranega vozlišča, in ta postopek ponavljamo, dobimo \emph{električno dominacijo}. Problem je dobil ime iz motivacije, ki je nadzor električnih omrežij, kjer želimo s čim manj nadzornimi napravami pokriti cel sistem.
+\begin{definicija}
+    Množica $S \subseteq$ je \emph{električna dominacijska množica}, če so po koncu apliciranja naslednjih pravil dominirana vsa vozlišča grafa:
+    \begin{enumerate}
+        \item vsa vozlišča iz $\bigcup_{s \in S} N[s]$ so dominirana,
+        \item če je vozlišče $u$ dominirano in ima natanko enega soseda $v$, ki ni dominiran, potem tudi $v$ postane dominiran.
+    \end{enumerate}
+    Velikost najmanjše take množice je \emph{električno dominacijsko število} $\gamma_P(G)$ grafa $G$.
+\end{definicija}
+Očitno je problem povezan z ničelno prisilo, saj je 2.~pravilo ekvivalentno širjenju barve. Opazimo, da za graf $G$ velja
+\[ S \text{ električna dominacijska množica} \iff N[S] \text{ množica ničelne prisile.} \]
+
+Za veliko družin grafov je težko dobiti spodnjo mejo električnega dominacijskega števila (dolgi, tehnični dokazi), zato je zaželena splošna spodnja meja, ki jo dobimo s pomočjo ničelne prisile. Pri tem nam pride prav naslednja lema:
+
+\begin{lema}{{\cite[lema 2]{dean2011power}}}
+    \label{lem:dom-zf-stopnje}
+    Naj bo $\{u_1, u_2, \ldots u_k \}$ električna dominacijska množica grafa $G$ brez izoliranih vozlišč. Potem za ničelno prisilo velja
+    \[ Z(G) \leq \sum_{i=1}^{k} \deg(u_i). \]
+\end{lema}
+
+\begin{izrek}{{\cite[izrek 3.2]{benson2015power}}}
+    Imejmo graf $G$ z vsaj eno povezavo in največjo stopnjo vozlišča $\Delta$. Potem velja
+    \[ \gamma_P(G) \geq \left\lceil \frac{Z(G)}{\Delta} \right\rceil, \]
+    meja je tesna.
+\end{izrek}
+\begin{proof}
+    Imejmo električno dominacijsko množico $\{u_1, u_2, \ldots u_k \}$, pri čemer je $k = \gamma_P(G)$. Če graf $G$ nima izoliranih vozlišč, potem po lemi~\ref{lem:dom-zf-stopnje} velja
+    \[ Z(G) \leq \sum_{i=1}^{k} \deg(u_i) \leq k \Delta = \gamma_P(G) \Delta, \]
+    delimo z $\Delta$ in upoštevamo, da je $\gamma_P(G)$ celo število, izrek sledi.
+
+    Če ima graf $G$ izolirana vozlišča, potem vsako izolirano vozlišče prispeva 1 k ničelni prisili in k električni dominaciji. Če vzamemo podgraf brez izoliranih vozlišč, potem zgornja neenakost velja, ko pa izolirana vozlišča dodamo nazaj, se z vsakem dodanim izoliranim vozliščem leva stran ($Z(G)$) poveča za 1, desna pa za $\Delta$, torej neenakost še vedno velja in rezultat drži tudi za grafe z izoliranimi vozlišči.
+
+    Meja je tesna za polne grafe $K_n$, saj velja $Z(K_n) = \Delta(K_n) = n-1$, za električno dominacijsko število pa je očitno, da velja $\gamma_P(K_n) = 1$, saj je vsako vozlišče sosedno vsem ostalim.
+\end{proof}
 
 
 % Literatura:
