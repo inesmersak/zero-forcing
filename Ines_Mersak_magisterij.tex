@@ -2111,6 +2111,38 @@ Za ničelno prisilo in povezano dominacijo torej sledi
 
 (S pomočjo te povezave med $k$-prisilo in $k$-dominacijo, natančneje z lemo~\ref{lem:k-prisila-povezana-k-dominacija}, je v~\cite{amos2015kforcing} dokazana zgornja meja $k$-ničelne prisile za $k$-povezane grafe~\eqref{eq:kprisila-zgornja-meja-povezan}, navedena v prejšnjem podpoglavju.)
 
+Še en pojem iz dominacije je \emph{Grundyjevo dominacijsko število}: to je dolžina najdaljšega dominacijskega zaporedja  za graf $G$, označimo $\gamma_{gr} (G)$. \emph{Dominacijsko zaporedje} grafa $G$ je tako zaporedje njegovih vozlišč, da vsako vozlišče zaporedja dominira vsaj eno prej še nedominirano vozlišče.
+Zapisano formalno, če imamo dominacijsko zaporedje $S=(u_1,\ldots,u_k)$, potem je $\{u_1, \ldots, u_k\}$ dominacijska množica in za vsako vozlišče $u_i$ v zaporedju mora držati
+\[ N[u_i] \setminus \bigcup_{j=1}^{i-1} N[u_j] \neq \emptyset. \]
+Povedano drugače, vozlišče $u$, ki ga dodamo v zaporedje $S$, mora dominirati vsaj eno izmed vozlišč, ki ga ne dominira nobeno izmed prejšnjih v zaporedju, ali pa $u$ ne sme biti dominirano, preden ga dodamo. (Tukaj smo malo priredili uporabo besede ``dominira'', da dodano vozlišče $u$ dominira tudi samega sebe, kar pa ne spremeni ničesar.)
+
+Ena izmed različic Grundyjeve dominacije je \emph{Z-Grundyjevo dominacijsko število}, označimo $\gamma^Z_{gr}(G)$, ki je dolžina najdaljšega Z-dominacijskega zaporedja, kar pomeni, da mora vsako vozlišče v zaporedju dominirati vsaj enega do zdaj še ne dominiranega soseda. (Razlika je v tem, da vozlišče samo tukaj ne šteje.) Če zapišemo formalno, za Z-dominacijsko zaporedje $S=(u_1,\ldots,u_k)$ velja, da je $\{u_1, \ldots, u_k\}$ dominacijska množica  (rekli ji bomo tudi \emph{Z-množica}) in za vsako vozlišče $u_i$ v zaporedju mora držati
+\[ N(u_i) \setminus \bigcup_{j=1}^{i-1} N[u_j] \neq \emptyset. \]
+Ker je ta različica bolj omejena kot prva in iščemo najdaljše zaporedje, očitno velja
+\begin{equation}
+\label{eq:grundy-zgrundy}
+\gamma_{gr}^Z \leq \gamma_{gr}.
+\end{equation}
+
+Izkaže se~\cite{bresar2017grundy}, da je Z-Grundyjeva dominacija povezana z ničelno prisilo (zato ima v imenu črko ``Z'', ki pride iz ``zero forcing''):
+\begin{izrek}{{\cite[izrek 2.2]{bresar2017grundy}}}
+    \label{izr:prisila-zgrundy}
+    Za graf $G$ brez izoliranih vozlišč velja
+    \[ \gamma^Z_{gr} + Z(G) = n .\]
+    Pri tem je komplement najmanjše množice ničelne prisile grafa $G$ največja Z-množica grafa $G$, in obratno.
+\end{izrek}
+Zaradi povezave~\eqref{eq:grundy-zgrundy} med Grundyjevo in Z-Grundyjevo dominacijo iz zgornjega izreka sledi
+\begin{posledica}
+    Za graf $G$ brez izoliranih vozlišč velja
+    \[ \gamma_{gr}(G) + Z(G) \geq n. \]
+\end{posledica}
+
+Avtorji~\cite{bresar2017grundy} s pomočjo izreka~\ref{izr:prisila-zgrundy} določijo vrednosti ničelne prisile nekaterih produktov grafov znanih družin, med drugim krepkega produkta med ciklom in potjo:
+\begin{trditev}{{\cite[trditev 2.5.]{bresar2017grundy}}}
+    Za $n \geq 3$ in $m \geq 2$ velja
+    \[ Z(C_n \boxtimes P_m) = 2m + n - 2 .\]
+\end{trditev}
+
 \subsection{Neodvisnostno število}
 
 
@@ -2155,4 +2187,5 @@ framesep=2mm]{csharp}
     */
     const double pi = 3.1415926535
 \end{minted}
+
 \end{document}
