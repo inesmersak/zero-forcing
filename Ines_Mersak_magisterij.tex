@@ -148,6 +148,8 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \newdimen\SOUL@dimen
 \makeatother
 
+%\usetikzlibrary{external}
+%\tikzexternalize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%           DOCUMENT           %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2143,8 +2145,126 @@ Avtorji~\cite{bresar2017grundy} s pomočjo izreka~\ref{izr:prisila-zgrundy} dolo
     \[ Z(C_n \boxtimes P_m) = 2m + n - 2 .\]
 \end{trditev}
 
-\subsection{Neodvisnostno število}
+\subsection{Neodvisnostno število in največje prirejanje}
 
+Izkaže se, da lahko za kubične grafe brez krempljev izboljšamo zgornjo mejo~\eqref{eq:zgornja-meja-zf-povezan}, kar sledi iz povezave ničelne prisile in neodvisnostnega števila. Poglejmo si osnovne pojme, da lahko navedemo rezultate, predstavljene v~\cite{davila2018claw}.
+
+Graf je kubičen, če je 3-regularen; velja torej, da so stopnje vseh vozlišč v grafu enake 3. Graf je brez krempljev, če ne vsebuje grafa $K_{1,3}$ (prikazan na sliki~\ref{fig:krempelj}) kot podgrafa.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+    \begin{scope}[every node/.style={circle,thick,draw}]
+    \node (1) at (0,0) {};
+    \node (2) at (3,-1) {};
+    \node (3) at (3,0) {};
+    \node (4) at (3,1) {};
+    \end{scope}
+
+    \path[-,thick,draw]
+    (1) edge (2)
+    (1) edge (3)
+    (1) edge (4);
+    \end{tikzpicture}
+    \caption{Prikazan je graf $K_{1,3}$ (krempelj).}
+    \label{fig:krempelj}
+\end{figure}
+
+\emph{Neodvisna množica (vozlišč)} grafa $G$ je taka množica, da za vsak par vozlišč v njej velja, da sta neodvisna (nista soseda). Velikost največje take množice je \emph{neodvisnostno število} grafa $G$, označimo z $\alpha(G)$.. Podobno, \emph{prirejanje} grafa $G$ je taka množica povezav, ki so paroma neodvisne (nimajo skupnih krajišč). Velikost največjega prirejanja grafa $G$ označimo z $\alpha'(G)$.
+
+Iz zgornje meje ničelne prisile~\eqref{eq:zgornja-meja-zf-povezan} za povezan graf sledi
+\begin{posledica}
+    Za povezan kubičen graf $G$ brez krempljev velja
+    \[ Z(G) \leq \frac{1}{2}n + 1. \]
+\end{posledica}
+
+To mejo se da še malo izboljšati, če izvzamemo graf $K_4$:
+\begin{izrek}{{\cite[izrek 3]{davila2018total}}}
+    Za povezan kubičen graf $G \neq K_4$ brez krempljev velja
+    \[ Z(G) \leq \frac{1}{2} n, \]
+    meja je tesna natanko tedaj, ko je $G$ graf $C_3 \boxempty K_2$ ali $N_2$ (prikazana na sliki~\ref{fig:prizma-ogrlica}).
+\end{izrek}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.8, xscale=0.8]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {};
+        \node (2) at (-2,-1) {};
+        \node (3) at (-2,1) {};
+        \end{scope}
+
+        \begin{scope}[every node/.style={circle,thick,draw}, rotate=180, shift={(-2,0)}]
+        \node (4) at (0,0) {};
+        \node (5) at (-2,-1) {};
+        \node (6) at (-2,1) {};
+        \end{scope}
+
+        \path[-,thick,draw]
+        (1) edge (2)
+        (1) edge (3)
+        (2) edge (3)
+        (4) edge (5)
+        (4) edge (6)
+        (5) edge (6)
+        (1) edge (4)
+        (2) edge (6)
+        (3) edge (5);
+        \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.8]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {};
+        \node (2) at (-1,-1) {};
+        \node (4) at (-1,1) {};
+        \node (3) at (-2,0) {};
+        \end{scope}
+
+        \begin{scope}[every node/.style={circle,thick,draw}, rotate=180, shift={(-2,0)}]
+        \node (5) at (0,0) {};
+        \node (6) at (-1,-1) {};
+        \node (8) at (-1,1) {};
+        \node (7) at (-2,0) {};
+        \end{scope}
+
+        \path[-,thick,draw]
+        (1) edge (2)
+        (2) edge (3)
+        (3) edge (4)
+        (1) edge (4)
+        (1) edge (3)
+        (5) edge (6)
+        (6) edge (7)
+        (7) edge (8)
+        (5) edge (8)
+        (5) edge (7)
+        (2) edge (8)
+        (4) edge (6);
+        \end{tikzpicture}
+    \end{subfigure}
+
+    \caption{Prikazana sta prizma $C_3 \boxempty K_2$ (levo) in diamantna ogrlica $N_2$ (desno).}
+    \label{fig:prizma-ogrlica}
+\end{figure}
+
+Še bolj pa se zgornjo mejo za tak tip grafa da izboljšati z naslednjim izrekom:
+\begin{izrek}{{\cite[izrek 5]{davila2018claw}}}
+    Za povezan kubičen graf $G \neq K_4$ brez krempljev velja
+    \begin{enumerate}
+        \item $Z(G) \leq \alpha(G) + 1$,
+        \item $Z(G) \leq \alpha'(G)$.
+    \end{enumerate}
+    Meji sta tesni za prizmo $C_3 \boxempty K_2$ in diamantno ogrlico $N_2$, za kateri velja $Z(G) = \alpha'(G) = \alpha(G) + 1$.
+\end{izrek}
+
+Ker iz~\cite{faudree1992independent} vemo, da za neodvisnostno število kubičnega grafa $G$ brez krempljev velja $\alpha(G) \leq \frac{2}{5} n$, sledi naslednja zgornja meja za ničelno prisilo tega tipa grafa:
+\begin{posledica}
+    Za povezan kubičen graf $G \neq K_4$ brez krempljev velja
+    \[ Z(G) \leq \frac{2}{5} n + 1. \]
+\end{posledica}
 
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
