@@ -1877,6 +1877,7 @@ V tem poglavju naredimo hiter pregled ostalih rezultatov, povezanih s pojmom ni�
 \subsection{Boljša zgornja in spodnja meja}
 Poglejmo si posplošitev ničelne prisile, ki je bila uvedena v~\cite{amos2015kforcing} in s pomočjo katere so bile v~\cite{amos2015kforcing, gentner2018bounds} dokazane boljše zgornje meje za osnovno ničelno prisilo.
 \begin{definicija}
+    \label{def:k-prisila}
     \emph{Število $k$-prisile} grafa $G$ za pozitivno celo število $k$, označimo $F_k(G)$, je velikost najmanjše take množice $Z \subseteq V$, da velja: če na začetku s črno pobarvamo vozlišča iz $Z$, ostala pa so bela, in upoštevamo pravilo, da črno vozlišče z največ $k$ belimi sosedi povzroči spremembo barve vseh teh, je po koncu postopka pobarvan cel graf $G$. Vse take množice $Z$, kjer je po koncu širjenje barve pobarvan cel graf, pravimo množice $k$-prisile.
 \end{definicija}
 
@@ -1895,7 +1896,8 @@ Poglejmo si vrednosti števila $k$-prisile za nekaj osnovnih družin grafov. Za 
     1, & \text{sicer.}
 \end{cases}
 \]
-Za polni graf pa velja $F_k(K_n) = n-k$, saj ima neko (vsako) črno vozlišče torej $k$ belih sosedov in jim spremeni barvo.
+Za polni graf pa velja $F_k(K_n) = n-k$, saj ima neko (vsako) črno vozlišče torej $k$ belih sosedov in jim spremeni barvo. Očitno je, da za splošen graf velja zgornja meja
+\[ F_k(G) \leq n - k .\]
 
 Očitno je neka množica $k$-prisile $Z$ tudi množica $(k+1)$-prisile: če lahko za začetno množico $Z$ s pravilom, da črno vozlišče s $k$ belimi sosedi spremeni barvo vsem tem, pobarvamo cel graf, ga lahko še toliko bolj, če ima lahko črno vozlišče iz pravila širjenja barve še enega belega soseda več. Vsaka množica $k$-prisile je tudi množica $(k+1)$-prisile, obratno pa seveda ni nujno res; ker iščemo minimum in je množic $k$-prisile torej manj, velja
 \[ F_{k}(G) \geq F_{k+1}(G). \]
@@ -2087,6 +2089,41 @@ Za veliko družin grafov je težko dobiti spodnjo mejo električnega dominacijsk
     Meja je tesna za polne grafe $K_n$, saj velja $Z(K_n) = \Delta(K_n) = n-1$, za električno dominacijsko število pa je očitno, da velja $\gamma_P(K_n) = 1$, saj je vsako vozlišče sosedno vsem ostalim.
 \end{proof}
 
+S pomočjo te povezave avtorji v~\cite{benson2015power} določijo električno dominacijsko število in število ničelne prisile (oz.~meje) za nekatere produkte znanih družin oziroma splošnih grafov, med drugim npr.~ničelno prisilo za leksikografski produkt med dvema regularnima grafoma, kjer ima prvi nizko dominacijsko število, drugi pa nizko električno dominacijsko število.
+
+Oglejmo si še en tip dominacije, za katerega se izkaže, da je povezana z ničelno prisilo. Povezana dominacijska množica grafa $G$ je taka dominacijska množica, ki inducira povezan podgraf v grafu $G$. \emph{Povezano dominacijsko število} $\gamma_c(G)$ je torej velikost najmanjše take množice za nek graf $G$.
+
+Dominacijo lahko (podobno kot prisilo v~\ref{def:k-prisila}) posplošimo: za $k$-dominacijsko množico $D$ grafa $G$ velja, da je vsako vozlišče, ki ni v $D$, sosednje vsaj $k$ vozliščem iz $D$. Velikost najmanjše take množica je \emph{$k$-dominacijsko število} grafa $G$, označimo $\gamma_k(G)$. Za $k = 1$ očitno dobimo navadno dominacijo.
+
+Sedaj lahko definiramo posplošeno verzijo povezane dominacije: povezana $k$-dominacijska množica je taka $k$-dominacijska množica, ki inducira povezan podgraf, \emph{povezano $k$-dominacijsko število} $\gamma_{k,c}(G)$ pa velikost najmanjše take množice.
+
+Izkaže se, da velja naslednja povezava med $k$-prisilo in $k$-dominacijo:
+\begin{lema}{{\cite[lema 4.1]{amos2015kforcing}}}
+    \label{lem:k-prisila-povezana-k-dominacija}
+    Naj bo $G$ $k$-povezan graf za neko pozitivno celo število $k < n$. Naj bo $F$ najmanjša taka množica $k$-prisile, da je $G[V \setminus F]$ povezan podgraf. Potem je $V \setminus F$ povezana $k$-dominacijska množica grafa $G$.
+\end{lema}
+Posledično lahko dokažemo sledečo zgornjo mejo $k$-prisile:
+\begin{posledica}{{\cite[posledica 4.2]{amos2015kforcing}}}
+    Naj bo $G$ $k$-povezan graf za neko pozitivno celo število $k < n$. Potem za $k$-prisilo in $k$-dominacijo tega grafa velja naslednja povezava:
+    \[ F_k(G) \leq n - \gamma_{k,c}(G). \]
+\end{posledica}
+\begin{proof}
+    Naj bo $F$ najmanjša taka množica $k$-prisile, da je $G[V \setminus F]$ povezan podgraf. (Taka množica $k$-prisile vedno obstaja, saj lahko za $F$ vzamemo vsa vozlišča, razen enega, torej $V \setminus F$ inducira trivialen povezan podgraf.) Očitno velja $F_k(G) \leq |F|$, saj $F$ ustreza dodatnim omejitvam povezanosti.
+    Po lemi~\ref{lem:k-prisila-povezana-k-dominacija} je $V \setminus F$ povezana $k$-dominacijska množica grafa $G$, velja torej $\gamma_{k, c}(G) \leq |V \setminus F| = n - |F|$. Če preuredimo, dobimo $|F| \leq n - \gamma_{k, c}(G)$, skupaj s prvo neenakostjo torej
+    \[ F_k(G) \leq |F| \leq  n - \gamma_{k, c}(G).\]
+\end{proof}
+
+Za ničelno prisilo in povezano dominacijo torej sledi
+\begin{posledica}
+    Za povezan graf $G$ z $n \geq 2$ velja
+    \[ Z(G) = F_1(G) \leq n - \gamma_c(G), \]
+    meja je tesna.
+\end{posledica}
+\begin{proof}
+    Meja je tesna za polni graf $K_n$, za katerega velja $Z(K_n) = n-1$ in $\gamma_c(G) = 1$ (vemo, da je $\gamma(G) = 1$, eno vozlišče pa je trivialno povezan podgraf).
+\end{proof}
+
+(S pomočjo te povezave med $k$-prisilo in $k$-dominacijo, natančneje z lemo~\ref{lem:k-prisila-povezana-k-dominacija}, je v~\cite{amos2015kforcing} dokazana zgornja meja $k$-ničelne prisile za $k$-povezane grafe~\eqref{eq:kprisila-zgornja-meja-povezan}, navedena v prejšnjem podpoglavju.)
 
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
