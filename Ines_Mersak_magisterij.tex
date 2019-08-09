@@ -1699,20 +1699,6 @@ Red prostorske zahtevnosti bi lahko zmanjšali, če bi namesto shranjevanja nepo
 
 \hl{TODO: Implementacija vseh treh v praksi. Tradeoff verjetno ne bo tako vplival, kot je teoretično.}
 
-%\begin{minted}[mathescape,
-%linenos,
-%numbersep=5pt,
-%gobble=4,
-%frame=lines,
-%framesep=2mm]{csharp}
-%    string title = "This is a Unicode in the sky"
-%    /*
-%    Defined as $\pi=\lim_{n\to\infty}\frac{P_n}{d}$ where $P$ is the perimeter
-%    of an $n$-sided regular polygon circumscribing a
-%    circle of diameter $d$.
-%    */
-%    const double pi = 3.1415926535
-%\end{minted}
 \subsection{Eksponenten algoritem}
 Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če imamo dan splošen graf $G$ in ne vemo ničesar o njegovem številu ničelne prisile $Z(G)$, lahko preiščemo vse možnosti. Za vsako podmnožico vozlišč grafa $G$ preverimo, ali je množica ničelne prisile, in sledimo, katera je do zdaj najmanjša taka množica. Pri tem uporabimo izboljšani algoritem za preverjanje, zapisan v algoritmu~\ref{alg:preveri-zf-izboljsan}. Postopek je opisan v algoritmu~\ref{alg:eksponentni-izracun-zf}.
 \begin{algorithm}[!h]
@@ -2125,6 +2111,9 @@ Za ničelno prisilo in povezano dominacijo torej sledi
 
 (S pomočjo te povezave med $k$-prisilo in $k$-dominacijo, natančneje z lemo~\ref{lem:k-prisila-povezana-k-dominacija}, je v~\cite{amos2015kforcing} dokazana zgornja meja $k$-ničelne prisile za $k$-povezane grafe~\eqref{eq:kprisila-zgornja-meja-povezan}, navedena v prejšnjem podpoglavju.)
 
+\subsection{Neodvisnostno število}
+
+
 % Literatura:
 % Primer navajanja na http://www.fmf.uni-lj.si/storage/24240/LiteraturaM.pdf,
 % ampak bi moral stil poskrbeti za vse. Reference se uredijo po abecedi.
@@ -2146,4 +2135,24 @@ Za ničelno prisilo in povezano dominacijo torej sledi
 %\addcontentsline{toc}{section}{\indexname} % dodajmo v kazalo
 %\printindex
 
+\newpage
+
+\appendix
+
+\section{Priloga: koda algoritmov}
+
+\begin{minted}[mathescape,
+linenos,
+numbersep=5pt,
+gobble=4,
+frame=lines,
+framesep=2mm]{csharp}
+    string title = "This is a Unicode in the sky"
+    /*
+    Defined as $\pi=\lim_{n\to\infty}\frac{P_n}{d}$ where $P$ is the perimeter
+    of an $n$-sided regular polygon circumscribing a
+    circle of diameter $d$.
+    */
+    const double pi = 3.1415926535
+\end{minted}
 \end{document}
