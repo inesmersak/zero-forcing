@@ -125,7 +125,11 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \newcommand{\ZFOdl}{\textsf{ZF-Odl}}
 
 \DeclareMathOperator{\boxempty}{\Box}
+\DeclareMathOperator{\mr}{mr}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\korang}{korang}
 \DeclareMathOperator{\fms}{fms}
+\DeclareMathOperator{\cc}{cc}
 
 % bold matematika znotraj \textbf{ }, tudi v naslovih, kot \omega spodaj
 \makeatletter \g@addto@macro\bfseries{\boldmath} \makeatother
@@ -728,14 +732,97 @@ Sedaj lahko definiramo množico vseh (simetričnih) matrik grafa $G$ nad poljem~
 \[ S(\F, G) = \{A \in Sym_n(\F) \mid \G(A) = G \}. \]
 Ideja za imenom ničelne prisile je sledeča. Črna vozlišča predstavljajo tiste koordinate v vektorju, za katere zahtevamo, da so enake nič, bela vozlišča pa so tiste koordinate, za katere (še) ni nobene zahteve. Sprememba barve $i$-tega vozlišča iz bele v črno pomeni, da mora $i$-ta koordinata biti nič pri predpostavki, da so vse ostale koordinate, katerih vozlišča so trenutno črna, enake nič in je vektor v jedru matrike grafa $G$. Brez dokaza navedimo
 \begin{trditev}[{\cite[trditev 2.3]{aim2008minimumrank}}]
+    \label{trd:rang2}
     Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake 0, potem je $x = 0$.
 \end{trditev}
 
+Ker imamo povezavo med grafom in matrikami, lahko definiramo tudi \emph{minimalni rang} in \emph{maksimalen korang} grafa $G$:
+\begin{gather*}
+    \mr^\F(G) = \min \{ \rang(A) \mid A \in S(\F, G) \} \\
+    M^\F(G) = \max \{ \korang(A) \mid A \in S(\F, G) \}
+\end{gather*}
+pri čemer je $\korang(A) = \dim(\ker(A))$. Ker za matriko $A$ velikosti $m \times n$ nad nekim poljem $\F$ velja $\rang(A) + \korang(A) = n$, bosta minimalni rang in maksimalen korang očitno dosežena pri isti matriki (saj če je rang matrike $A$ manjši od ranga matrike istih dimenzij $B$, mora biti korang matrike $A$ večji od koranga matrike $B$). Prav tako iz te enakosti očitno sledi, da velja
+\begin{equation}
+    \label{eq:mr+m=n}
+    \mr^\F(G) + M^\F(G) = n(G).
+\end{equation}
+Če velja $\F = \R$, bomo oznako za polje izpuščali in pisali samo $S(G), \mr(G), M(G)$.
+
+Definiramo lahko tudi \emph{pozitivno semidefiniten minimalni rang} $\mr_+(G)$ grafa $G$ nad $\R$, kjer upoštevamo samo tiste matrike grafa $G$, ki so pozitivno semidefinitne. Očitno velja $\mr(G) \leq \mr_+(G)$.
+
+S pomočjo kličnega pokritja lahko minimalni rang grafa omejimo od zgoraj. Nek induciran podgraf velikosti $n'$ grafa $G$ je klika, če je izomorfen polnemu grafu na $n'$ vozliščih (vsa vozlišča so sosednja). Množica podgrafov klik, za katero velja, da je vsaka povezava grafa $G$ vsebovana vsaj v eni izmed klik, je \emph{klično pokritje} grafa $G$. Velikost najmanjše take množice je \emph{število kličnega pokritja} $\cc(G)$ grafa $G$. Velja~\cite{}\hl{TODO}
+\begin{equation}
+\mr(G) \leq \mr_+(G) \leq \cc(G),
+\end{equation}
+saj lahko pozitivno semidefinitno matriko grafa dobimo kot vsoto matrik klik iz kličnega pokritja ranga 1 (in vemo, da velja $\rang(A+B) \leq \rang(A) + \rang(B)$). Poglejmo si preprost primer:
+\begin{primer}
+    Naj bo graf $G$ kot na sliki~\ref{fig:primer-klicno-pokritje}. Najmanjše klično pokritje je očitno sestavljeno iz klike velikosti 3 in klike velikosti 2: $\{2, 3, 4\}, \{1,2\}$.
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[scale=0.9]
+        \begin{scope}[every node/.style={circle,thick,draw}]
+        \node (1) at (0,0) {1};
+        \node (2) at (2,0) {2};
+        \node (3) at (4,1) {3};
+        \node (4) at (4,-1) {4};
+        \end{scope}
+
+        \path[-,thick,draw]
+        (1) edge (2)
+        (2) edge (3)
+        (3) edge (4)
+        (2) edge (4);
+        \end{tikzpicture}
+        \caption{TODO}
+        \label{fig:primer-klicno-pokritje}
+    \end{figure}
+    Eno izmed matrik, ki pripada grafu $G$, lahko zapišemo kot vsoto matrik ranga 1, ki pripadajo tem klikam:
+    \[ A=
+    \begin{bmatrix}
+    1 & 1 & 0 & 0 \\
+    1 & 2 & 1 & 1 \\
+    0 & 1 & 1 & 1 \\
+    0 & 1 & 1 & 1 \\
+    \end{bmatrix} =
+    \begin{bmatrix}
+    0 & 0 & 0 & 0 \\
+    0 & 1 & 1 & 1 \\
+    0 & 1 & 1 & 1 \\
+    0 & 1 & 1 & 1 \\
+    \end{bmatrix} +
+    \begin{bmatrix}
+    1 & 1 & 0 & 0 \\
+    1 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    \end{bmatrix}.
+    \]
+    Matriki na desni strani sta očitno ranga 1 (število linearno neodvisnih stolpcev je enako 1), matrika na levi ($A$) pa je ranga 2 (drugi stolpec je linearna kombinacija prvega in tretjega) in pozitivno semidefinitna (njene lastne vrednosti so $\left\{\frac{1}{2} \left(5+\sqrt{5}\right), \frac{1}{2} \left(5-\sqrt{5}\right), 0, 0 \right\}$).
+\end{primer}
+
+
+Glavna motivacija za uvedbo ničelne prisile je ravno preučevanje minimalnega ranga (oziroma maksimalnega koranga) grafov. Izkaže se, da je število ničelne prisile zgornja meja za maksimalen korang, za kar potrebujemo še sledeč rezultat:
+\begin{trditev}{{\cite[trditev 2.2]{aim2008minimumrank}}}
+    \label{trd:rang1}
+    Imejmo matriko $A \in \F^{n \times n}$ s korangom $\korang(A) > k$. Potem obstaja tak neničelni vektor iz jedra $x \in \ker(A)$, katerega koordinate so enake 0 na poljubnih $k$ indeksih.
+\end{trditev}
+
+Sedaj lahko dokažemo
+\begin{izrek}{{\cite[trditev 2.4]{aim2008minimumrank}}}
+    Imejmo množico ničelne prisile $Z$ grafa $G$. Potem za neko polje $\F$ velja $M^\F(G)  \leq |Z|$ in posledično
+    \begin{equation}
+        \label{eq:zf-korang}
+        M^\F(G) \leq Z(G).
+    \end{equation}
+\end{izrek}
+\begin{proof}
+    S protislovjem: predpostavimo $M^\F(G) > |Z|$ in vzemimo tako matriko $A \in S(\F, G)$, da $\korang(A) > |Z|$. Po trditvi~\ref{trd:rang1} obstaja tak neničelni vektor $x \in \ker(A)$, katerega koordinate so enake 0 na indeksih, pripadajočih vozliščem iz $Z$. Po trditvi~\ref{trd:rang2} pa sledi, da so potem vse koordinate $x$ enake 0, kar je protislovje z neničelnostjo $x$.
+\end{proof}
 
 \section{Ničelna prisila nekaterih razredov grafov}
 \label{sec:osnovni-rezultati}
 
-V tem poglavju si ogledamo, kakšno je število ničilne prisile za nekatere osnovne družine grafov, kot npr.~poti, cikli ali polni grafi.
+V tem poglavju si ogledamo, kakšno je število ničelne prisile za nekatere osnovne družine grafov, kot npr.~poti, cikli ali polni grafi.
 
 \subsection{Poti}
 Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta dve stopnje~1 (krajišči), preostala vozlišča pa so stopnje 2. Za poti velja: 
