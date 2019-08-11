@@ -69,6 +69,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 % Za barvanje source kode
 \usepackage{minted}
 \renewcommand\listingscaption{Program}
+\setminted{fontsize=\footnotesize, frame=lines, linenos, numbersep=5pt, framesep=2mm}
 
 % Za pisanje psevdokode
 \usepackage{algpseudocode}  % za psevdokodo
@@ -1695,7 +1696,7 @@ Ker se bomo dotaknili tudi težavnosti odločitvenih problemov, si poglejmo neka
         \item Odločitveni problem $\Pi$ spada v razred \NP, pišemo $\Pi \in \NP$, če ga lahko rešimo z nedeterminističnim Turingovim strojem s polinomsko časovno zahtevnostjo.
     \end{enumerate}
 \end{definicija}
-Povedano drugače, v razred $\P$ spadajo tisti problemi, za katere poznamo algoritem, ki najde rešitev v polinomskem času. Po drugi strani v $\NP$ spadajo tisti problemi, za katere poznamo algoritem, ki v polinomskem času preveri, ali je dana rešitev pravilna. Spodnja definicija razreda $NP$ je namreč ekvivalentna zgornji \hl{TODO citat}:
+Povedano drugače, v razred $\P$ spadajo tisti problemi, za katere poznamo algoritem, ki najde rešitev v polinomskem času. Po drugi strani v $\NP$ spadajo tisti problemi, za katere poznamo algoritem, ki v polinomskem času preveri, ali je dana rešitev pravilna. Spodnja definicija razreda $\NP$ je namreč ekvivalentna zgornji~\cite[izrek 7.20]{sipser2006complexity}:
 \begin{definicija}
     Problem $\Pi$ je v $\NP$, če obstaja certifikat, polinomske dolžine glede na vhodne podatke, za rešitev in obstaja polinomski algoritem (preverjevalec), ki vrne ``da'', če certifikat za konkreten primer problema dokaže, da je odgovor na problem ``da'', in ``ne'' sicer.
 \end{definicija}
@@ -1739,7 +1740,7 @@ Do zdaj smo govorili samo o težavnosti odločitvenih problemov, kaj pa, če ima
 \subsection{Preverljivost}
 Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Najti želimo algoritem, ki preveri, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. 
 
-Psevdokoda zgornjega postopka je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji. Za graf v tem primeru izberemo predstavitev s seznamom sosedov, implementiranega s seznamom, saj želimo prihraniti na prostoru (če bi izbrali matriko sosednosti, sploh ne bi mogli obravnavati grafov \hl{TODO, ker zgleda ne znam računati prostora}), poleg tega pa ne bomo potrebovali operacij odstranjevanja ali ugotavljati sosednosti med dvema vozliščema, zato je smiselno izbrati bolj preprosto podatkovno strukturo seznam namesto množice. 
+Psevdokoda zgornjega postopka je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji. Za graf v tem primeru izberemo predstavitev s seznamom sosedov, implementiranega s seznamom, saj želimo prihraniti na prostoru. (Če bi izbrali matriko sosednosti, bi že za grafe velikosti 25000 porabili približno 5GB spomina, tudi za redke grafe, kot je na primer pot. Če pa bi pot velikosti 25000 predstavili s seznamom sosedov, bi porabili le nekaj MB.) Poleg tega ne bomo potrebovali operacij odstranjevanja ali ugotavljati sosednosti med dvema vozliščema, zato je smiselno izbrati bolj preprosto podatkovno strukturo seznam namesto množice. 
 
 Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``barvanje'' $barva$ poišče vse nepobarvane sosede vozlišča $u$. Uporablja podatkovno strukturo seznam, ki ima metodo \textsc{dodaj} za dodajanje elementa na konec seznama z amortizirano konstantno časovno zahtevnostjo. Funkcija \textsc{vsiPobarvani} sprejme graf $G$ in trenutno ``barvanje'' $barva$  ter vrne logično vrednost \texttt{true} ali \texttt{false}, odvisno od tega, ali so vsa vozlišča v grafu pobarvana.
 \begin{algorithm}[!h]
@@ -2035,8 +2036,8 @@ Posledično sledi tudi $\NP$-polnost uteženega problema za splošne grafe. To n
 
 Avtor v~\cite[izrek~2.3.8]{aazami2008hardness} za utežen problem dokaže tudi, da je za poljuben fiksen $\epsilon > 0$ $\NP$-težko najti približek rešitve $Z(G,w)$ na $2^{\log^{1-\epsilon}n}$ natančno. \hl{TODO: katera osnova logaritma?} Če bi torej obstajal aproksimativen algoritem s tako konstanto, bi sledilo $\P = \NP$, zato pričakujemo, da takšni aproksimativni algoritmi ne obstajajo.
 
-\subsection{Pregled algoritmov za specifične družine grafov}
-\hl{TODO}
+%\subsection{Pregled algoritmov za specifične družine grafov}
+%\hl{TODO}
 %Greedy nekam?
 %Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
@@ -2474,19 +2475,5 @@ Ker iz~\cite{faudree1992independent} vemo, da za neodvisnostno število kubične
 
 \section{Priloga: implementacija algoritmov}
 
-\begin{minted}[mathescape,
-linenos,
-numbersep=5pt,
-gobble=4,
-frame=lines,
-framesep=2mm]{csharp}
-    string title = "This is a Unicode in the sky"
-    /*
-    Defined as $\pi=\lim_{n\to\infty}\frac{P_n}{d}$ where $P$ is the perimeter
-    of an $n$-sided regular polygon circumscribing a
-    circle of diameter $d$.
-    */
-    const double pi = 3.1415926535
-\end{minted}
-
+\inputminted{c++}{koda/check.cpp}
 \end{document}
