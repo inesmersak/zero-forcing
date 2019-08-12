@@ -55,10 +55,22 @@ bool check_ZFS_queue_set(const Graph& graph, const vector<int>& zfs) {
         }
     }
 
-    while (q.size() > 0) {
+    while (! q.empty()) {
         int u = q.front();
         q.pop();
         colouring[u] = BLACK;
+
+        // Check if u has only one white neighbour
+        if (white_neighbours[u].size() == 1) {
+            int v = pop(white_neighbours[u]);
+            if (forces[v] == NOT_FORCED) {
+                q.push(v);
+                forces[v] = u;
+            }
+        }
+
+        // Remove u from white_neighbours set of all its neighbours and check
+        // whether any of those neighbours now have only one white neighbour.
         for (int v : graph.adjacency_lists[u]) {
             white_neighbours[v].erase(u);
             if (colouring[v] == BLACK && white_neighbours[v].size() == 1) {
