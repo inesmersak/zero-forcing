@@ -94,21 +94,30 @@ int main () {
     bool r = timeit(check_ZFS_naive, K5, vector<int> {1,2,3,4}); */
 
     double p = 0.6;
-    vector<int> Ns = {10, 22, 46, 100, 215, 464, 1000, 2154, 4642, 10000, 15000};
+    vector<int> Ns = {10, 21, 43, 89, 184, 380, 785, 1624, 3360, 6952, 14385, 
+        29764, 61585, 127428, 263666, 545560, 1128838, 2335722, 4832931, 
+        10000000};
     vector<Graph> graphs;
     vector<vector<int>> zfs;
     for (int N : Ns) {
-        graphs.push_back(Graph::random_erdos_renyi(N, p));
-        zfs.push_back(generate_random_zfs(N));
+        graphs.push_back(Graph::path(N));
+        // zfs.push_back(generate_random_zfs(N));
+        zfs.push_back({N-1});
     }
 
     for (int i=0; i < Ns.size(); ++i) {
         cout << "---------------------\n";
         cout << "Graph size: " << Ns[i] << "\n";
-        /* cout << graphs[i]; */
+        // cout << graphs[i];
+        // cout << "ZFS: ";
+        // for (int v : zfs[i]) {
+        //     cout << v << " ";
+        // }
+        // cout << "\n";
+
         timeit(check_ZFS_naive, graphs[i], zfs[i]);
-        // timeit(check_ZFS_queue_set, graphs[i], zfs[i]);
-        timeit(check_ZFS_queue_count, graphs[i], zfs[i]);
+        timeit(check_ZFS_queue<WhiteNeighboursSet>, graphs[i], zfs[i]);
+        timeit(check_ZFS_queue<WhiteNeighboursCount>, graphs[i], zfs[i]);
     }
 
     return 0;
