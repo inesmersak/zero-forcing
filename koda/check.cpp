@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <vector>
 #include "Graph.hpp"
+#include "WhiteNeighbours.hpp"
 #include "utils.hpp"
 
 
@@ -31,7 +32,8 @@ bool check_ZFS_naive(const Graph& graph, const vector<int>& zfs) {
     return all_vertices_coloured(colouring);
 }
 
-bool check_ZFS_queue_set(const Graph& graph, const vector<int>& zfs) {
+template <typename T>
+bool check_ZFS_queue(const Graph& graph, const vector<int>& zfs) {
     vector<int> colouring(graph.vertices_num(), WHITE);
     vector<int> forces(graph.vertices_num(), NOT_FORCED);
     for (int u : zfs) {
@@ -41,13 +43,11 @@ bool check_ZFS_queue_set(const Graph& graph, const vector<int>& zfs) {
     }
 
     queue<int> q;
-    vector<unordered_set<int>> white_neighbours;
+    T white_neighbours = T(&graph, &colouring);
     // Preprocessing
     for (int u=0; u < graph.vertices_num(); ++u) {
-        auto neighbours = find_white_neighbours(graph, u, colouring);
-        white_neighbours.emplace_back(neighbours.begin(), neighbours.end());
-        if (colouring[u] == BLACK && white_neighbours[u].size() == 1) {
-            int v = pop(white_neighbours[u]);
+        if (colouring[u] == BLACK && white_neighbours.size(u) == 1) {
+            int v = white_neighbours.only_white_neighbour(u);
             if (forces[v] == NOT_FORCED) {
                 q.push(v);
                 forces[v] = u;
@@ -61,8 +61,8 @@ bool check_ZFS_queue_set(const Graph& graph, const vector<int>& zfs) {
         colouring[u] = BLACK;
 
         // Check if u has only one white neighbour
-        if (white_neighbours[u].size() == 1) {
-            int v = pop(white_neighbours[u]);
+        if (white_neighbours.size(u) == 1) {
+            int v = white_neighbours.only_white_neighbour(u);
             if (forces[v] == NOT_FORCED) {
                 q.push(v);
                 forces[v] = u;
@@ -72,53 +72,9 @@ bool check_ZFS_queue_set(const Graph& graph, const vector<int>& zfs) {
         // Remove u from white_neighbours set of all its neighbours and check
         // whether any of those neighbours now have only one white neighbour.
         for (int v : graph.adjacency_lists[u]) {
-            white_neighbours[v].erase(u);
-            if (colouring[v] == BLACK && white_neighbours[v].size() == 1) {
-                int w = pop(white_neighbours[v]);
-                if (forces[w] == NOT_FORCED) {
-                    q.push(w);
-                    forces[w] = v;
-                }
-            }
-        }
-    }
-
-    return all_vertices_coloured(colouring);
-}
-
-bool check_ZFS_queue_count(const Graph& graph, const vector<int>& zfs) {
-    vector<int> colouring(graph.vertices_num(), WHITE);
-    vector<int> forces(graph.vertices_num(), NOT_FORCED);
-    for (int u : zfs) {
-        assert_vertex_label_correctness(graph, u);
-        colouring[u] = BLACK;
-        forces[u] = IN_ZFS;
-    }
-
-    queue<int> q;
-    vector<int> white_neighbours_cnt(graph.vertices_num(), 0);
-    // Preprocessing
-    for (int u=0; u < graph.vertices_num(); ++u) {
-        auto neighbours = find_white_neighbours(graph, u, colouring);
-        white_neighbours_cnt[u] = neighbours.size();
-        if (colouring[u] == BLACK && white_neighbours_cnt[u] == 1) {
-            int v = neighbours[0];
-            if (forces[v] == NOT_FORCED) {
-                q.push(v);
-                forces[v] = u;
-            }
-        }
-    }
-
-    while (q.size() > 0) {
-        int u = q.front();
-        q.pop();
-        colouring[u] = BLACK;
-        for (int v : graph.adjacency_lists[u]) {
-            --white_neighbours_cnt[v];
-            if (colouring[v] == BLACK && white_neighbours_cnt[v] == 1) {
-                auto neighbours = find_white_neighbours(graph, v, colouring);
-                int w = neighbours[0];
+            white_neighbours.remove(v, u);
+            if (colouring[v] == BLACK && white_neighbours.size(v) == 1) {
+                int w = white_neighbours.only_white_neighbour(v);
                 if (forces[w] == NOT_FORCED) {
                     q.push(w);
                     forces[w] = v;
