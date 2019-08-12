@@ -9,9 +9,16 @@
 
 #define prn(f, r, t) { std::cout << #f << " = " << r << ", t (ms): " << t << "\n"; }
 
+// some constants describing vertex colour / state
+#define BLACK 0
+#define WHITE 1
+#define IN_ZFS -1
+#define NOT_FORCED -2
+
 vector<int> find_white_neighbours(const Graph& graph, int u, const vector<int>& colouring);
 bool all_vertices_coloured(const vector<int>& colouring);
 vector<int> generate_random_zfs(int N);
+void assert_vertex_label_correctness(const Graph& graph, int u);
 
 template <typename T>
 T pop(unordered_set<T>& set) {
