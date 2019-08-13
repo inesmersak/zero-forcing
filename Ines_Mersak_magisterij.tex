@@ -1882,6 +1882,12 @@ Red prostorske zahtevnosti bi lahko zmanjšali, če bi namesto shranjevanja nepo
 
 \hl{TODO: Implementacija vseh treh v praksi. Tradeoff verjetno ne bo tako vplival, kot je teoretično.}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=210pt]{koda/results/plots/pot_prvo_vozlisce.png}
+    \includegraphics[width=210pt]{koda/results/plots/pot_zadnje_vozlisce.png}
+    \caption{TODO}
+\end{figure}
 \subsection{Eksponenten algoritem}
 Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če imamo dan splošen graf $G$ in ne vemo ničesar o njegovem številu ničelne prisile $Z(G)$, lahko preiščemo vse možnosti. Za vsako podmnožico vozlišč grafa $G$ preverimo, ali je množica ničelne prisile, in sledimo, katera je do zdaj najmanjša taka množica. Pri tem uporabimo izboljšani algoritem za preverjanje, zapisan v algoritmu~\ref{alg:preveri-zf-izboljsan}. Postopek je opisan v algoritmu~\ref{alg:eksponentni-izracun-zf}.
 \begin{algorithm}[!h]

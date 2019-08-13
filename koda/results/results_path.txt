@@ -1,0 +1,100 @@
+---------------------
+Graph size: 1000
+naive -> res = 1, iter = 2, t (ms): 0
+queue_set -> res = 1, iter = 999, t (ms): 2
+queue_count -> res = 1, iter = 999, t (ms): 1
+---------------------
+Graph size: 1624
+naive -> res = 1, iter = 2, t (ms): 0
+queue_set -> res = 1, iter = 1623, t (ms): 2
+queue_count -> res = 1, iter = 1623, t (ms): 1
+---------------------
+Graph size: 2637
+naive -> res = 1, iter = 2, t (ms): 0
+queue_set -> res = 1, iter = 2636, t (ms): 2
+queue_count -> res = 1, iter = 2636, t (ms): 1
+---------------------
+Graph size: 4282
+naive -> res = 1, iter = 2, t (ms): 0
+queue_set -> res = 1, iter = 4281, t (ms): 5
+queue_count -> res = 1, iter = 4281, t (ms): 2
+---------------------
+Graph size: 6952
+naive -> res = 1, iter = 2, t (ms): 1
+queue_set -> res = 1, iter = 6951, t (ms): 6
+queue_count -> res = 1, iter = 6951, t (ms): 2
+---------------------
+Graph size: 11289
+naive -> res = 1, iter = 2, t (ms): 1
+queue_set -> res = 1, iter = 11288, t (ms): 11
+queue_count -> res = 1, iter = 11288, t (ms): 5
+---------------------
+Graph size: 18330
+naive -> res = 1, iter = 2, t (ms): 5
+queue_set -> res = 1, iter = 18329, t (ms): 27
+queue_count -> res = 1, iter = 18329, t (ms): 7
+---------------------
+Graph size: 29764
+naive -> res = 1, iter = 2, t (ms): 4
+queue_set -> res = 1, iter = 29763, t (ms): 27
+queue_count -> res = 1, iter = 29763, t (ms): 11
+---------------------
+Graph size: 48330
+naive -> res = 1, iter = 2, t (ms): 5
+queue_set -> res = 1, iter = 48329, t (ms): 39
+queue_count -> res = 1, iter = 48329, t (ms): 15
+---------------------
+Graph size: 78476
+naive -> res = 1, iter = 2, t (ms): 11
+queue_set -> res = 1, iter = 78475, t (ms): 96
+queue_count -> res = 1, iter = 78475, t (ms): 29
+---------------------
+Graph size: 127428
+naive -> res = 1, iter = 2, t (ms): 18
+queue_set -> res = 1, iter = 127427, t (ms): 126
+queue_count -> res = 1, iter = 127427, t (ms): 42
+---------------------
+Graph size: 206914
+naive -> res = 1, iter = 2, t (ms): 22
+queue_set -> res = 1, iter = 206913, t (ms): 177
+queue_count -> res = 1, iter = 206913, t (ms): 62
+---------------------
+Graph size: 335982
+naive -> res = 1, iter = 2, t (ms): 33
+queue_set -> res = 1, iter = 335981, t (ms): 309
+queue_count -> res = 1, iter = 335981, t (ms): 102
+---------------------
+Graph size: 545560
+naive -> res = 1, iter = 2, t (ms): 59
+queue_set -> res = 1, iter = 545559, t (ms): 553
+queue_count -> res = 1, iter = 545559, t (ms): 171
+---------------------
+Graph size: 885867
+naive -> res = 1, iter = 2, t (ms): 98
+queue_set -> res = 1, iter = 885866, t (ms): 821
+queue_count -> res = 1, iter = 885866, t (ms): 282
+---------------------
+Graph size: 1438450
+naive -> res = 1, iter = 2, t (ms): 167
+queue_set -> res = 1, iter = 1438449, t (ms): 1387
+queue_count -> res = 1, iter = 1438449, t (ms): 442
+---------------------
+Graph size: 2335722
+naive -> res = 1, iter = 2, t (ms): 239
+queue_set -> res = 1, iter = 2335721, t (ms): 2301
+queue_count -> res = 1, iter = 2335721, t (ms): 706
+---------------------
+Graph size: 3792691
+naive -> res = 1, iter = 2, t (ms): 385
+queue_set -> res = 1, iter = 3792690, t (ms): 3658
+queue_count -> res = 1, iter = 3792690, t (ms): 1173
+---------------------
+Graph size: 6158483
+naive -> res = 1, iter = 2, t (ms): 653
+queue_set -> res = 1, iter = 6158482, t (ms): 6866
+queue_count -> res = 1, iter = 6158482, t (ms): 1869
+---------------------
+Graph size: 10000000
+naive -> res = 1, iter = 2, t (ms): 1086
+queue_set -> res = 1, iter = 9999999, t (ms): 14380
+queue_count -> res = 1, iter = 9999999, t (ms): 3270
