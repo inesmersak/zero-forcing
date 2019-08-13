@@ -1809,7 +1809,7 @@ Poglejmo si še prostorsko zahtevnost. Za shranjevanje barve vozlišč porabimo 
 
 Izkaže se, da lahko algoritem za preverjanje precej izboljšamo v smislu časovne zahtevnosti. Na začetku si pripravimo tabelo, kjer bomo za vsako vozlišče beležili, katero vozlišče je povzročilo spremembo barve. Za vsako vozlišče si shranimo tudi množico belih sosedov, pri čemer upoštevamo začetni $Z$. Za tista črna vozlišča $u$, ki imajo natanko enega belega soseda $v$, vozlišče $v$ zapišemo v podatkovno strukturo vrsta, v tabeli pa označimo, da je spremembo $v$-ja povzročilo vozlišče $u$. 
 
-Če je vrsta prazna, potem se postopek širjenje barve ne more začeti, $Z$ ni množica ničelne prisile. V nasprotnem primeru odstranimo začetni element $u$ iz vrste, mu spremenimo barvo, vsem njegovim sosedom pa odstranimo $u$ iz množice belih sosedov. Če je pri tem v množici belih sosedov katerega izmed črnih vozlišč $v$ ostalo le eno vozlišče $w$, preverimo, ali spremembo barve $w$ ni povzročilo že kakšno drugo vozlišče, in če ne, ga dodamo v vrsto in označimo, da je spremembo $w$ povzročil $v$. 
+Če je vrsta prazna, potem se postopek širjenje barve ne more začeti, $Z$ ni množica ničelne prisile. V nasprotnem primeru odstranimo začetni element $u$ iz vrste, mu spremenimo barvo in preverimo, ali lahko takoj povzroči kakšno spremembo barve, torej ali ima natanko enega belega soseda $v$. Če ga ima, preverimo, ali spremembo barve $v$ ni povzročilo že kakšno drugo vozlišče, in če ne, ga dodamo v vrsto in označimo, da je spremembo $u$ povzročil $v$ (ta pregled je zapisan v pomožni funkciji \textsc{preveriSosede}, saj ga uporabimo večkrat). Nato vsem sosedom vozlišča $u$ odstranimo $u$ iz množice belih sosedov. Če je pri tem v množici belih sosedov katerega izmed črnih vozlišč ostalo le eno vozlišče, kot prej preverimo, ali lahko povzroči kakšno spremembo barve.
 
 Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, če so vsa pobarvana, je $Z$ množica ničelne prisile. Postopek je podrobneje opisan v algoritmu~\ref{alg:preveri-zf-izboljsan}, pri čemer uporabljamo pomožni funkciji, opisani v algoritmu~\ref{alg:preveri-zf-naiven}.
 
@@ -1832,6 +1832,21 @@ Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, č
         \State $Q \gets [\,]$ \Comment{$Q$ postane prazna vrsta.}
         \ForEach{$u$}{$V$}  \Comment{Predprocesiranje.}
         \State $beliSosedi(u) \gets \textsc{mnozica}(\Call{najdiBeleSosede}{G, u, barva})$
+        \State $\Call{preveriSosede}{barva, beliSosedi, povzroci, Q, u}$
+        \EndFor
+        \While{$Q \neq [\,]$} \Comment{Spremembe se dogajajo, dokler $Q$ ni prazna.}
+        \State $u \gets \Call{odstrani}{Q}$  \Comment{Ko element vzamemo iz vrste,}
+        \State $barva(u) \gets 0$  \Comment{zabeležimo spremembo barve.}
+        \State $\Call{preveriSosede}{barva, beliSosedi, povzroci, Q, u}$
+        \ForEach{$v$}{$N(u)$} \Comment{Vsem sosedom odstranimo $u$}
+        \State $\Call{odstrani}{beliSosedi(v), u}$ \Comment{iz množice belih sosedov.}
+        \State $\Call{preveriSosede}{barva, beliSosedi, povzroci, Q, v}$ \Comment{Preverimo,}
+        \EndFor \Comment{ali ima kateri od njih točno enega belega soseda.}
+        \EndWhile
+        \State \Return \Call{vsiPobarvani}{$G, barva$}
+        \EndFunction
+        \vspace{2mm}
+        \Function{preveriSosede}{$barva$, $beliSosedi$, $povzroci$, $Q$, $u$}
         \If{$barva(u) = 0 \land \Call{dolzina}{beliSosedi(u)} = 1$}
         \State $v \gets \Call{odstrani}{beliSosedi(u)}$ \Comment{$v$ je edini bel sosed $u$.}
         \If{$povzroci(v) = null$}  \Comment{Če spremembe barve $v$ še ni}
@@ -1839,22 +1854,6 @@ Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, č
         \State $povzroci(v) = u$  \Comment{jo povzroči $u$.}
         \EndIf
         \EndIf
-        \EndFor
-        \While{$Q \neq [\,]$} \Comment{Spremembe se dogajajo, dokler $Q$ ni prazna.}
-        \State $u \gets \Call{odstrani}{Q}$  \Comment{Ko element vzamemo iz vrste,}
-        \State $barva(u) \gets 0$  \Comment{zabeležimo spremembo barve.}
-        \ForEach{$v$}{$N(u)$} \Comment{Vsem sosedom odstranimo $u$}
-        \State $\Call{odstrani}{beliSosedi(v), u}$ \Comment{iz množice belih sosedov.}
-        \If{$barva(v) = 0 \land \Call{dolzina}{beliSosedi(v)} = 1$}
-        \State $w \gets \Call{odstrani}{beliSosedi(v)}$
-        \If{$povzroci(w) = null$}
-        \State $\Call{dodaj}{Q, w}$
-        \State $povzroci(w) = v$
-        \EndIf
-        \EndIf
-        \EndFor
-        \EndWhile
-        \State \Return \Call{vsiPobarvani}{$G, barva$}
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
@@ -1868,6 +1867,7 @@ Sedaj analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} in pokaž
     Časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je $O(m+n)$.
 \end{trditev}
 \begin{proof}
+    \hl{TODO popravi}
     Vrstice~2--9 imajo skupno časovno zahtevnost $O(n)$, vrstica~10 pa konstantno. Analizirajmo predprocesiranje, ki se dogaja na vrsticah~11--20. Za vsako vozlišče poiščemo vse nepobarvane sosede in jih pretvorimo v množico. Vemo, da ima \textsc{najdiBeleSosede} časovno zahtevnost $O(\deg u)$, pretvorba v množico pa je linearna v številu elementov seznama, ki ga pretvarjamo. Skupna časovna zahtevnost vrstice~12 je torej $O(\deg u)$. V vrsticah~13--19, če je vozlišče~$u$ pobarvano in ima natanko enega belega soseda $v$, preverimo, ali je spremembo barve $v$ povzročilo že katero drugo vozlišče, in če ni, dodamo $v$ v vrsto. Celoten postopek traja konstantno časa, saj je dodajanje v vrsto operacija s konstantno časovno zahtevnostjo.
     Predprocesiranje ima torej skupno zahtevnost $O(m+n)$, saj za vsako vozlišče~$u$ potrebujemo $O(\deg u + 1)$.
     
