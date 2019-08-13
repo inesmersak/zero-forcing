@@ -1809,7 +1809,7 @@ Poglejmo si še prostorsko zahtevnost. Za shranjevanje barve vozlišč porabimo 
 
 Izkaže se, da lahko algoritem za preverjanje precej izboljšamo v smislu časovne zahtevnosti. Na začetku si pripravimo tabelo, kjer bomo za vsako vozlišče beležili, katero vozlišče je povzročilo spremembo barve. Za vsako vozlišče si shranimo tudi množico belih sosedov, pri čemer upoštevamo začetni $Z$. Za tista črna vozlišča $u$, ki imajo natanko enega belega soseda $v$, vozlišče $v$ zapišemo v podatkovno strukturo vrsta, v tabeli pa označimo, da je spremembo $v$-ja povzročilo vozlišče $u$. 
 
-Če je vrsta prazna, potem se postopek širjenje barve ne more začeti, $Z$ ni množica ničelne prisile. V nasprotnem primeru odstranimo začetni element $u$ iz vrste, mu spremenimo barvo in preverimo, ali lahko takoj povzroči kakšno spremembo barve, torej ali ima natanko enega belega soseda $v$. Če ga ima, preverimo, ali spremembo barve $v$ ni povzročilo že kakšno drugo vozlišče, in če ne, ga dodamo v vrsto in označimo, da je spremembo $u$ povzročil $v$ (ta pregled je zapisan v pomožni funkciji \textsc{preveriSosede}, saj ga uporabimo večkrat). Nato vsem sosedom vozlišča $u$ odstranimo $u$ iz množice belih sosedov. Če je pri tem v množici belih sosedov katerega izmed črnih vozlišč ostalo le eno vozlišče, kot prej preverimo, ali lahko povzroči kakšno spremembo barve.
+Če je vrsta prazna, potem se postopek širjenje barve ne more začeti, $Z$ ni množica ničelne prisile. V nasprotnem primeru odstranimo začetni element $u$ iz vrste, mu spremenimo barvo in preverimo, ali lahko takoj povzroči kakšno spremembo barve, torej ali ima natanko enega belega soseda $v$. Če ga ima, preverimo, ali spremembo barve $v$ ni povzročilo že kakšno drugo vozlišče, in če ne, ga dodamo v vrsto in označimo, da je spremembo $u$ povzročil $v$ (ta pregled je zapisan v pomožni funkciji \textsc{preveriSosede}, saj ga uporabimo večkrat). Nato vsem sosedom vozlišča $u$ odstranimo $u$ iz množice belih sosedov. Če je pri tem v množici belih sosedov katerega izmed črnih vozlišč ostalo le eno vozlišče, kot prej preverimo, ali naj ga dodamo v vrsto.
 
 Tako ponavljamo, dokler vrsta ni prazna. Nato preverimo barve vseh vozlišč, če so vsa pobarvana, je $Z$ množica ničelne prisile. Postopek je podrobneje opisan v algoritmu~\ref{alg:preveri-zf-izboljsan}, pri čemer uporabljamo pomožni funkciji, opisani v algoritmu~\ref{alg:preveri-zf-naiven}.
 
@@ -1867,27 +1867,46 @@ Sedaj analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} in pokaž
     Časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je $O(m+n)$.
 \end{trditev}
 \begin{proof}
-    \hl{TODO popravi}
-    Vrstice~2--9 imajo skupno časovno zahtevnost $O(n)$, vrstica~10 pa konstantno. Analizirajmo predprocesiranje, ki se dogaja na vrsticah~11--20. Za vsako vozlišče poiščemo vse nepobarvane sosede in jih pretvorimo v množico. Vemo, da ima \textsc{najdiBeleSosede} časovno zahtevnost $O(\deg u)$, pretvorba v množico pa je linearna v številu elementov seznama, ki ga pretvarjamo. Skupna časovna zahtevnost vrstice~12 je torej $O(\deg u)$. V vrsticah~13--19, če je vozlišče~$u$ pobarvano in ima natanko enega belega soseda $v$, preverimo, ali je spremembo barve $v$ povzročilo že katero drugo vozlišče, in če ni, dodamo $v$ v vrsto. Celoten postopek traja konstantno časa, saj je dodajanje v vrsto operacija s konstantno časovno zahtevnostjo.
+    Najprej si poglejmo časovno zahtevnost pomožne funkcije \textsc{preveriSosede}. Če je vozlišče~$u$ pobarvano in ima natanko enega belega soseda $v$, preverimo, ali je spremembo barve $v$ povzročilo že katero drugo vozlišče, in če ni, dodamo $v$ v vrsto. Celoten postopek traja konstantno časa, saj je dodajanje v vrsto operacija s konstantno časovno zahtevnostjo.
+
+    Vrstice~2--9 imajo skupno časovno zahtevnost $O(n)$, vrstica~10 pa konstantno. Analizirajmo predprocesiranje, ki se dogaja na vrsticah~11--14. Za vsako vozlišče poiščemo vse nepobarvane sosede in jih pretvorimo v množico. Vemo, da ima \textsc{najdiBeleSosede} časovno zahtevnost $O(\deg u)$, pretvorba v množico pa je linearna v številu elementov seznama, ki ga pretvarjamo. Skupna časovna zahtevnost vrstice~12 je torej $O(\deg u)$. V vrstici~13 kličemo funkcijo \textsc{preveriSosede}, za katero vemo, da je konstantne časovne zahtevnosti.
     Predprocesiranje ima torej skupno zahtevnost $O(m+n)$, saj za vsako vozlišče~$u$ potrebujemo $O(\deg u + 1)$.
-    
-    Sedaj si poglejmo notranjost \texttt{while} zanke na vrsticah~22--33. Odstranjevanje iz vrste ima konstantno časovno zahtevnost. Nato za vsakega soseda vozlišča $u$ odstranimo $u$ iz njihove množice belih sosedov, časovna zahtevnost odstranjevanja je konstantna, če je kakšnemu sosedu pri tem preostal samo en bel sosed, naredimo isto, kot pri predprocesiranju -- vrstice~26--32 so enake vrsticam~13--19 in torej imajo konstantno časovno zahtevnost. En korak \texttt{while} zanke ima torej za vozlišče $u$ časovno zahtevnost $O(\deg u + 1)$.
-    
+
+    Sedaj si poglejmo notranjost \texttt{while} zanke na vrsticah~15--23. Odstranjevanje iz vrste ima konstantno časovno zahtevnost, prav tako sprememba barve vozlišča in klic funkcije \textsc{preveriSosede}. Nato za vsakega soseda vozlišča $u$ odstranimo $u$ iz njihove množice belih sosedov, časovna zahtevnost odstranjevanja je konstantna, zatem pa s pomožno funkcijo \textsc{preveriSosede} konstantne časovne zahtevnosti ponovno preverimo, ali je pri tem ostal samo en bel sosed. En korak \texttt{while} zanke ima torej za vozlišče $u$ časovno zahtevnost $O(\deg u + 1)$.
+
     Zanka ima toliko korakov, kolikor elementov dodamo v vrsto. Ker v vrsto dodajamo še nepobarvana vozlišča (in se ta v vrsti nikoli ne ponovijo, saj s pomočjo $povzroci$ beležimo, ali so že dodana), jih lahko dodamo največ $n-z$, v najslabšem primeru $n-1$, torej kar $O(n)$. Skupna časovna zahtevnost zanke je torej $O(m+n)$, tako kot tudi predprocesiranja, torej je to tudi časovna zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
 \end{proof}
 
 Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}. Shranjevanje barv porabi $O(n)$ prostora, prav tako podatek, kdo povzroči spremembo barve v vozliščih, zapisan v $povzroci$. (Lahko bi si tudi samo zapisali, ali je vozlišče že dodano v vrsto, vendar s spremenljivko $povzroci$ dobimo še dodaten podatek; z majhno modifikacijo lahko algoritem vrne zaporedje sprememb barve vozlišč in kdo jih je povzročil, pri tem pa ostane red prostorske zahtevnosti enak.) Za shranjevanje belih sosedov nekega vozlišča $u$ porabimo $O(\deg u)$, skupaj torej $O(m+n)$ prostora. Ostane še vrsta, v katero vemo, da dodamo največ $O(n)$ vozlišč, torej potrebujemo toliko tudi prostora. Skupna prostorska zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je torej $O(m+n)$.
 
-Red prostorske zahtevnosti bi lahko zmanjšali, če bi namesto shranjevanja nepobarvanih sosedov za vsako vozlišče shranjevali samo število. S tem bi porabili $O(n)$ prostora, skupna prostorska zahtevnost bi bila torej $O(n)$. Pri tem bi morali, po tem, ko bi v vrstici~26 ugotovili, da se je števec nepobarvanih sosedov nekega vozlišča $v$ zmanjšal na 1, poiskati, kateri sosed vozlišča $v$ je še nepobarvan, za kar bi potrebovali $O(\deg v)$ operacij. Ker bi se to zgodilo največ $O(n)$-krat, bi skupno porabili $O(n+m)$ operacij več, kar torej ne spremeni reda časovne zahtevnosti, spremeni pa konstanto.
+Red prostorske zahtevnosti bi lahko zmanjšali, če bi namesto shranjevanja nepobarvanih sosedov za vsako vozlišče shranjevali samo število. S tem bi porabili $O(n)$ prostora, skupna prostorska zahtevnost bi bila torej $O(n)$. Pri tem bi morali, po tem, ko bi v pomožni funkciji \textsc{preveriSosede} ugotovili, da se je števec nepobarvanih sosedov nekega vozlišča $u$ zmanjšal na 1, poiskati, kateri sosed vozlišča $u$ je še nepobarvan, za kar bi potrebovali $O(\deg u)$ operacij. Ker bi se to zgodilo največ $O(n)$-krat, bi skupno porabili $O(n+m)$ operacij več, kar torej ne spremeni reda časovne zahtevnosti, spremeni pa konstanto.
 
-\hl{TODO: Implementacija vseh treh v praksi. Tradeoff verjetno ne bo tako vplival, kot je teoretično.}
+V prilogi~\ref{sec:algoritmi} je podana C++ implementacija vseh treh algoritmov (naivnega algoritma~\ref{alg:preveri-zf-naiven} in dveh verzij algoritma~\ref{alg:preveri-zf-izboljsan}, z množicami ali števci). Na sliki~\ref{fig:primerjava-check-random-graf} je predstavljena primerjava hitrosti teh treh algoritmov v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi (povezavo dodamo v $G$ z verjetnostjo $p$ neodvisno od ostalih povezav). Levo je izbran $p=0.01$, torej z veliko verjetnostjo generiramo ``redke'' grafe z malo povezavami, desno pa $p=0.7$, torej imajo generirani grafi veliko povezav.
+V obeh primerih je za preverjanje izbrana naključna množica 95\% velikosti grafa $G$.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=210pt]{koda/results/plots/random_sparse.png}
+    \includegraphics[width=210pt]{koda/results/plots/random_dense.png}
+    \caption{TODO}
+    \label{fig:primerjava-check-random-graf}
+\end{figure}
 
+Izkaže se, da je na gostih grafih (slika~\ref{fig:primerjava-check-random-graf} desno) zelo malo verjetno, da se bo za izbrano množico sploh začel proces širjenja barve. Vsi algoritmi tako naredijo samo eno iteracijo, vendar pa ima naiven algoritem pri tem precej manj dela (ne gradi množic ali dodatnih tabel), zato je za majhne velikosti najhitrejši, vendar ga algoritem z vrsto in števci hitro ujame. Ker je delo z množicami najbolj zamudno, je ta različica algoritma z vrsto najpočasnejša.
+
+Pri redkih grafih (slika~\ref{fig:primerjava-check-random-graf} levo) vsaj za manjše grafe (do 10000 vozlišč) še kar pogosto naletimo na množico ničelne prisile, kar pomeni tudi več dela za algoritme. Naiven algoritem se kljub temu (malo presenetljivo) v večini primerov dobro izkaže: razlog temu je majhno število (največ 2) iteracij zunanje \texttt{while} zanke algoritma~\ref{alg:preveri-zf-naiven}, kar pa se verjetno zgodi zaradi prikladnega vrstnega reda sprememb barv vozlišč (naivnemu algoritmu ugaja, če se spremembe dogajajo čim bolj po vrsti od oznake 0 do $n-1$). Kljub temu na sliki vidimo skok, kjer se odreže slabše kot ostala dva: to se zgodi pri velikosti $n=16238$, kjer naredi 11~iteracij \texttt{while} zanke. 
+
+Da bi bolje demonstrirali odvisnost naivnega algoritma od oznak vozlišč, si poglejmo še primerjavo teh treh algoritmov na poteh različnih velikosti, prikazano na sliki~\ref{fig:primerjava-check-pot}. Pri tem smo na levi strani za začetno množico vzeli vozlišče z oznako 0, na desni pa z oznako $n-1$.
 \begin{figure}[h]
     \centering
     \includegraphics[width=210pt]{koda/results/plots/pot_prvo_vozlisce.png}
     \includegraphics[width=210pt]{koda/results/plots/pot_zadnje_vozlisce.png}
     \caption{TODO}
+    \label{fig:primerjava-check-pot}
 \end{figure}
+Na levem grafu se naiven algoritem izkaže najbolje, saj je iskanje edinega belega soseda hitro (vsako vozlišče ima največ 2 soseda), poleg tega zaradi vrstnega reda sprememb algoritem naredi le 1~iteracijo \texttt{while} zanke. Na desnem grafu pa se pokaže prava časovna zahtevnost naivnega algoritma, saj mora zaradi obratnega vrstnega reda sprememb(od $n-1$ proti 0) \texttt{while} zanka narediti toliko iteracij, kolikor je velikost grafa, in odpove že za poti velikosti $10^6$. Vidimo lahko, da je trend hitrosti naivnega algoritma v tem primeru kvadratičen, kar potrjuje teoretično časovno zahtevnost. 
+
+Opazimo tudi, da je teoretično boljša različica z množicami v praksi pravzaprav slabša. Vzrok temu je, da je povečanje števca v tabeli za 1 v jeziku C++ močno optimizirano, medtem ko je odstranjevanje iz množice precej počasno. Dejstvo, da moramo v različici s števci poiskati edinega belega soseda, na hitrost ne vpliva preveč, saj se to zgodi zelo redko. 
+
 \subsection{Eksponenten algoritem}
 Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če imamo dan splošen graf $G$ in ne vemo ničesar o njegovem številu ničelne prisile $Z(G)$, lahko preiščemo vse možnosti. Za vsako podmnožico vozlišč grafa $G$ preverimo, ali je množica ničelne prisile, in sledimo, katera je do zdaj najmanjša taka množica. Pri tem uporabimo izboljšani algoritem za preverjanje, zapisan v algoritmu~\ref{alg:preveri-zf-izboljsan}. Postopek je opisan v algoritmu~\ref{alg:eksponentni-izracun-zf}.
 \begin{algorithm}[!h]
@@ -2480,6 +2499,7 @@ Ker iz~\cite{faudree1992independent} vemo, da za neodvisnostno število kubične
 \appendix
 
 \section{Priloga: implementacija algoritmov}
+\label{sec:algoritmi}
 
 \inputminted[lastline=93]{c++}{koda/check.cpp}
 

@@ -23,7 +23,7 @@ vector<int> generate_random_zfs(int N) {
         zfs.push_back(i);
     }
     random_shuffle(zfs.begin(), zfs.end());
-    zfs.resize(static_cast<int>(N/2));
+    zfs.resize(static_cast<int>(0.95 * N));
     return zfs;
 }
 
