@@ -10,7 +10,7 @@ vector<int> find_white_neighbours(const Graph& graph, int u, const vector<int>& 
     return neighbours;
 }
 
-bool all_vertices_coloured(const vector<int>& colouring) {
+bool all_vertices_black(const vector<int>& colouring) {
     for (int c : colouring) {
         if (c == WHITE) return false;
     }
@@ -32,4 +32,11 @@ void assert_vertex_label_correctness(const Graph& graph, int u) {
         "greater or equal to 0");
     assert(u < graph.vertices_num() && "zero-forcing set should contain "
         "vertex labels smaller than graph size");
+}
+
+ostream& operator<<(ostream& out, const vector<int>& vec) {
+    for (int u : vec) {
+        cout << u << " ";
+    }
+    cout << "\n";
 }

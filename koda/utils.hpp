@@ -7,7 +7,7 @@
 #include <vector>
 #include "Graph.hpp"
 
-#define prn(f, r, t) { std::cout << #f << " = " << r << ", t (ms): " << t << "\n"; }
+#define prn(r, t) { std::cout << "res = " << r.first << ", iter = " << r.second << ", t (ms): " << t << "\n"; }
 
 // some constants describing vertex colour / state
 #define BLACK 0
@@ -16,9 +16,10 @@
 #define NOT_FORCED -2
 
 vector<int> find_white_neighbours(const Graph& graph, int u, const vector<int>& colouring);
-bool all_vertices_coloured(const vector<int>& colouring);
+bool all_vertices_black(const vector<int>& colouring);
 vector<int> generate_random_zfs(int N);
 void assert_vertex_label_correctness(const Graph& graph, int u);
+ostream& operator<<(ostream& out, const vector<int>& vec);
 
 template <typename T>
 T pop(unordered_set<T>& set) {
@@ -33,8 +34,7 @@ auto timeit(Function func, Args... args) -> decltype(func(args...)) {
     auto r = func(args...);
     t = clock() - t;
     float t_ms = (float) t / CLOCKS_PER_SEC * 1000;
-    prn(func, r, t_ms);
-    // cout << "It took me " << t << " clicks (" << (float) t / CLOCKS_PER_SEC * 1000 << " milliseconds).\n";
+    prn(r, t_ms);
     return r;
 }
 

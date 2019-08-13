@@ -3,19 +3,21 @@
 #include <queue>
 #include <thread>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 #include "Graph.hpp"
 #include "WhiteNeighbours.hpp"
 #include "utils.hpp"
 
 
-bool check_ZFS_naive(const Graph& graph, const vector<int>& zfs) {
+pair<bool,int> check_ZFS_naive(const Graph& graph, const vector<int>& zfs) {
     vector<int> colouring(graph.vertices_num(), WHITE);
     for (int u : zfs) {
         assert_vertex_label_correctness(graph, u);
         colouring[u] = BLACK;
     }
     bool change = true;
+    int iter = 0;
     while (change) {
         change = false;
         for (int u=0; u < graph.vertices_num(); ++u) {  // for every vertex
@@ -28,12 +30,13 @@ bool check_ZFS_naive(const Graph& graph, const vector<int>& zfs) {
                 }
             }
         }
+        ++iter;
     }
-    return all_vertices_coloured(colouring);
+    return pair<bool,int> (all_vertices_black(colouring), iter);
 }
 
 template <typename T>
-bool check_ZFS_queue(const Graph& graph, const vector<int>& zfs) {
+pair<bool,int> check_ZFS_queue(const Graph& graph, const vector<int>& zfs) {
     vector<int> colouring(graph.vertices_num(), WHITE);
     vector<int> forces(graph.vertices_num(), NOT_FORCED);
     for (int u : zfs) {
@@ -55,7 +58,8 @@ bool check_ZFS_queue(const Graph& graph, const vector<int>& zfs) {
         }
     }
 
-    while (! q.empty()) {
+    int iter = 0;
+    while (!q.empty()) {
         int u = q.front();
         q.pop();
         colouring[u] = BLACK;
@@ -81,19 +85,15 @@ bool check_ZFS_queue(const Graph& graph, const vector<int>& zfs) {
                 }
             }
         }
+        ++iter;
     }
 
-    return all_vertices_coloured(colouring);
+    return pair<bool,int> (all_vertices_black(colouring), iter);
 }
 
 int main () {
-/*     Graph K5 = Graph::complete_graph(24);
-    Graph C4 = Graph::cycle(4);
-    Graph P6 = Graph::path(6);
+    double p = 0.6;  // random graph density
 
-    bool r = timeit(check_ZFS_naive, K5, vector<int> {1,2,3,4}); */
-
-    double p = 0.6;
     vector<int> Ns = {10, 21, 43, 89, 184, 380, 785, 1624, 3360, 6952, 14385, 
         29764, 61585, 127428, 263666, 545560, 1128838, 2335722, 4832931, 
         10000000};
@@ -109,12 +109,7 @@ int main () {
         cout << "---------------------\n";
         cout << "Graph size: " << Ns[i] << "\n";
         // cout << graphs[i];
-        // cout << "ZFS: ";
-        // for (int v : zfs[i]) {
-        //     cout << v << " ";
-        // }
-        // cout << "\n";
-
+        // cout << "ZFS: " << zfs[i];
         timeit(check_ZFS_naive, graphs[i], zfs[i]);
         timeit(check_ZFS_queue<WhiteNeighboursSet>, graphs[i], zfs[i]);
         timeit(check_ZFS_queue<WhiteNeighboursCount>, graphs[i], zfs[i]);
