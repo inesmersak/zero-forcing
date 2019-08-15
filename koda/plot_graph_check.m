@@ -1,9 +1,9 @@
-s = mat2str(ceil(logspace(2, 4, 20)));
+s = mat2str(ceil(logspace(2, 5, 20)));
 strrep(s, ' ', ', ')
 
 %%
-file = 'results/results_path.csv';
-title_str = 'Hitrost algoritmov preverjanja za pot s pobarvanim prvim vozliscem';
+file = 'results/results_random_dense.csv';
+title_str = 'Hitrost algoritmov preverjanja za nakljucen graf, p=0.7';
 label_n = 'naiven, k=%0.4f';
 label_s = 'vrsta + mnozice, k=%0.4f';
 label_c = 'vrsta + stevci, k=%0.4f';

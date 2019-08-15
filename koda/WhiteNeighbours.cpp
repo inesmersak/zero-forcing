@@ -11,7 +11,7 @@ const vector<int>* colouring) {
 }
 
 ostream& operator<<(ostream& out, const WhiteNeighboursSet& wn) {
-    for (int u=0; u < wn.white_neighbours.size(); ++u) {
+    for (size_t u=0; u < wn.white_neighbours.size(); ++u) {
         out << u << ": ";
         for (int v: wn.white_neighbours[u]) {
             out << v << " ";
@@ -44,7 +44,7 @@ const vector<int>* p_colouring): graph(p_graph), colouring(p_colouring) {
 }
 
 ostream& operator<<(ostream& out, const WhiteNeighboursCount& wnc) {
-    for (int u=0; u < wnc.white_neighbours_count.size(); ++u) {
+    for (size_t u=0; u < wnc.white_neighbours_count.size(); ++u) {
         out << u << ": " << wnc.white_neighbours_count[u] << "\n";
     }
     return out;
