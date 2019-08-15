@@ -1,3 +1,6 @@
+#ifndef CHECK_H
+#define CHECK_H
+
 #include <chrono>
 #include <iostream>
 #include <queue>
@@ -10,7 +13,7 @@
 #include "utils.hpp"
 
 
-pair<bool,int> check_ZFS_naive(const Graph& graph, const vector<int>& zfs) {
+inline pair<bool,int> check_ZFS_naive(const Graph& graph, const vector<int>& zfs) {
     vector<int> colouring(graph.vertices_num(), WHITE);
     for (int u : zfs) {
         assert_vertex_label_correctness(graph, u);
@@ -91,31 +94,4 @@ pair<bool,int> check_ZFS_queue(const Graph& graph, const vector<int>& zfs) {
     return pair<bool,int> (all_vertices_black(colouring), iter);
 }
 
-int main () {
-    double p = 0.01;  // random graph density
-
-    vector<int> Ns = {100, 128, 163, 207, 264, 336, 429, 546, 696, 886, 1129, 1439, 1833, 2336, 2977, 3793, 4833, 6159, 7848, 10000};
-    vector<Graph> graphs;
-    vector<vector<int>> zfs;
-    for (int N : Ns) {
-        graphs.push_back(Graph::random_erdos_renyi(N, p));
-        zfs.push_back(generate_random_zfs(N));
-        // graphs.push_back(Graph::path(N));
-        // zfs.push_back({0});
-    }
-
-    for (int i=0; i < Ns.size(); ++i) {
-        cout << "---------------------\n";
-        cout << "Graph size: " << Ns[i] << "\n";
-        // cout << graphs[i];
-        // cout << "ZFS: " << zfs[i];
-        cout << "naive -> ";
-        timeit(check_ZFS_naive, graphs[i], zfs[i]);
-        cout << "queue_set -> ";
-        timeit(check_ZFS_queue<WhiteNeighboursSet>, graphs[i], zfs[i]);
-        cout << "queue_count -> ";
-        timeit(check_ZFS_queue<WhiteNeighboursCount>, graphs[i], zfs[i]);
-    }
-
-    return 0;
-}
+#endif

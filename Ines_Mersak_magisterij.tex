@@ -70,6 +70,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \usepackage{minted}
 \renewcommand\listingscaption{Program}
 \setminted{fontsize=\footnotesize, frame=lines, linenos, numbersep=5pt, framesep=2mm}
+\newcommand{\mintedtitle}[1]{\noindent \texttt{#1} \vspace{-5mm}}
 
 % Za pisanje psevdokode
 \usepackage{algpseudocode}  % za psevdokodo
@@ -2510,8 +2511,22 @@ Ker iz~\cite{faudree1992independent} vemo, da za neodvisnostno število kubične
 \section{Priloga: implementacija algoritmov}
 \label{sec:algoritmi}
 
-\inputminted[lastline=93]{c++}{koda/check.cpp}
+Algoritmi so implementirani v C++, koda je strukturirana takole:
+\begin{itemize}
+    \item v \texttt{Graph.cpp} je implementirana podatkovna struktura grafa s seznamom sosedov;
+    \item v \texttt{utils.cpp} so implementirane pomožne funkcije, med drugim tudi algoritmov~\ref{alg:preveri-zf-naiven}~in~\ref{alg:preveri-zf-izboljsan},
+    \item v \texttt{check.hpp} so implementirani algoritmi preverjanja (torej~\ref{alg:preveri-zf-naiven}~in~\ref{alg:preveri-zf-izboljsan}), pri čemer algoritem z vrsto sprejme podatkovno strukturo za sledenje belim sosedom;
+    \item v \texttt{WhiteNeighbours.cpp} sta implementirani dve podatkovni strukturi za sledenje belim sosedom, ena z množicami, druga s tabelo števcev;
+    \item v \texttt{zero\_forcing\_number.cpp} so implementirane nekatere različice algoritma~\ref{alg:eksponentni-izracun-zf} za izračun števile ničelne prisile.
+\end{itemize}
 
-\inputminted{c++}{koda/WhiteNeighbours.hpp}
-\inputminted{c++}{koda/WhiteNeighbours.cpp}
+\mintedtitle{check.hpp}
+\inputminted[firstline=11, lastline=95]{c++}{koda/check.hpp}
+
+Algoritme za preverjanje kličemo z eno od dveh podatkovnih struktur, implementiranih v \texttt{WhiteNeighbours}.
+
+\mintedtitle{WhiteNeighbours.hpp}
+\inputminted[firstline=7]{c++}{koda/WhiteNeighbours.hpp}
+\mintedtitle{WhiteNeighbours.cpp}
+\inputminted[firstline=2]{c++}{koda/WhiteNeighbours.cpp}
 \end{document}
