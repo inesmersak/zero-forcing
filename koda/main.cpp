@@ -1,4 +1,5 @@
 #include "check.hpp"
+#include "utils.hpp"
 #include "zero_forcing_number.hpp"
 
 void test_check() {
@@ -14,7 +15,7 @@ void test_check() {
         // zfs.push_back({0});
     }
 
-    for (int i=0; i < Ns.size(); ++i) {
+    for (size_t i=0; i < Ns.size(); ++i) {
         cout << "---------------------\n";
         cout << "Graph size: " << Ns[i] << "\n";
         // cout << graphs[i];
@@ -29,7 +30,25 @@ void test_check() {
 }
 
 void test_zfn() {
-    
+    // int n = 20;  // 25 -> 33 mio, maybe doable
+    // Graph graph = Graph::cycle(n);
+    // vvvi subsets = power_subset(n);
+    // timeit(ZFN_top_down, graph, subsets);
+
+    int N = 20;
+    vector<int> ns = {5, 10, 15};
+    vector<double> ps = {0.01, 0.4, 0.7};
+    for (int n : ns) {
+        vvvi subsets = power_subset(n);
+        for (double p : ps) {
+            cout << "-----------------------\n";
+            cout << "n = " << n << ", p = " << p << "\n";
+            for (int i=0; i < N; ++i) {
+                Graph graph = Graph::random_erdos_renyi(n, p);
+                timeit(ZFN_top_down, graph, subsets);
+            }
+        }
+    }
 }
 
 int main () {

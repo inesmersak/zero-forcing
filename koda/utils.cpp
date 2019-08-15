@@ -33,10 +33,3 @@ void assert_vertex_label_correctness(const Graph& graph, int u) {
     assert(u < graph.vertices_num() && "zero-forcing set should contain "
         "vertex labels smaller than graph size");
 }
-
-ostream& operator<<(ostream& out, const vector<int>& vec) {
-    for (int u : vec) {
-        cout << u << " ";
-    }
-    cout << "\n";
-}

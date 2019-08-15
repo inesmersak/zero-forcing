@@ -19,7 +19,23 @@ vector<int> find_white_neighbours(const Graph& graph, int u, const vector<int>& 
 bool all_vertices_black(const vector<int>& colouring);
 vector<int> generate_random_zfs(int N);
 void assert_vertex_label_correctness(const Graph& graph, int u);
-ostream& operator<<(ostream& out, const vector<int>& vec);
+
+template <typename T>
+ostream& operator<<(ostream& out, const vector<T>& vec) {
+    out << "{";
+    for (T u : vec) {
+        out << u << ",";
+    }
+    out << "}\n";
+
+    return out;
+}
+
+template <typename T1, typename T2>
+ostream& operator<<(ostream& out, const pair<T1, T2>& pair) {
+    out << "p{" << pair.first << ", " << pair.second << "}";
+    return out;
+}
 
 template <typename T>
 T pop(unordered_set<T>& set) {
@@ -34,7 +50,8 @@ auto timeit(Function func, Args... args) -> decltype(func(args...)) {
     auto r = func(args...);
     t = clock() - t;
     float t_ms = (float) t / CLOCKS_PER_SEC * 1000;
-    prn(r, t_ms);
+    // prn(r, t_ms);
+    cout << "res = " << r << ", t (ms): " << t_ms << "\n";
     return r;
 }
 
