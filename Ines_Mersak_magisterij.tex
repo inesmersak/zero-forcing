@@ -1928,7 +1928,7 @@ Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če im
     \end{algorithmic}
 \end{algorithm}
 
-Analizirajmo zahtevnost algoritma~\ref{alg:eksponentni-izracun-zf}. Za vsak element potenčne množice~$V$ pokličemo \textsc{preveriIzboljsan}, ki ima časovno zahtevnost $O(m+n)$. Vseh elementov je $2^n$, skupna časovna zahtevnost algoritma je torej $O(2^n(m+n))$. (Časovna zahtevnost bila še slabša, če bi uporabili osnovni algoritem za preverjanje.)
+Analizirajmo zahtevnost algoritma~\ref{alg:eksponentni-izracun-zf}. Za vsak element potenčne množice~$V$ pokličemo \textsc{preveriIzboljsan}, ki ima časovno zahtevnost $O(m+n)$. Vseh elementov je $2^n$, skupna časovna zahtevnost algoritma je torej $O(2^n(m+n))$. (Časovna zahtevnost bi bila še slabša, če bi uporabili osnovni algoritem za preverjanje.)
 Prostorska zahtevnost algoritma pa je $O(m+n)$, saj je to prostorska zahtevnost funkcije  \textsc{preveriIzboljsan}, ki edina porabi nekaj dodatnega prostora (ki ga po izhodu iz funkcije tudi sprosti), preostanek algoritma pa porabi konstantno prostora.
 
 Razmislimo, ali lahko algoritem~\ref{alg:eksponentni-izracun-zf} kako izboljšamo. Hitro opazimo, da nam pravzaprav ni treba pregledati čisto vseh podmnožic. Če jih uredimo naraščajoče po velikosti, potem lahko s pregledovanjem končamo, čim najdemo eno, ki je množica ničelne prisile (ker vemo, da so vse kasnejše podmnožice, ki jih še nismo pregledali, kvečjemu večje ali enake po velikosti). Podobno, lahko jih uredimo padajoče, in s pregledovanjem končamo, čim za neko velikost ne najdemo več množice ničelne prisile. (Da potem ne obstaja kakšna manjša množica ničelne prisile, vemo zaradi posledice~\ref{posl:ne-obstaja-manjsi-zfs}.)
@@ -1941,7 +1941,16 @@ Vendar pa lahko število pregledanih možnosti v primeru padajočega vrstnega re
 Tako res ne izpustimo nobene množice ničelne prisile, kar nam zagotovi kontrapozicija posledice~\ref{posl:ne-obstaja-manjsi-zfs}: če obstaja neka množica ničelne prisile velikosti $z_2$, obstaja tudi množica ničelne prisile velikosti $z_1$ za vsak $z_2 \leq z_1 \leq n-1$.
 V primerjavi s prejšnjim pristopom porabimo nekaj več prostora, ker moramo shraniti množice ničelne prisile, poleg tega ne moremo prekiniti z iskanjem, čim najdemo neko množico ničelne prisile trenutne velikosti, nam pa možnosti zato zožijo množice ničelne prisile prejšnje velikosti.
 
-Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo). Vemo, da vedno obstaja množica ničelne prisile velikosti $n-1$. Preverimo vse množice velikosti~1. Če je katera od njih množica ničelne prisile, smo končali, saj vemo, da je $Z(G) = 1$. V nasprotnem primeru pogledamo množice velikosti~$\lfloor \frac{n}{2} \rfloor$; če najdemo kakšno množico ničelne prisile, postopek iskanja ponovimo na intervalu~$[1,\lfloor \frac{n}{2} \rfloor]$, v nasprotnem primeru pa na intervalu~$[\lfloor \frac{n}{2} \rfloor + 1, n-1]$. \hl{TODO: Časovna zahtevnost še vedno eksponentna.}
+Iskalni prostor si lahko zmanjšamo tudi z binarnim iskanjem (oziroma bisekcijo). Vemo, da vedno obstaja množica ničelne prisile velikosti $n-1$. Preverimo vse množice velikosti~1. Če je katera od njih množica ničelne prisile, smo končali, saj vemo, da je $Z(G) = 1$. V nasprotnem primeru pogledamo množice velikosti~$\lfloor \frac{n}{2} \rfloor$; če najdemo kakšno množico ničelne prisile, postopek iskanja ponovimo na intervalu~$[1,\lfloor \frac{n}{2} \rfloor]$, v nasprotnem primeru pa na intervalu~$[\lfloor \frac{n}{2} \rfloor + 1, n-1]$. 
+Časovna zahtevnost pa je še vedno eksponentna, najslabši primer je npr.~$Z(G) = \lfloor \frac{n}{2} \rfloor$, kjer prvič izberemo levi interval $[1,\lfloor \frac{n}{2} \rfloor]$, nato pa vsakič desnega: $[\lfloor \frac{n}{4} \rfloor, \lfloor \frac{n}{2} \rfloor], [\lfloor \frac{n}{4} \rfloor + \lfloor \frac{n}{8} \rfloor, \lfloor \frac{n}{2} \rfloor], \ldots$ Ocenimo število množic $N$, ki jih pri tem pregledamo:
+\begin{align*}
+N &= \binom{n}{\lfloor \frac{n}{2} \rfloor} + \binom{n}{\lfloor \frac{n}{4} \rfloor} + \binom{n}{\lfloor \frac{n}{4} \rfloor + \lfloor \frac{n}{8} \rfloor}  + \cdots \\
+&\geq   \binom{n}{\lfloor \frac{n}{4} \rfloor} = \prod_{i=1}^{\lfloor \frac{n}{4} \rfloor} \frac{n - i + 1}{i}  \\
+&= \frac{n}{1} + \frac{n - 1}{2} + \cdots + \frac{n - \lfloor \frac{n}{4} \rfloor + 1}{\lfloor \frac{n}{4} \rfloor} \\
+&\geq \left( \frac{n - \lfloor \frac{n}{4} \rfloor + 1}{\lfloor \frac{n}{4} \rfloor} \right)^{\lfloor \frac{n}{4} \rfloor} \geq  \left( \frac{n - \frac{n}{4} + 1}{\frac{n}{4}} \right)^{\lfloor \frac{n}{4} \rfloor} \\
+&= \left( 3 +  \frac{4}{n} \right)^{\lfloor \frac{n}{4} \rfloor} \geq 3^{\lfloor \frac{n}{4} \rfloor} \geq 3^\frac{n-4}{4} = 2^\frac{n-4}{4 \log_3 2}= c \cdot 2^\frac{n}{2.5237\ldots}.
+\end{align*}
+Pri tem smo uporabili $\lfloor \frac{n}{4} \rfloor \leq \frac{n}{4}$ in rešitev enačbe $3^\frac{n-4}{4} = 2^x$ ter v konstanto $c$ skrili~$2^\frac{-4}{4\log_3 2}$. Časovna zahtevnost je torej še vedno eksponentna: $\Omega((m+n) 2^\frac{n}{2.5237\ldots})$.
 
 \hl{TODO: implementacija + primerjava vseh petih.}
 
