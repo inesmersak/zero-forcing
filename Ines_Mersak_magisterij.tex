@@ -247,7 +247,7 @@ organizirano.
 
 \vfill
 \begin{center}
-\textbf{English translation of the title} \\[3mm] % prevod slovenskega naslova dela
+\textbf{Zero forcing} \\[3mm] % prevod slovenskega naslova dela
 \textsc{Abstract}\\[2mm]
 \end{center}
 
@@ -273,7 +273,7 @@ razdelku.
 \section{Osnovne definicije}
 V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa definiramo dva temeljna pojma tega dela, množico ničelne prisile in število ničelne prisile, si ogledamo motivacijo za poimenovanje in nekaj primerov.
 
-\emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jih z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$ ali $n(G)$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. Velikost množice povezav grafa $G$ pa bomo označevali kot $m(G)$.
+\emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jo z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$ ali $n(G)$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. Velikost množice povezav grafa $G$ pa bomo označevali z $m(G)$.
 
 Graf $H$ je \emph{podgraf} grafa $G$, če velja $V(H) \subseteq V(G)$ in $E(H) \subseteq E(G)$. $H$ je \emph{vpet} podgraf, če velja $V(H) = V(G)$. $H$ je podgraf, \emph{induciran} z množico vozlišč $V_H \subseteq V(G)$, če velja $E(H) = \{ \{ u,v \} \in E(G) \mid u \in V_H \land v \in V_H \}$. Zapišemo tudi $H = G[V_H]$.
 
@@ -299,7 +299,7 @@ V delu si bomo ogledali tudi rezultate za nekatere produkte grafov, zato jih naj
     \end{enumerate}
 \end{definicija}
 
-Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$. Poglejmo si  nekaj primerov obeh produktov z enostavnimi družinami grafov.
+Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$, kartezični produkt je torej vpeti podgraf krepkega. Poglejmo si  nekaj primerov obeh produktov z enostavnimi družinami grafov.
 
 \begin{primer}
     Najprej si poglejmo primera kartezičnega produkta poti $P_2 \boxempty P_3$ in krepkega produkta poti $P_2 \boxtimes P_3$, ki sta prikazana na sliki~\ref{fig:produkta-poti}.
@@ -410,13 +410,13 @@ Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$. Po
                 (uz) edge (vy);
             \end{tikzpicture}
         \end{subfigure}
-        \caption{Na sliki sta prikazana kartezični produkt $P_2 \boxempty P_3$ (levo) in krepki produkt $P_2 \boxtimes P_3$ (desno). Kartezični produkt označujemo z $\boxempty$, krepki produkt pa z $\boxtimes$ ravno zaradi rezultata teh dveh produktov poti $P_2$ same s seboj.}
+        \caption{Na sliki sta prikazana kartezični produkt $P_2 \boxempty P_3$ (levo) in krepki produkt $P_2 \boxtimes P_3$ (desno). Kartezični produkt označujemo z $\boxempty$, krepki produkt pa z~$\boxtimes$ ravno zaradi rezultata teh dveh produktov poti $P_2$ same s seboj.}
         \label{fig:produkta-poti}
     \end{figure}
     
     Pri obeh produktih opazimo, da kot inducirani podgrafi za ustrezno izbrano podmnožico vozlišč nastopajo 3 (ravno $n(P_3)$) kopije grafa $P_2$ in 2 (ravno $n(P_2)$) kopiji grafa $P_3$.
     
-    Na spodnjih slikah je prikazan še primer kartezičnega in krepkega produkta cikla in poti na $n$ vozliščih, natančneje $C_4 \boxempty P_n$ na sliki~\ref{fig:kartez-produkt-cikel-pot} in $C_4 \boxtimes P_n$ na sliki~\ref{fig:krep-produkt-cikel-pot}.
+    Na spodnjih slikah sta prikazana še primera kartezičnega in krepkega produkta cikla in poti na $n$ vozliščih, natančneje $C_4 \boxempty P_n$ na sliki~\ref{fig:kartez-produkt-cikel-pot} in $C_4 \boxtimes P_n$ na sliki~\ref{fig:krep-produkt-cikel-pot}.
     \begin{figure}[h]
         \centering
         \begin{tikzpicture}[xscale=1.2,yscale=1.5]
@@ -507,14 +507,14 @@ Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$. Po
     \end{figure}
 \end{primer}
 
-Iz zgornjih definicij in primerov lahko vidimo, da sta tako kartezični kot tudi krepki produkt komutativna produkta, do izomorfnosti grafov natančno. Poglejmo si še en grafovski produkt, za katerega pa komutativnost v splošnem ne velja.
+Iz zgornjih definicij in primerov lahko vidimo, da sta tako kartezični kot tudi krepki produkt komutativni operaciji do izomorfnosti grafov natančno. Poglejmo si še en produkt grafov, za katerega pa komutativnost v splošnem ne velja.
 
 \begin{definicija}
     \emph{Korona} grafov $G$ in $H$, označimo jo z $G \circ H$, je graf velikosti $n(G) n(H) + n(G)$, ki ga sestavimo tako, da vzamemo eno kopijo $G$ in $n(G)$ kopij grafa $H$, vsa vozlišča $i$-te kopije $H$ pa povežemo z $i$-tim vozliščem v kopiji grafa $G$.
 \end{definicija}
 Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2$ in $P_2 \circ C_5$.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \begin{subfigure}{0.33\textwidth}
         \centering
         \begin{tikzpicture}[scale=0.7]
@@ -610,7 +610,7 @@ Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2
 
 \subsection{Ničelna prisila}
 
-Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, njihove osnovne lastnosti in jih demonstrirajmo na preprostih primerih.
+Poglejmo si osnovne definicije in lastnosti pojmov, ki so temelji tega dela ter jih demonstrirajmo na preprostih primerih.
 
 \begin{definicija}
     \emph{Množica ničelne prisile} $Z$ grafa $G$ je podmnožica vozlišč tega grafa, takšna, da velja: če na začetku s črno barvo pobarvamo vsa vozlišča iz $Z$, potem pa sledimo pravilu, da vsako črno vozlišče $u$ z natanko enim belim sosedom $v$ povzroči, da vozlišče $v$ spremeni barvo v črno (označimo $u \rightarrow v$), in postopek ponavljamo, dokler se še dogajajo kakšne spremembe, morajo biti po koncu postopka vsa vozlišča grafa $G$ pobarvana črno.
@@ -641,7 +641,7 @@ Poglejmo si osnovno definicijo pojmov, ki so temelji tega dela, njihove osnovne 
         \caption{Ena izmed petih možnih množic ničelne prisile velikosti~2 grafa na sliki je množica $Z =\{1,5\}$.}
         \label{fig:osnovni-primer-prisile}
     \end{figure}
-    Pravzaprav od podmnožic vozlišč velikosti~2 zadostujejo tiste, ki vsebujejo vozlišče~1 ali vozlišče~2 ter hkrati vozlišče~3 ali vozlišče~5, pa tudi podmnožica, ki vsebuje tako vozlišče~1 kot vozlišče~2. (Če se virus začne širiti iz trikotnika, potem morata biti pobarvani vsaj dve izmed vozlišč trikotnika, če pa se začne širiti iz vozlišča~5, ki je stopnje 1, mora biti pobarvano vsaj še eno vozlišče trikotnika (1 ali 2), da bo vozlišče~3 lahko okužilo zadnje neokuženo vozlišče trikotnika.) Vse možne množice ničelne prisile velikosti~2 so torej:
+    Pravzaprav od podmnožic vozlišč velikosti~2 zadostujejo tiste, ki vsebujejo vozlišče~1 ali vozlišče~2 ter hkrati vozlišče~3 ali vozlišče~5, pa tudi podmnožica, ki vsebuje tako vozlišče~1 kot vozlišče~2. (Če se barva začne širiti iz trikotnika, potem morata biti pobarvani vsaj dve izmed vozlišč trikotnika, če pa se začne širiti iz vozlišča~5, ki je stopnje 1, mora biti pobarvano vsaj še eno vozlišče trikotnika (1 ali 2), da bo vozlišče~3 lahko pobarvalo zadnje belo vozlišče trikotnika.) Vse možne množice ničelne prisile velikosti~2 so torej:
     \[ Z_1 = \{ 1, 2\}, Z_2 = \{ 1, 3\},\ Z_3 = \{ 1, 5\},\ Z_4 = \{ 2, 3\},\ Z_5 = \{2, 5\}. \]
     Če gledamo podmnožice vozlišč velikosti~3, pa so množice ničelne prisile vse, razen tista, ki ne vsebuje ne vozlišča~1 ne vozlišča~2, torej množica $\{3, 4, 5\}$. Množice ničelne prisile velikosti 4 so očitno vse možne podmnožice vozlišč velikosti 4.
 \end{primer}
@@ -658,7 +658,7 @@ Hitro vidimo, da je število ničelne prisile dobro definirano, saj lahko za pol
     Z(G) \leq n(G) - 1.
     \label{eq:trv-zgornja-meja}
 \end{equation}
-Po drugi strani seveda velja tudi, da moramo za zadostitev definicije vedno imeti vsaj eno vozlišče, da lahko govorimo o množici ničelne prisile, očitno velja
+Po drugi strani seveda velja tudi, da moramo za zadostitev definiciji vedno imeti vsaj eno vozlišče, da lahko govorimo o množici ničelne prisile, očitno velja
 \begin{equation}
 Z(G)  \geq 1.
 \label{eq:trv-trv-spodnja-meja}
@@ -668,9 +668,9 @@ Hitro lahko postavimo boljšo očitno spodnjo mejo. Če imamo graf z najmanjšo 
     Z(G) \geq \delta.
     \label{eq:trv-spodnja-meja}
 \end{equation}
-Ta spodnja meja je tesna za splošen graf $G$ brez dodatnih omejitev: če vzamemo primer poti $P_n$, ki ima $\delta = 1$, vidimo, da je $Z(G)$ prav tako enak 1 (pobarvamo eno od krajišč poti), torej $Z(P_n) = \delta(P_n).$
+Ta spodnja meja je tesna za splošen graf $G$ brez dodatnih omejitev: če vzamemo primer poti $P_n$, ki ima $\delta = 1$, vidimo, da je tudi $Z(P_n)$ enak 1 (pobarvamo eno od krajišč poti), torej $Z(P_n) = \delta(P_n).$
 
-Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč $Z$, ki ni nujno množica ničelne prisile, končen rezultat postopka širjenja barve vedno enaka množica neodvisno od vrstnega reda spreminjanja barve. Pokažimo:
+Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč $Z$, ki ni nujno množica ničelne prisile, končen rezultat postopka širjenja barve vedno enaka množica, neodvisno od vrstnega reda spreminjanja barve. Pokažimo:
 \begin{trditev}
     Končna množica pobarvanih vozlišč za neko začetno množico $Z$ je vedno ista, ne glede na vrstni red sprememb barv. 
 \end{trditev}
@@ -682,7 +682,7 @@ Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč 
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
 
-Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$. Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če ta ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
+Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$ ($u$ povzroči spremembo barve vozlišča $v$). Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če ta ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
 \begin{trditev}[{\cite[trditev~2.10]{barioli2010zero}}]
     Za velikost minimalnega pokritja splošnega grafa $G$ s potmi $P(G)$ velja
     \begin{equation}
@@ -699,7 +699,7 @@ Poglejmo si, kako izgleda veriga sprememb na grafu s slike~\ref{fig:osnovni-prim
     \[ Z_1 \subseteq Z_2 \implies Z_2 \text{ je množica ničelne prisile}. \]
 \end{trditev}
 \begin{proof}
-    Imejmo množico ničelne prisile $Z_1$ in tako podmnožico $Z_2$ vozlišč $G$, da velja $Z_1 \subseteq Z_2$. Naj bo $z_1 = |Z_1|$ in $z_2 = |Z_2|$. Označimo zaporedje sprememb barv vozlišč, če so na začetku pobarvana vozlišča iz $Z_1$, takole: $u_1 \rightarrow v_1, u_2 \rightarrow v_2 \ldots$, pri čemer $u_i \rightarrow v_i$ pomeni, da je $u_i$ povzročil spremembo barve vozlišča $v_i$, in $i$ teče od 1 do $n(G) - z_1$, saj je $Z_1$ množica ničelne prisile in mora biti na koncu pobarvan cel graf. Očitno je, da so vozlišča v zaporedju, ki spremenijo barvo, enolična, torej $v_i \neq v_j$ za $i \neq j$. Če sedaj na začetku pobarvamo vozlišča iz $Z_2$ in gremo po zaporedju sprememb barv za $Z_1$, imamo za spremembo $u_i \rightarrow v_i$ dve možnosti:
+    Imejmo množico ničelne prisile $Z_1$ in tako podmnožico $Z_2$ vozlišč $G$, da velja $Z_1 \subseteq Z_2$. Naj bo $z_1 = |Z_1|$ in $z_2 = |Z_2|$. Označimo zaporedje sprememb barv vozlišč, če so na začetku pobarvana vozlišča iz $Z_1$, takole: $u_1 \rightarrow v_1, u_2 \rightarrow v_2 \ldots$, pri čemer $u_i \rightarrow v_i$ pomeni, da je $u_i$ povzročil spremembo barve vozlišča $v_i$, in $i$ teče od 1 do $n(G) - z_1$, saj je $Z_1$ množica ničelne prisile in mora biti na koncu pobarvan cel graf. Vozlišča v zaporedju, ki spremenijo barvo, so enolična, torej $v_i \neq v_j$ za $i \neq j$. Če sedaj na začetku pobarvamo vozlišča iz $Z_2$ in gremo po zaporedju sprememb barv za $Z_1$, imamo za spremembo $u_i \rightarrow v_i$ dve možnosti:
     \begin{itemize}
         \item $v_i$ še ni pobarvan in je edini bel sosed $u_i$ (na začetku smo dodali več črnih vozlišč, torej se je število belih sosedov vozlišč kvečjemu zmanjšalo, ne povečalo), v tem primeru se zgodi sprememba barve kot originalno;
         \item $v_i$ je že pobarvan, kar se lahko zgodi le, če $v_i \in Z_2 \setminus Z_1$, saj smo sledili spremembam barve za $Z_1$, kjer se $v_i$ pojavi samo enkrat; sprememba barve se ne zgodi.
@@ -755,7 +755,7 @@ pri čemer je $\korang(A) = \dim(\ker(A))$. Ker za matriko $A$ velikosti $m \tim
 
 Definiramo lahko tudi \emph{pozitivno semidefiniten minimalni rang} $\mr_+(G)$ grafa $G$ nad $\R$, kjer upoštevamo samo tiste matrike grafa $G$, ki so pozitivno semidefinitne. Očitno velja $\mr(G) \leq \mr_+(G)$.
 
-S pomočjo kličnega pokritja lahko minimalni rang grafa omejimo od zgoraj. Nek induciran podgraf velikosti $n'$ grafa $G$ je klika, če je izomorfen polnemu grafu na $n'$ vozliščih (vsa vozlišča so sosednja). Množica podgrafov klik, za katero velja, da je vsaka povezava grafa $G$ vsebovana vsaj v eni izmed klik, je \emph{klično pokritje} grafa $G$. Velikost najmanjše take množice je \emph{število kličnega pokritja} $\cc(G)$ grafa $G$. Velja~\cite{booth2008minimum}
+S pomočjo kličnega pokritja lahko minimalni rang grafa omejimo od zgoraj. Nek induciran podgraf velikosti $n'$ grafa $G$ je klika, če je izomorfen polnemu grafu na $n'$ vozliščih (vsa vozlišča so sosednja). Množica podgrafov klik, za katero velja, da je vsaka povezava grafa $G$ vsebovana vsaj v eni izmed klik, je \emph{klično pokritje} grafa $G$. Velikost najmanjše take množice je \emph{število kličnega pokritja} $\cc(G)$ grafa $G$. Velja~\cite{booth2008minimum}:
 \begin{equation}
 \label{eq:mr-cc}
 \mr(G) \leq \mr_+(G) \leq \cc(G),
@@ -837,7 +837,7 @@ Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta (za $n \geq 2$) dve st
     \label{trd:pot}
 \end{trditev}
 \begin{proof}
-    Če na začetku pobarvamo eno izmed krajišč, označimo ga z $u$, ki je torej stopnje 1, potem ta prisili v spremembo svojega edinega soseda $v$, ki je stopnje 2 in katerega sosed $u$ je že pobarvan, zato $v$ prisili v spremembo svojega edinega nepobarvanega soseda in tako dalje \ldots (Predstavljeno tudi na sliki~\ref{fig:pot}.) Velja torej $Z(P_n) \leq 1$, saj je krajišče množica ničelne prisile. Ker je $\delta = 1$, po trivialni spodnji meji~\ref{eq:trv-spodnja-meja} velja $Z(P_n) = 1$.
+    Če na začetku pobarvamo eno izmed krajišč, označimo ga z $u$, ki je torej stopnje 1, potem ta povzroči spremembo v svojem edinem sosedu $v$, ki je stopnje~2 in katerega sosed $u$ je že pobarvan, zato $v$ povzroči spremembo barve svojega edinega nepobarvanega soseda in tako dalje \ldots (Predstavljeno tudi na sliki~\ref{fig:pot}.) Velja torej $Z(P_n) \leq 1$, saj je krajišče množica ničelne prisile. Ker je $\delta = 1$, po trivialni spodnji meji~\ref{eq:trv-spodnja-meja} velja $Z(P_n) = 1$.
     \begin{figure}[h]
         \begin{subfigure}{0.5\textwidth}
             \centering
@@ -885,7 +885,7 @@ Pot dolžine $n$ je graf z $n$ vozlišči, od katerih sta (za $n \geq 2$) dve st
             }
             \end{tikzpicture}
         \end{subfigure}
-        \caption{Prikazano je vmesno stanje širjenja črne barve v grafu $P_n$, če smo na začetku pobarvali samo levo krajišče. Drugo vozlišče z leve ima natanko enega nepobarvanega soseda (na sliki levo) in ga prisili v spremembo barve (na sliki desno). Širjenje se nadaljuje na enak način, dokler ni pobarvan cel graf.}
+        \caption{Prikazano je vmesno stanje širjenja črne barve v grafu $P_n$, če smo na začetku pobarvali samo levo krajišče. Drugo vozlišče z leve ima natanko enega nepobarvanega soseda (na sliki levo) in povzroči njegovo spremembo (na sliki desno). Širjenje se nadaljuje na enak način, dokler ni pobarvan cel graf.}
         \label{fig:pot}
     \end{figure}
 \end{proof}
@@ -944,11 +944,11 @@ Cikel na $n \geq 3$ vozliščih $C_n$ je graf, v katerem imajo vsa vozlišča st
         }
         \end{tikzpicture}
     \end{subfigure}
-    \caption{Prikazano je vmesno stanje širjenja barve v grafu $C_n$, pri čemer sta na začetku pobarvani sosednji vozlišči~1 in~2 (prikazano na sliki levo). Vozlišče~1 lahko v spremembo prisili desnega soseda, vozlišče~2 pa levega soseda (prikazano na sliki desno). Postopek se ponavlja, dokler ni pobarvan cel graf.}
+    \caption{Prikazano je vmesno stanje širjenja barve v grafu $C_n$, pri čemer sta na začetku pobarvani sosednji vozlišči~1 in~2 (prikazano na sliki levo). Vozlišče~1 lahko povzroči spremembo desnega soseda, vozlišče~2 pa levega soseda (prikazano na sliki desno). Postopek se ponavlja, dokler ni pobarvan cel graf.}
     \label{fig:cikel}
 \end{figure}
 \begin{proof}
-    Če za začetno množico pobarvanih vozlišč vzamemo dva soseda, bo vsak imel natanko enega nepobarvanega soseda, širjenje bo torej potekalo v obe smeri (prikazano na sliki~\ref{fig:cikel}), dokler ne bo cel graf pobarvan. Takšna začetna množica torej je množica ničelne prisile, torej velja $Z(C_n) \leq 2$. Če upoštevamo trivialno spodnjo mejo~\ref{eq:trv-spodnja-meja} in dejstvo, da je najmanjša stopnja v ciklu enaka~2, dobimo $Z(C_n) = 2$.\qedhere
+    Če za začetno množico pobarvanih vozlišč vzamemo dva soseda, bo vsak imel natanko enega nepobarvanega soseda, širjenje bo torej potekalo v obe smeri (prikazano na sliki~\ref{fig:cikel}), dokler ne bo cel graf pobarvan. Takšna začetna množica torej je množica ničelne prisile, velja $Z(C_n) \leq 2$. Če upoštevamo trivialno spodnjo mejo~\ref{eq:trv-spodnja-meja} in dejstvo, da je najmanjša stopnja v ciklu enaka~2, dobimo $Z(C_n) = 2$.\qedhere
 \end{proof}
 
 \subsection{Polni grafi}
@@ -958,7 +958,7 @@ Polni graf na $n$ vozliščih $K_n$ je graf, v katerem je vsako vozlišče sosed
     $Z(K_n) = n-1$.
 \end{trditev}
 \begin{proof}
-    Če pobarvamo vsa vozlišča, razen enega (označimo $v$), je to množica ničelne prisile, saj so vsi sosedi vozlišča $v$ črni in je $v$ njihov edini nepobarvan sosed, torej ga prisilijo v spremembo barve in pobarvan je cel graf. Velja torej $Z(K_n) \leq n-1$, po spodnji meji~\ref{eq:trv-spodnja-meja} pa velja tudi $Z(K_n) \geq \delta = n-1$, torej je $Z(K_n) = n-1$.
+    Če pobarvamo vsa vozlišča, razen enega (označimo $v$), je to množica ničelne prisile, saj so vsi sosedi vozlišča $v$ črni in je $v$ njihov edini nepobarvan sosed, torej spremeni barvo in pobarvan je cel graf. Velja torej $Z(K_n) \leq n-1$, po spodnji meji~\ref{eq:trv-spodnja-meja} pa velja tudi $Z(K_n) \geq \delta = n-1$, torej je $Z(K_n) = n-1$.
 \end{proof}
 Na sliki~\ref{fig:polni-graf} je prikazan polni graf na 5 vozliščih in njegova množica ničelne prisile.
 \begin{figure}[h]
@@ -982,12 +982,12 @@ Na sliki~\ref{fig:polni-graf} je prikazan polni graf na 5 vozliščih in njegova
         }
     }
     \end{tikzpicture}
-    \caption{Prikazan je polni graf $K_5$ in njegova množica ničelne prisile. Čim bi pobarvali eno vozlišče manj, bi imelo vsako črno vozlišče dva nepobarvana soseda in se postopek širjenja barve ne bi mogel začeti.}
+    \caption{Prikazan je polni graf $K_5$ in njegova množica ničelne prisile. Čim bi pobarvali eno vozlišče manj, bi imelo vsako črno vozlišče dva nepobarvana soseda in se postopek širjenja barve ne bi začel.}
     \label{fig:polni-graf}
 \end{figure}
 
 \subsection{Zvezde}
-Zvezda $S_n$ je tak graf na $n+1$ vozliščih, ki ima $n$ vozlišč stopnje~1 in eno vozlišče stopnje~$n$. Je pravzaprav poseben primer polnega dvodelnega grafa, množico vozlišč lahko torej razbijemo na dve množici $X$, v kateri je vozlišče stopnje $n$, in $Y$, v kateri so vsa preostala vozlišča, ki so stopnje 1. Znotraj množic $X$ in $Y$ ni povezav, vsako vozlišče iz $X$ pa je sosednje vsakemu v $Y$. Primer zvezde je prikazan na sliki~\ref{fig:zvezda}.
+Zvezda $S_n$ je tak graf na $n+1$ vozliščih, ki ima $n$ vozlišč stopnje~1 in eno vozlišče stopnje~$n$. Je pravzaprav poseben primer polnega dvodelnega grafa, množico vozlišč lahko torej razbijemo na dve množici: $X$, v kateri je vozlišče stopnje $n$, in $Y$, v kateri so vsa preostala vozlišča, ki so stopnje 1. Znotraj množic $X$ in $Y$ ni povezav, vsako vozlišče iz $X$ pa je sosednje vsakemu v $Y$. Primer zvezde je prikazan na sliki~\ref{fig:zvezda}.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[scale=0.6]
@@ -1014,16 +1014,16 @@ Zvezda $S_n$ je tak graf na $n+1$ vozliščih, ki ima $n$ vozlišč stopnje~1 in
 \end{trditev}
 \begin{proof}
     Za namene tega dokaza si bomo sliko zvezde predstavljali kot poln dvodelen graf $K_{1,n}$ (podobno kot na sliki~\ref{fig:polni-dvodelni-graf}), sredinsko vozlišče stopnje $n$ na eni strani (množica $X$), na drugi pa vsa preostala vozlišča, ki so stopnje 1 (množica $Y$).
-    Opazimo, da so vozlišča iz $Y$ ekvivalentna v smislu, da ni važno, katero točno je pobarvano, saj imajo vsa isto stopnjo in soseda. Če črno pobarvamo vsa vozlišča v $Y$ razen enega, bo eno izmed teh vozlišč poskrbelo za spremembo barve sredinskega vozlišča stopnje $n$, to pa bo poskrbelo za spremembo barve edinega vozlišča stopnje 1, ki še ni črno. Velja torej $Z(K_{1,n}) \leq n-1$. Poskusimo najti manjšo množico ničelne prisile. Na začetku lahko pobarvamo $n-2$ vozlišča na dva načina: lahko pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, lahko pa pobarvamo $n-2$ vozlišč stopnje 1. Obravnavajmo oba primera.
+    Opazimo, da so vozlišča iz $Y$ ekvivalentna v smislu, da ni važno, katero točno je pobarvano, saj imajo vsa isto stopnjo in istega soseda. Če črno pobarvamo vsa vozlišča v $Y$ razen enega, bo eno izmed teh vozlišč poskrbelo za spremembo barve sredinskega vozlišča stopnje $n$, to pa bo poskrbelo za spremembo barve edinega vozlišča stopnje 1, ki še ni črno. Velja torej $Z(K_{1,n}) \leq n-1$. Poskusimo najti manjšo množico ničelne prisile. Na začetku lahko pobarvamo $n-2$ vozlišča na dva načina: lahko pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, lahko pa pobarvamo $n-2$ vozlišč stopnje 1. Obravnavajmo oba primera.
     \begin{enumerate}[a)]
-        \item Če na začetku pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, potem črna vozlišča stopnje 1 nimajo več nobenega nepobarvanega soseda, vozlišče stopnje $n$ pa ima še 3 nepobarvane sosede, zato se črna barva ne more širiti. 
+        \item Če na začetku pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, potem črna vozlišča stopnje 1 nimajo več nobenega nepobarvanega soseda, vozlišče stopnje $n$ pa ima še 3 nepobarvane sosede, zato se barva ne more širiti. 
         \item Če na začetku pobarvamo $n-2$ vozlišč stopnje 1, ima vsako od njih enega nepobarvanega soseda, to je vozlišče stopnje $n$, ki torej spremeni barvo. Sedaj ima vozlišče stopnje $n$ še 2 nepobarvana soseda in širjenje barve se ustavi.
     \end{enumerate}
     Torej ne glede na to, kako izberemo začetno množico velikosti $n-2$, ta ne bo množica ničelne prisile. Velja torej $Z(S_n) = n-1$.
 \end{proof}
 
 \subsection{Polni dvodelni grafi}
-Poln dvodelni graf $K_{m,n}$ je tak graf na $m+n$ vozliščih, kjer lahko množico vozlišč razbijemo na dve množici $V_m$ velikosti $m$ in $V_n$ velikosti $n$ tako, da znotraj vsake od množic ni povezav, vsako vozlišče iz $V_m$ pa je sosednje vsakemu vozlišču iz $V_n$. Na sliki~\ref{fig:polni-dvodelni-graf} je prikazan primer polnega dvodelnega graf $K_{3,4}$.
+Poln dvodelni graf $K_{m,n}$ je tak graf na $m+n$ vozliščih, kjer lahko množico vozlišč razbijemo na množici $V_m$ velikosti $m$ in $V_n$ velikosti $n$ tako, da znotraj vsake od množic ni povezav, vsako vozlišče iz $V_m$ pa je sosednje vsakemu vozlišču iz $V_n$. Na sliki~\ref{fig:polni-dvodelni-graf} je prikazan primer polnega dvodelnega graf $K_{3,4}$.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
@@ -1057,7 +1057,7 @@ Poln dvodelni graf $K_{m,n}$ je tak graf na $m+n$ vozliščih, kjer lahko množi
 \begin{proof}
     Če je $m=1$, dobimo ravno zvezdo, $Z(K_{1,n}) = 1 + n - 2 = n - 1 = Z(S_n)$, trditev torej velja.
     
-    Zdaj si poglejmo splošen primer, torej število ničelne prisile $K_{m,n}$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$, lahko eno izmed pobarvanih vozlišč v $V_m$ prisili v spremembo barve edino nepobarvano vozlišče v $V_n$ in obratno. Velja torej $Z(K_{m,n}) \leq (m - 1) + (n - 1) = m + n -2$. Sedaj poskusimo najti $m + n - 3$ vozlišč, ki so množica ničelne prisile. Podobno kot v posebenem primeru zvezde jih lahko izberemo tako, da pobarvamo vsa vozlišča iz $V_n$ in $m-3$ vozlišč iz $V_m$, v tem primeru pobarvana vozlišča iz $V_m$ nimajo nobenega nepobarvanega soseda, vozlišča iz $V_n$ pa imajo tri nepobarvane sosede, zato se barva ne more razširiti. Simetrično v primeru, če pobarvamo vsa vozlišča iz $V_m$ in $n-3$ vozlišč iz $V_n$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-2$ vozlišč iz $V_n$, potem imajo črna vozlišča iz $V_n$ enega nepobarvanega soseda, ki torej spremeni barvo, pobarvana vozlišča iz $V_m$ pa imajo 2~nepobarvana soseda, torej se širjenje ustavi. Simetrično, če na začetku pobarvamo $m-2$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$. Ne glede na to, kako izberemo vozlišča, torej ne dobimo množice ničelne prisile. Velja torej $Z(K_{m,n}) \geq m + n - 2$, trditev sledi.
+    Zdaj si poglejmo splošen primer, torej število ničelne prisile $K_{m,n}$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$, lahko eno izmed pobarvanih vozlišč v $V_m$ povzroči spremembo barve v edinem nepobarvanem vozlišču v $V_n$ in obratno. Velja torej $Z(K_{m,n}) \leq (m - 1) + (n - 1) = m + n -2$. Sedaj poskusimo najti $m + n - 3$ vozlišč, ki so množica ničelne prisile. Podobno kot v posebenem primeru zvezde jih lahko izberemo tako, da pobarvamo vsa vozlišča iz $V_n$ in $m-3$ vozlišč iz $V_m$, v tem primeru pobarvana vozlišča iz $V_m$ nimajo nobenega nepobarvanega soseda, vozlišča iz $V_n$ pa imajo tri nepobarvane sosede, zato se barva ne more razširiti. Simetrično za primer, ko pobarvamo vsa vozlišča iz $V_m$ in $n-3$ vozlišč iz $V_n$. Če na začetku pobarvamo $m-1$ vozlišč iz $V_m$ in $n-2$ vozlišč iz $V_n$, potem imajo črna vozlišča iz $V_n$ enega nepobarvanega soseda, ki torej spremeni barvo, pobarvana vozlišča iz $V_m$ pa imajo 2~nepobarvana soseda, torej se širjenje ustavi. Simetrično, če na začetku pobarvamo $m-2$ vozlišč iz $V_m$ in $n-1$ vozlišč iz $V_n$. Ne glede na to, kako izberemo vozlišča, torej ne dobimo množice ničelne prisile. Velja torej $Z(K_{m,n}) \geq m + n - 2$, trditev sledi.
 \end{proof}
 
 \subsection{Kolesa}
@@ -1093,12 +1093,12 @@ Kolo $W_n$ je graf na $n+1$ vozliščih, ki ga dobimo, če vzamemo cikel $C_n$, 
 
 \subsection{Trikotniki}
 Trikotnik $T_n$ je graf z $\frac{n (n+1)}{2}$ vozlišči. Najlažje ga definiramo rekurzivno:
-$T_1$ je graf na enem vozlišču (tudi $K_1$), graf $T_n$ pa iz grafa $T_{n-1}$ dobimo tako, da pod sliko grafa $T_{n-1}$ dodamo $n$ vozlišč v ravni vrsti, jih povežemo v pot, nato pa vsako vozlišče povežemo z vozliščema iz prejšnje ravni, ki imata enak indeks ali indeks, ki je za ena večji. Zapišimo matematično: če $j$-to vozlišče na $i$-ti ravni označimo z $u_{i,j}$, potem za graf $T_n$ velja:
+$T_1$ je graf na enem vozlišču (tudi $K_1$), graf $T_n$ pa iz grafa $T_{n-1}$ dobimo tako, da pod sliko grafa $T_{n-1}$ dodamo $n$ vozlišč v ravni vrsti, jih povežemo v pot, nato pa vsako vozlišče povežemo z vozliščema iz prejšnje ravni, ki imata enak indeks ali indeks, ki je za ena manjši. Zapišimo matematično: če $j$-to vozlišče na $i$-ti ravni označimo z $u_{i,j}$, potem za graf $T_n$ velja:
 \begin{align*}
     V(T_n) &= \{u_{i,j} \mid i=0,\ldots,n-1, \quad j=0,\ldots,i \} \\
     E(T_n) &= \{ \{u_{i,j}, u_{i, j+1} \} \mid i=1,\ldots,n-1, \quad j=0,\ldots,i-1  \} 
     \\ &\phantom{=} \cup \{ \{ u_{i-1, j}, u_{i,j}  \} \mid i=1,\ldots,n-1, \quad j=0,\ldots,i-1  \} 
-    \\ &\phantom{=} \cup \{ \{ u_{i-1, j},u_{i,j+1} \} \mid i=1,\ldots,n-1, \quad j=0,\ldots,i-1  \} 
+    \\ &\phantom{=} \cup \{ \{ u_{i-1, j-1},u_{i,j} \} \mid i=1,\ldots,n-1, \quad j=1,\ldots,i \} 
 \end{align*}
 Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ skupaj z oznakami vozlišč.
 \begin{figure}[h]
@@ -1147,9 +1147,9 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
 \end{proof}
 
 \subsection{Drevesa}
-\emph{Drevo} $T$ je graf, ki ne vsebuje ciklov (kot podgrafov). Za število povezav drevesa velja $m(T) = n(T) - 1$, poleg tega ima vsako drevo z $n(T) \geq 2$ vsaj dva lista, tj.~vozlišča stopnje 1.
+\emph{Drevo} $T$ je graf, ki ne vsebuje ciklov (kot podgrafov). Za število povezav drevesa velja $m(T) = n(T) - 1$, poleg tega ima vsako drevo z $n(T) \geq 2$ vsaj dva lista, tj.~vozlišči stopnje 1.
 
-\begin{trditev}
+\begin{trditev}{{\cite[trditev 4.2]{aim2008minimumrank}}}
     \label{trd:zf-dreves}
     $Z(T) = P(T)$.
 \end{trditev}
@@ -2102,7 +2102,7 @@ Vsakemu vozlišču priredimo neko utež s pomočjo funkcije $w\colon V(G) \right
 \end{izrek}
 Posledično sledi tudi $\NP$-polnost uteženega problema za splošne grafe. To ni presenetljivo, saj je \ZFOdl\ za neutežene grafe ožji problem (predstavljamo si lahko, da imajo vse uteži vrednosti 1), za katerega vemo, da je $\NP$-poln, torej mora tak biti tudi širši problem. Ker je bila $\NP$-polnost uteženega problema dokazana 8~let pred neuteženim, pa je dokaz ponovno narejen s pomočjo polinomske prevedbe že znanega $\NP$-polnega problema, usmerjenega Hamiltonskega cikla, na naš problem. (Da je problem v $\NP$, pa pokažemo enako, kot za primer povezane ničelne prisile.)
 
-Avtor v~\cite[izrek~2.3.8]{aazami2008hardness} za utežen problem dokaže tudi, da je za poljuben fiksen $\epsilon > 0$ $\NP$-težko najti približek rešitve $Z(G,w)$ na $2^{\log^{1-\epsilon}n}$ natančno. \hl{TODO: katera osnova logaritma?} Če bi torej obstajal aproksimativen algoritem s tako konstanto, bi sledilo $\P = \NP$, zato pričakujemo, da takšni aproksimativni algoritmi ne obstajajo.
+Avtor v~\cite[izrek~2.3.8]{aazami2008hardness} za utežen problem dokaže tudi, da je za poljuben fiksen $\epsilon > 0$ $\NP$-težko najti približek rešitve $Z(G,w)$ na $2^{\log^{1-\epsilon}n}$ natančno. Če bi torej obstajal aproksimativen algoritem s tako konstanto, bi sledilo $\P = \NP$, zato pričakujemo, da takšni aproksimativni algoritmi ne obstajajo.
 
 %\subsection{Pregled algoritmov za specifične družine grafov}
 %\hl{TODO}
