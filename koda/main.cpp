@@ -37,23 +37,24 @@ void test_zfn() {
     // timeit(ZFN_top_down_subsets, graph, subsets);
 
     int N = 100;
-    vector<int> ns = {15};
+    vector<int> ns = {18};
     // vector<double> ps = {0.01, 0.4, 0.7};
-    vector<double> ps = {0.01};
     for (int n : ns) {
         vvvi subsets = power_subset(n);
-        for (double p : ps) {
+        for (int j = 1; j < 100; ++j ) {
+            double p = j / 100.0;
+            cerr << p << "\n";
             // cout << "-----------------------\n";
             // cout << "n = " << n << ", p = " << p << "\n";
             for (int i=0; i < N; ++i) {
                 if (i % 100 == 0) cerr << i << ", p = " << p << "\n";
                 Graph graph = Graph::random_erdos_renyi(n, p);
-                cout << "top_down -> ";
+                // cout << "top_down -> ";
                 timeit(ZFN_top_down, graph, subsets);
-                cout << "top_down_subsets -> ";
-                timeit(ZFN_top_down_subsets, graph, subsets);
-                cout << "binary_search -> ";
-                timeit(ZFN_binary_search, graph, subsets);
+                // cout << "top_down_subsets -> ";
+                // timeit(ZFN_top_down_subsets, graph, subsets);
+                // cout << "binary_search -> ";
+                // timeit(ZFN_binary_search, graph, subsets);
             }
         }
     }

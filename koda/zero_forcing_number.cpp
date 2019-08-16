@@ -89,7 +89,3 @@ int ZFN_binary_search(const Graph& graph, const vvvi& subsets) {
     }
     return r;
 }
-
-// graf Zjev v odvisnosti od pjev za nek fiksen n, varianca / min / max
-// histogram Zjev za konkreten n, p 
-
