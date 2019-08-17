@@ -13,8 +13,8 @@
 \newcommand{\letnica}{2019} % letnica magistriranja
 \newcommand{\opis}{Delo obravnava integracijo po ω-kompleksih, njene lastnosti in posplošitve
 na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati matematičnih simbolov v $ $.
-\newcommand{\kljucnebesede}{integracija\sep kompleks} % ključne besede, ločene z \sep, da se PDF metapodatki prav procesirajo
-\newcommand{\keywords}{integration\sep complex} % ključne besede v angleščini
+\newcommand{\kljucnebesede}{ničelna prisila\sep produkt grafov\sep računska zahtevnost} % ključne besede, ločene z \sep, da se PDF metapodatki prav procesirajo
+\newcommand{\keywords}{zero forcing\sep graph product\sep computational complexity} % ključne besede v angleščini
 \newcommand{\organization}{Univerza v Ljubljani, Fakulteta za matematiko in fiziko} % fakulteta
 \newcommand{\literatura}{literatura}  % pot do datoteke z literaturo (brez .bib končnice)
 \newcommand{\sep}{, }  % separator med ključnimi besedami v besedilu
@@ -242,8 +242,9 @@ Magistrsko delo naj vsebuje poglobljen pregled znanih rezultatov o ničelni pris
 \textbf{\naslovdela} \\[3mm]
 \textsc{Povzetek} \\[2mm]
 \end{center}
-Tukaj napišemo povzetek vsebine. Sem sodi razlaga vsebine in ne opis tega, kako je delo
-organizirano.
+Množica ničelne prisile grafa $G$ je taka podmnožica vozlišč $Z$, za katero velja: če na začetku pobarvamo vozlišča iz $Z$, nato pa uporabljamo pravilo za širjenje barve, dokler se dogajajo spremembe, morajo biti na koncu pobarvana vsa vozlišča grafa~$G$. Pri tem je pravilo širjenja barve tako, da pobarvano vozlišče $u$ spremeni barvo soseda~$v$ natanko tedaj, ko je ta edini še nepobarvan sosed vozlišča $u$. Število ničelne prisile grafa $G$ je velikost najmanjše take množice ničelne prisile. Delo obravnava ničelno prisilo nekaterih pogostih družin grafov, zgornje in spodnje meje zanjo in karakterizira grafe, ki te meje dosežejo. Obravnavane so tudi zgornje meje za nekatere produkte grafov in povezave ničelne prisile z nekaterimi drugimi grafovskimi parametri, kot sta npr.~dominacijsko število in neodvisnostno število. 
+
+V sklopu dela so v C++ implementirani algoritmi za preverjanje, ali je množica res množica ničelne prisile, in za izračun števila ničelne prisile za dan graf $G$. Slednji so eksponentni, vendar za splošen graf ne moremo doseči polinomske časovne zahtevnosti, saj je problem \NP-težek. Predstavljeni so tudi nekateri drugi rezultati kompleksnosti za probleme, ki so tesno povezani z ničelno prisilo. 
 
 \vfill
 \begin{center}
@@ -251,12 +252,12 @@ organizirano.
 \textsc{Abstract}\\[2mm]
 \end{center}
 
-An abstract of the work is written here. This includes a short description of
-the content and not the structure of your work.
+Zero forcing set of graph $G$ is a subset $Z$ of vertices for which the following holds: if initially the vertices from $Z$ are coloured black and we apply the colour change rule repeatedly, then at the end of the process all vertices of $G$ should be black. Here the colour change rule is defined as: a black vertex $u$ forces the change of colour in a white negihbour $v$ if $v$ is the only white neighbour of $u$. Zero forcing number of a graph is the size of the smallest zero forcing set. In this work, we list and prove results for some well known families of graphs, lower and upper bounds of zero forcing number and characterise the graphs for which these bounds are tight. Some upper bounds for various products of graphs and connections to other graph parameters, such as domination and independence number, are also given. 
+
+We implement algorithms for checking whether a set is zero forcing and for calculating the zero forcing number of a general graph in C++. The latter are exponential, however due to \NP-hardness of the problem, polynomial time complexity cannot be obtained. Some additional complexity results for closely related problems are also listed. 
 
 \vfill\noindent
-\textbf{Math.~Subj.~Class.~(2010):} oznake kot 74B05, 65N99, na voljo so na naslovu
-\url{http://www.ams.org/msc/msc2010.html?t=65Mxx} \\[1mm]
+\textbf{Math.~Subj.~Class.~(2010):} 05C99, 68Q25 \\[1mm]
 \textbf{Ključne besede:} \kljucnebesede \\[1mm]
 \textbf{Keywords:} \keywords
 
