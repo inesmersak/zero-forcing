@@ -124,7 +124,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \newcommand{\NP}{\ensuremath{\mathsf{NP}}}
 \newcommand{\NPC}{\ensuremath{\mathsf{NPC}}}
 \newcommand{\DHC}{\ensuremath{\mathsf{DHC}}}
-\newcommand{\ZFOdl}{\textsf{ZF-Odl}}
+\newcommand{\ZFOdl}{\ensuremath{\mathsf{ZF\text{-}Odl}}}
 
 \DeclareMathOperator{\boxempty}{\Box}
 \DeclareMathOperator{\mr}{mr}
@@ -193,8 +193,14 @@ FAKULTETA ZA MATEMATIKO IN FIZIKO\\[5mm]
 % zahvala
 \pdfbookmark[1]{Zahvala}{zahvala} %
 \section*{Zahvala}
-Neobvezno.
-Zahvaljujem se \dots
+Rada bi se zahvalila mentorju za hitro odzivnost in dobre komentarje ter vso pomoč med pisanjem diplomske in magistrske naloge.
+
+Najlepša hvala staršem, ki so me vsa leta izobrazbe brezpogojno podpirali in prenašali ter v meni vzbudili interes za znanost. Hvala tudi sestri, ki me je poučevala že pred malo šolo, v osnovni šoli skupaj z mano reševala enačbe, in ker me je prenašala v slabih trenutkih.
+
+Hvala vsem bivšim kolegom, ki so mi polepšali dolge dneve na faksu, in zdajšnjim kolegom, ki me v službi neumorno sprašujejo po datumu zaključka magistrskega študija.
+
+Največja zahvala pa mojemu fantu Juretu, za vse razlage in debate tekom študija, za podporo in boljšo voljo, ko je prihodnost (polna izpitov ali pisanja nalog) izgledala črna, za priložnosti, ki sem jih zaradi njegove spodbude in truda pridobila, pa tudi za natančen pregled tega dela in vztrajanja pri \LaTeX-u za Matlabove grafe.
+
 % end zahvala -- izbriši vse med zahvala in end zahvala, če je ne rabiš
 
 \cleardoublepage
@@ -271,7 +277,7 @@ Pojem ničelne prisile je bil prvič predstavljen v~\cite{aim2008minimumrank} le
 
 Neodvisno je bila ničelna prisila obravnavana tudi v fiziki za nadzor velikih kvantnih sistemov prek manjšega, lokalnega dela sistema~\cite{burgarth2007control}. Ekvivalentni pojem \emph{propagacija} so bolj formalno uvedli v~\cite{severini2008nondiscriminatorypropagation} leta 2008, kjer so prav tako postavili vprašanje najmanjše take podmnožice vozlišč, da bo na koncu pobarvan cel graf, problem preučili za nekaj preprostih družin grafov in število določili za uravnotežena $n$-terna drevesa.
 
-Kasneje se je ničelno prisilo začelo preučevati tudi v povezavi drugimi grafovskimi problemi, kot npr.~s povezano dominacijo \cite{amos2015kforcing}, Grundyjevim dominacijskim številom~\cite{bresar2017grundy}, neodvisnostnim številom~\cite{davila2018claw} in električno dominacijo~\cite{dean2011power, benson2015power, aazami2008hardness}. Slednja ima še posebej zanimivo motivacijo v nadzoru električnih omrežij, saj želimo cel sistem pokriti s čim manj (dragimi) nadzornimi napravami. Nekateri izmed teh rezultatov so predstavljeni v tem delu v poglavju~\ref{sec:ostali-rezultati}.
+Kasneje se je ničelno prisilo začelo preučevati tudi v povezavi drugimi grafovskimi problemi, kot npr.~s povezano dominacijo \cite{amos2015kforcing}, Grundyjevim dominacijskim številom~\cite{bresar2017grundy}, neodvisnostnim številom~\cite{davila2018claw} in električno dominacijo~\cite{dean2011power, benson2018zero, aazami2008hardness}. Slednja ima še posebej zanimivo motivacijo v nadzoru električnih omrežij, saj želimo cel sistem pokriti s čim manj (dragimi) nadzornimi napravami. Nekateri izmed teh rezultatov so predstavljeni v tem delu v poglavju~\ref{sec:ostali-rezultati}.
 
 Ker je izračun števila ničelne prisile~\NP-težek problem, hkrati pa je pomembna meja za nekatere druge parametre, je bila motivacija za iskanje tesnejših zgornjih in spodnjih mej velika. V~\cite{amos2015kforcing} so v ta namen definirali splošnejšo različico problema, \emph{$k$-prisilo}, s pomočjo katere so v~\cite{amos2015kforcing, gentner2018bounds} našli boljše zgornje meje, nekatere sicer držijo le za povezane grafe. S spodnjo mejo pa so se v odvisnosti od ožine grafa ukvarjali v~\cite{davila2018forcing, davila2018lower, davila2014bounds, gentner2018bounds, gentner2016extremal}.
 
@@ -283,17 +289,17 @@ V~\ref{sec:izracun}.~poglavju sta zapisana algoritma za preverjanje množice in 
 \label{sec:osnovne-definicije}
 V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa definiramo dva temeljna pojma tega dela, množico ničelne prisile in število ničelne prisile, si ogledamo motivacijo za poimenovanje in nekaj primerov.
 
-\emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jo z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$ ali $n(G)$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. Velikost množice povezav grafa $G$ pa bomo označevali z $m(G)$.
+\emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jo z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirana kot število vozlišč tega grafa, označimo jo tudi kot $|G|$ ali $n(G)$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. Velikost množice povezav grafa $G$ pa bomo označevali z $m(G)$.
 
-Graf $H$ je \emph{podgraf} grafa $G$, če velja $V(H) \subseteq V(G)$ in $E(H) \subseteq E(G)$. $H$ je \emph{vpet} podgraf, če velja $V(H) = V(G)$. $H$ je podgraf, \emph{induciran} z množico vozlišč $V_H \subseteq V(G)$, če velja $E(H) = \{ \{ u,v \} \in E(G) \mid u \in V_H \land v \in V_H \}$. Zapišemo tudi $H = G[V_H]$.
+Graf $H$ je \emph{podgraf} grafa $G$, če velja $V(H) \subseteq V(G)$ in $E(H) \subseteq E(G)$. Graf $H$ je \emph{vpet} podgraf, če velja $V(H) = V(G)$. Graf $H$ je podgraf, \emph{induciran} z množico vozlišč $V_H \subseteq V(G)$, če velja $E(H) = \{ \{ u,v \} \in E(G) \mid u \in V_H \land v \in V_H \}$. Zapišemo tudi $H = G[V_H]$.
 
-Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina} $N(u)$ vozlišča $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{zaprta soseščina} $N[u]$ poleg sosedov vsebuje še samo vozlišče $u$, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov (oziroma velikost njegove soseščine). Največjo stopnjo nekega vozlišča v grafu $G$ bomo označili z $\Delta(G)$, najmanjšo pa z $\delta(G)$. Kadar je očitno, za kateri graf gre, bomo pisali kar $\Delta$ in $\delta$. Če velja $\delta(G) = \Delta(G)$, rečemo, da je graf $G$ \emph{regularen}.
+Vozlišči $u$ in $v$ sta \emph{sosednji}, če obstaja povezava med njima, torej $\{u,v\} \in E$, pišemo tudi $u \sim_G v$ ali kar $u \sim v$. (Pri pisanju povezav bomo ponavadi izpuščali oklepaje in vejico, namesto $\{u,v\}$ torej pišimo kar $uv$.) \emph{Soseščina} $N(u)$ vozlišča $u$ je množica tistih vozlišč, ki so mu sosednja, \emph{zaprta soseščina} $N[u]$ poleg sosedov vsebuje še samo vozlišče $u$, \emph{stopnja vozlišča} v grafu $G$ pa je število njegovih sosedov (oziroma velikost njegove soseščine). Največjo stopnjo vozlišča v grafu $G$ bomo označili z $\Delta(G)$, najmanjšo pa z $\delta(G)$. Kadar je očitno, za kateri graf gre, bomo pisali kar $\Delta$ in $\delta$. Če velja $\delta(G) = \Delta(G)$, rečemo, da je graf $G$ \emph{regularen}.
 
 \subsection{Produkti grafov}
 V delu si bomo ogledali tudi rezultate za nekatere produkte grafov, zato jih najprej definirajmo in ilustrirajmo s primeri.
 
 \begin{definicija}
-    \emph{Kartezični produkt} grafov $G$ in $H$, označimo $G \boxempty H$, je graf, katerega  množica vozlišč je kartezični produkt množice vozlišč grafa $G$ in grafa $H$, sosednji pa sta tisti dve vozlišči $(u, v)$ in $(u', v')$, $u, u' \in V(G),\ v, v' \in V(H)$, za kateri velja eden izmed naslednjih pogojev:
+    \emph{Kartezični produkt} grafov $G$ in $H$, označimo z $G \boxempty H$, je graf, katerega  množica vozlišč je kartezični produkt množice vozlišč grafa $G$ in grafa $H$, sosednji pa sta tisti dve vozlišči $(u, v)$ in $(u', v')$, $u, u' \in V(G),\ v, v' \in V(H)$, za kateri velja eden izmed naslednjih pogojev:
     \begin{enumerate}
         \item $u = u'$ in $vv' \in E(H)$,
         \item $v = v'$ in $uu' \in E(G)$.
@@ -301,7 +307,7 @@ V delu si bomo ogledali tudi rezultate za nekatere produkte grafov, zato jih naj
 \end{definicija}
 
 \begin{definicija}
-    \emph{Krepki produkt} grafov $G$ in $H$, označimo $G \boxtimes H$, je graf, katerega  množica vozlišč je kartezični produkt množice vozlišč grafa $G$ in grafa $H$, sosednji pa sta tisti dve vozlišči $(u, v)$ in $(u', v')$, $u, u' \in V(G),\ v, v' \in V(H)$, za kateri velja eden izmed naslednjih pogojev:
+    \emph{Krepki produkt} grafov $G$ in $H$, označimo z $G \boxtimes H$, je graf, katerega  množica vozlišč je kartezični produkt množice vozlišč grafa $G$ in grafa $H$, sosednji pa sta tisti dve vozlišči $(u, v)$ in $(u', v')$, $u, u' \in V(G),\ v, v' \in V(H)$, za kateri velja eden izmed naslednjih pogojev:
     \begin{enumerate}
         \item $u = u'$ in $vv' \in E(H)$,
         \item $v = v'$ in $uu' \in E(G)$,
@@ -426,7 +432,7 @@ Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$, ka
     
     Pri obeh produktih opazimo, da kot inducirani podgrafi za ustrezno izbrano podmnožico vozlišč nastopajo 3 (ravno $n(P_3)$) kopije grafa $P_2$ in 2 (ravno $n(P_2)$) kopiji grafa $P_3$.
     
-    Na spodnjih slikah sta prikazana še primera kartezičnega in krepkega produkta cikla in poti na $n$ vozliščih, natančneje $C_4 \boxempty P_n$ na sliki~\ref{fig:kartez-produkt-cikel-pot} in $C_4 \boxtimes P_n$ na sliki~\ref{fig:krep-produkt-cikel-pot}.
+    Na slikah~\ref{fig:kartez-produkt-cikel-pot}~in~\ref{fig:krep-produkt-cikel-pot} sta prikazana še primera kartezičnega in krepkega produkta cikla in poti na $n$ vozliščih, natančneje $C_4 \boxempty P_n$ na sliki~\ref{fig:kartez-produkt-cikel-pot} in $C_4 \boxtimes P_n$ na sliki~\ref{fig:krep-produkt-cikel-pot}.
     \begin{figure}[h]
         \centering
         \begin{tikzpicture}[xscale=1.2,yscale=1.5]
@@ -522,7 +528,7 @@ Iz zgornjih definicij in primerov lahko vidimo, da sta tako kartezični kot tudi
 \begin{definicija}
     \emph{Korona} grafov $G$ in $H$, označimo jo z $G \circ H$, je graf velikosti $n(G) n(H) + n(G)$, ki ga sestavimo tako, da vzamemo eno kopijo $G$ in $n(G)$ kopij grafa $H$, vsa vozlišča $i$-te kopije $H$ pa povežemo z $i$-tim vozliščem v kopiji grafa $G$.
 \end{definicija}
-Na spodnji sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2$ in $P_2 \circ C_5$.
+Na sliki~\ref{fig:korona-poti-cikla} sta prikazani koroni $C_5 \circ P_2$ in $P_2 \circ C_5$.
 
 \begin{figure}[!h]
     \begin{subfigure}{0.33\textwidth}
@@ -680,12 +686,12 @@ Hitro lahko postavimo boljšo očitno spodnjo mejo. Če imamo graf z najmanjšo 
 \end{equation}
 Ta spodnja meja je tesna za splošen graf $G$ brez dodatnih omejitev: če vzamemo primer poti $P_n$, ki ima $\delta = 1$, vidimo, da je tudi $Z(P_n)$ enak 1 (pobarvamo eno od krajišč poti), torej $Z(P_n) = \delta(P_n).$
 
-Smiselno je vprašati se, ali je ob neki začetni množici pobarvanih vozlišč $Z$, ki ni nujno množica ničelne prisile, končen rezultat postopka širjenja barve vedno enaka množica, neodvisno od vrstnega reda spreminjanja barve. Pokažimo:
-\begin{trditev}
+Smiselno se je vprašati, ali je ob neki začetni množici pobarvanih vozlišč $Z$, ki ni nujno množica ničelne prisile, končen rezultat postopka širjenja barve vedno enaka množica, neodvisno od vrstnega reda spreminjanja barve. Pokažimo:
+\begin{trditev}[{\cite[str.~1633]{aim2008minimumrank}}]
     Končna množica pobarvanih vozlišč za neko začetno množico $Z$ je vedno ista, ne glede na vrstni red sprememb barv. 
 \end{trditev}
 \begin{proof}
-    Pokažimo, da vozlišče, ki postane črno za nek vrstni red sprememb barv, lahko vedno postane črno, s pomočjo indukcije na število sprememb barv, ki so potrebne, da pobarvamo vozlišče~\cite[str.~1633]{aim2008minimumrank}. 
+    Pokažimo, da vozlišče, ki postane črno za nek vrstni red sprememb barv, lahko vedno postane črno, s pomočjo indukcije na število sprememb barv, ki so potrebne, da pobarvamo vozlišče. 
     
     Fiksirajmo $Z$. Recimo, da za počrnitev vozlišča $u$ potrebujemo 1 spremembo barve. To pomeni, da je $u$ edini nepobarvan sosed enega izmed vozlišč v $Z$ (sprememba barve, ki jo potrebujemo, je ravno barva vozlišča $u$). Ne glede na to, v kakšnem vrstnem redu spreminjamo barve vozlišč, bo $u$ še vedno edini nepobarvan sosed enega izmed vozlišč v $Z$ in bo nekoč pobarvan.
     
@@ -714,7 +720,7 @@ Poglejmo si, kako izgleda veriga sprememb na grafu s slike~\ref{fig:osnovni-prim
         \item $v_i$ še ni pobarvan in je edini bel sosed $u_i$ (na začetku smo dodali več črnih vozlišč, torej se je število belih sosedov vozlišč kvečjemu zmanjšalo, ne povečalo), v tem primeru se zgodi sprememba barve kot originalno;
         \item $v_i$ je že pobarvan, kar se lahko zgodi le, če $v_i \in Z_2 \setminus Z_1$, saj smo sledili spremembam barve za $Z_1$, kjer se $v_i$ pojavi samo enkrat; sprememba barve se ne zgodi.
     \end{itemize}
-Druga možnost se zgodi natanko $z_2 - z_1$-krat, toliko sprememb torej ``zavržemo'', ostale pa se zgodijo kot originalno. Teh je torej $n(G) - z_1 -(z_2 - z_1) = n(G) - z_2$, na začetku smo pobarvali $z_2$ vozlišč, torej je zdaj skupaj pobarvanih $z_2 + n(G) - z_2 = n(G)$ vozlišč, $Z_2$ je torej množica ničelne prisile.
+Druga možnost se zgodi natanko $(z_2 - z_1)$-krat, toliko sprememb torej ``zavržemo'', ostale pa se zgodijo kot originalno. Teh je torej $n(G) - z_1 -(z_2 - z_1) = n(G) - z_2$, na začetku smo pobarvali $z_2$ vozlišč, torej je zdaj skupaj pobarvanih $z_2 + n(G) - z_2 = n(G)$ vozlišč, $Z_2$ je torej množica ničelne prisile.
 \end{proof}
 
 Iz trditve~\ref{trd:nadmnozica-zfs-je-zfs} vidimo, da za dve množici ničelne prisile $Z_1, Z_2$ grafa $G$ velja, da je njuna unija $Z_1 \cup Z_2$ tudi množica ničelne prisile za $G$. To pa ne velja za presek: če vzamemo graf $K_2$, z vozliščema 1 in 2, sta $Z_1 = \{1\}$ in $Z_2 = \{2\}$ množici ničelne prisile, njun presek, prazna množica, pa očitno ni množica ničelne prisile za $K_2$.
@@ -728,7 +734,7 @@ Velja pa tudi naslednja posledica trditve~\ref{trd:nadmnozica-zfs-je-zfs}:
     Fiksirajmo $z_1$ in $z_2 \leq z_1$. Dokažimo, da če ne velja desna stran implikacije, tudi leva ne velja. Naj torej obstaja množica ničelne prisile velikosti $z_2$. Po trditvi~\ref{trd:nadmnozica-zfs-je-zfs} ji lahko dodajamo vozlišča grafa $G$, dokler ne bo velikosti $z_1$, pa bo še vedno množica ničelne prisile. Sledi torej, da obstaja množica ničelne prisile velikosti $z_1$ in dokaz je končan. 
 \end{proof}
 
-Kaj se zgodi z ničelno prisilo grafa, če odstranimo kakšno povezavo in / ali vozlišče? Če za nek graf $G$ poznamo $Z(G)$, za njegov podgraf v splošnem ne moremo povedati, kakšna bo ničelna prisila. V poglavju~\ref{sec:osnovni-rezultati} npr.~dokažemo, da ima cikel $C_n$ ničelno prisilo 2, polni graf $K_n$ pa $n-1$. V tem primeru (gledamo dovolj velike vrednosti $n$) za vpeti podgraf $C_n$ velja $Z(C_n) \leq Z(K_n)$. Če pa vzamemo kolo $W_n$ in vpet podgraf zvezdo $S_n$, pa velja $n-1 = Z(S_n) \geq Z(W_n) = 3$.
+Kaj se zgodi z ničelno prisilo grafa, če odstranimo kakšno povezavo ali vozlišče? Če za nek graf $G$ poznamo $Z(G)$, za njegov podgraf v splošnem ne moremo povedati, kakšna bo ničelna prisila. V poglavju~\ref{sec:osnovni-rezultati} npr.~dokažemo, da ima cikel $C_n$ ničelno prisilo 2, polni graf $K_n$ pa $n-1$. V tem primeru (gledamo dovolj velike vrednosti $n$) za vpeti podgraf $C_n$ velja $Z(C_n) \leq Z(K_n)$. Če pa vzamemo kolo $W_n$ in vpet podgraf zvezdo $S_n$, pa velja $n-1 = Z(S_n) \geq Z(W_n) = 3$.
 
 % Kaj je z induciranimi podgrafi? Če vzameš samo presek Z_G in V(H), ni nujno v redu, lahko pride prazna množica. Mogoče še naslednjega, ki se forsira? Tole ima pomoje nekaj veze s path coverjem.
 
@@ -741,22 +747,22 @@ Poglejmo si še, zakaj temu pojmu rečemo ``ničelna prisila''. Najprej definira
     3 & 6.9 & 0 & 7 & 0 \\
     0 & 0 & 7 & -1.1 & 1 \\
     0 & 0 & 0 & 1 & 0 \\
-    \end{bmatrix*},\] je prikazan na sliki~\ref{fig:osnovni-primer-prisile}.
+    \end{bmatrix*},\] je prikazan na sliki~\ref{fig:osnovni-primer-prisile} na strani~\pageref{fig:osnovni-primer-prisile}. Iz definicije vidimo, da vrednost elementov v matriki (razen neničelnosti) ni pomembna.
 \end{primer}
 Sedaj lahko definiramo množico vseh (simetričnih) matrik grafa $G$ nad poljem~$\F$:
 \[ S(\F, G) = \{A \in Sym_n(\F) \mid \G(A) = G \}. \]
-Ideja za imenom ničelne prisile je sledeča. Črna vozlišča predstavljajo tiste koordinate v vektorju, za katere zahtevamo, da so enake nič, bela vozlišča pa so tiste koordinate, za katere (še) ni nobene zahteve. Sprememba barve $i$-tega vozlišča iz bele v črno pomeni, da mora $i$-ta koordinata biti nič pri predpostavki, da so vse ostale koordinate, katerih vozlišča so trenutno črna, enake nič in je vektor v jedru matrike grafa $G$. Brez dokaza navedimo
+Ideja za imenom ničelne prisile je sledeča. Vzemimo matriko, ki pripada grafu $G$, in vektor, ki je v jedru te matrike. Črna vozlišča grafa $G$ predstavljajo tiste koordinate v vektorju, za katere zahtevamo, da so enake nič, bela vozlišča pa so tiste koordinate, za katere (še) ni nobene zahteve. Sprememba barve $i$-tega vozlišča iz bele v črno pomeni, da mora $i$-ta koordinata vektorja biti nič. Če začnemo z množico ničelne prisile, sledi naslednja trditev 
 \begin{trditev}[{\cite[trditev 2.3]{aim2008minimumrank}}]
     \label{trd:rang2}
     Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake 0, potem je $x = 0$.
 \end{trditev}
 
-Ker imamo povezavo med grafom in matrikami, lahko definiramo tudi \emph{minimalni rang} in \emph{maksimalen korang} grafa $G$:
+Ker imamo povezavo med grafom in matrikami, lahko definiramo tudi \emph{minimalni rang} in \emph{maksimalni korang} grafa $G$:
 \begin{gather*}
-    \mr^\F(G) = \min \{ \rang(A) \mid A \in S(\F, G) \} \\
-    M^\F(G) = \max \{ \korang(A) \mid A \in S(\F, G) \}
+    \mr^\F(G) = \min \{ \rang(A) \mid A \in S(\F, G) \}, \\
+    M^\F(G) = \max \{ \korang(A) \mid A \in S(\F, G) \},
 \end{gather*}
-pri čemer je $\korang(A) = \dim(\ker(A))$. Ker za matriko $A$ velikosti $m \times n$ nad nekim poljem $\F$ velja $\rang(A) + \korang(A) = n$, bosta minimalni rang in maksimalen korang očitno dosežena pri isti matriki (saj če je rang matrike $A$ manjši od ranga matrike istih dimenzij $B$, mora biti korang matrike $A$ večji od koranga matrike $B$). Prav tako iz te enakosti očitno sledi, da velja
+pri čemer je $\korang(A) = \dim(\ker(A))$. Ker za matriko $A$ velikosti $m \times n$ nad nekim poljem $\F$ velja $\rang(A) + \korang(A) = n$, bosta minimalni rang in maksimalni korang očitno dosežena pri isti matriki (saj če je rang matrike $A$ manjši od ranga matrike istih dimenzij $B$, mora biti korang matrike $A$ večji od koranga matrike $B$). Prav tako iz te enakosti očitno sledi, da velja
 \begin{equation}
     \label{eq:mr+m=n}
     \mr^\F(G) + M^\F(G) = n(G).
@@ -817,14 +823,14 @@ saj lahko pozitivno semidefinitno matriko grafa dobimo kot vsoto matrik klik iz 
 \end{primer}
 
 
-Glavna motivacija za uvedbo ničelne prisile je ravno preučevanje minimalnega ranga (oziroma maksimalnega koranga) grafov. Izkaže se, da je število ničelne prisile zgornja meja za maksimalen korang, za kar potrebujemo še sledeč rezultat:
-\begin{trditev}{{\cite[trditev 2.2]{aim2008minimumrank}}}
+Glavna motivacija za uvedbo ničelne prisile je ravno preučevanje minimalnega ranga (oziroma maksimalnega koranga) grafov. Izkaže se, da je število ničelne prisile zgornja meja za maksimalni korang, za kar potrebujemo še sledeč rezultat:
+\begin{trditev}[{\cite[trditev 2.2]{aim2008minimumrank}}]
     \label{trd:rang1}
     Imejmo matriko $A \in \F^{n \times n}$ s korangom $\korang(A) > k$. Potem obstaja tak neničelni vektor iz jedra $x \in \ker(A)$, katerega koordinate so enake 0 na poljubnih $k$ indeksih.
 \end{trditev}
 
 Sedaj lahko dokažemo
-\begin{izrek}{{\cite[trditev 2.4]{aim2008minimumrank}}}
+\begin{izrek}[{\cite[trditev 2.4]{aim2008minimumrank}}]
     Imejmo množico ničelne prisile $Z$ grafa $G$. Potem za neko polje $\F$ velja $M^\F(G)  \leq |Z|$ in posledično
     \begin{equation}
         \label{eq:zf-korang}
@@ -1025,10 +1031,10 @@ Zvezda $S_n$ je tak graf na $n+1$ vozliščih, ki ima $n$ vozlišč stopnje~1 in
 \begin{proof}
     Za namene tega dokaza si bomo sliko zvezde predstavljali kot poln dvodelen graf $K_{1,n}$ (podobno kot na sliki~\ref{fig:polni-dvodelni-graf}), sredinsko vozlišče stopnje $n$ na eni strani (množica $X$), na drugi pa vsa preostala vozlišča, ki so stopnje 1 (množica $Y$).
     Opazimo, da so vozlišča iz $Y$ ekvivalentna v smislu, da ni važno, katero točno je pobarvano, saj imajo vsa isto stopnjo in istega soseda. Če črno pobarvamo vsa vozlišča v $Y$ razen enega, bo eno izmed teh vozlišč poskrbelo za spremembo barve sredinskega vozlišča stopnje $n$, to pa bo poskrbelo za spremembo barve edinega vozlišča stopnje 1, ki še ni črno. Velja torej $Z(K_{1,n}) \leq n-1$. Poskusimo najti manjšo množico ničelne prisile. Na začetku lahko pobarvamo $n-2$ vozlišča na dva načina: lahko pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, lahko pa pobarvamo $n-2$ vozlišč stopnje 1. Obravnavajmo oba primera.
-    \begin{enumerate}[a)]
+    \begin{itemize}
         \item Če na začetku pobarvamo vozlišče stopnje $n$ in $n-3$ vozlišč stopnje 1, potem črna vozlišča stopnje 1 nimajo več nobenega nepobarvanega soseda, vozlišče stopnje $n$ pa ima še 3 nepobarvane sosede, zato se barva ne more širiti. 
         \item Če na začetku pobarvamo $n-2$ vozlišč stopnje 1, ima vsako od njih enega nepobarvanega soseda, to je vozlišče stopnje $n$, ki torej spremeni barvo. Sedaj ima vozlišče stopnje $n$ še 2 nepobarvana soseda in širjenje barve se ustavi.
-    \end{enumerate}
+    \end{itemize}
     Torej ne glede na to, kako izberemo začetno množico velikosti $n-2$, ta ne bo množica ničelne prisile. Velja torej $Z(S_n) = n-1$.
 \end{proof}
 
@@ -1142,7 +1148,7 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
     \label{fig:trikotnik}
 \end{figure}
 
-\begin{trditev}{{\cite[trditev 3.2]{aim2008minimumrank}}}
+\begin{trditev}[{\cite[trditev 3.2]{aim2008minimumrank}}]
     $Z(T_n) = n$.
 \end{trditev}
 \begin{proof}
@@ -1159,7 +1165,7 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
 \subsection{Drevesa}
 \emph{Drevo} $T$ je graf, ki ne vsebuje ciklov (kot podgrafov). Za število povezav drevesa velja $m(T) = n(T) - 1$, poleg tega ima vsako drevo z $n(T) \geq 2$ vsaj dva lista, tj.~vozlišči stopnje 1.
 
-\begin{trditev}{{\cite[trditev 4.2]{aim2008minimumrank}}}
+\begin{trditev}[{\cite[trditev 4.2]{aim2008minimumrank}}]
     \label{trd:zf-dreves}
     $Z(T) = P(T)$.
 \end{trditev}
@@ -1199,7 +1205,7 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
 \end{figure}
 
 \begin{proof}
-    Iz~\eqref{eq:neenakost-path-cover-zf}~in~\eqref{eq:zf-korang} sledi, da velja $P(G) \leq Z(G) \leq M(G)$. Ker za vsako drevo $T$ velja~\cite{johnson1999maximum} $M(T) = P(T)$, sledijo enakosti v prejšnjem izrazu in posledično $Z(T) = P(T)$.
+    Iz~\eqref{eq:neenakost-path-cover-zf}~in~\eqref{eq:zf-korang} sledi, da velja $P(G) \leq Z(G) \leq M(G)$. Ker za vsako drevo $T$ velja $M(T) = P(T)$~\cite{johnson1999maximum}, sledijo enakosti v prejšnjem izrazu in posledično $Z(T) = P(T)$.
 
     Poglejmo si še konstruktiven dokaz z indukcijo na $P(T)$. Vzemimo minimalno pokritje s potmi nekega grafa in za vsako pot v pokritju pobarvajmo enega izmed krajišč (konstrukcija je predstavljena na sliki~\ref{fig:drevo}). Trdimo, da je to množica ničelne prisile. Če je $P(T) = 1$, je graf $T$ pot, očitno velja $Z(T) = P(T) = 1$ in krajišče poti je množica ničelne prisile.
 
@@ -1208,12 +1214,10 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
     Sedaj lahko preostanek drevesa, ki ga inducirajo vozlišča $T \setminus V(P_1)$, analiziramo neodvisno od poti $P_1$ (edino vozlišče $v$, ki je povezano s preostankom grafa, je že pobarvano). Dobimo graf $T_1$ z minimalnim pokritjem velikosti $n-1$ (ravno pokritje $T$ brez $P_1$), po indukcijski predpostavki velja, da so črna krajišča preostalih poti v pokritju množica ničelne prisile za $T_1$, torej postanejo vsa vozlišča iz $T \setminus V(P_1)$, tudi $u$, črna in se lahko barva razširi še na preostanek poti $P_1$. Na koncu so torej pobarvana vsa vozlišča, $Z$ je množica ničelne prisile. Velja $Z(T) \leq P(T)$, iz~\eqref{eq:neenakost-path-cover-zf} pa sledi še enakost $Z(T) = P(T)$.
 \end{proof}
 
-Ker za drevesa poznamo linearen algoritem za izračun minimalnega pokritja~\cite{franzblau2002hamiltoniancompletions}, imamo zaradi trditve~\ref{trd:zf-dreves} tudi linearen algoritem za ničelno prisilo dreves.
-
 \section{Ekstremni primeri}
 \label{sec:ekstremni-primeri}
 Poglejmo si, za katere grafe je pri zgornji meji~\eqref{eq:trv-zgornja-meja} in trivialni spodnji meji~\eqref{eq:trv-trv-spodnja-meja} za ničelno prisilo dosežena enakost.
-\begin{trditev}{{\cite[trditev 2.2]{row2012technique}}}
+\begin{trditev}[{\cite[trditev 2.2]{row2012technique}}]
     Za graf $G$ na $n > 1$ vozliščih velja:
     \[ Z(G) = n - 1 \iff G = K_n .\]
     Z besedami, enakost v zgornji meji~\eqref{eq:trv-zgornja-meja} je dosežena natanko takrat, ko imamo polni graf na $n$ vozliščih.
@@ -1227,7 +1231,7 @@ Poglejmo si, za katere grafe je pri zgornji meji~\eqref{eq:trv-zgornja-meja} in 
     Množico ničelne prisile lahko sedaj sestavimo tako, da pobarvamo vse sosede $u$, razen enega, poleg tega pa še vsa preostala vozlišča v grafu, razen vozlišča $w$. Vozlišče $u$ torej povzroči spremembo barve v edinem nepobarvanem sosedu, nato pa so pobarvana že vsa vozlišča v grafu, razen $w$, ki spremeni barvo zaradi enega izmed svojih sosedov. Našli smo torej množico ničelne prisile velikosti $n-2$, kar je v protislovju s predpostavko. Sledi, da je $G = K_n$. 
 \end{proof}
 
-\begin{trditev}{{\cite[ugotovitev 2.1]{row2012technique}}}
+\begin{trditev}[{\cite[ugotovitev 2.1]{row2012technique}}]
     Za graf $G$ na $n \geq 1$ vozliščih velja:
     \[ Z(G) = 1 \iff G = P_n. \]
     Z besedami, enakost v trivialni spodnji meji~\eqref{eq:trv-trv-spodnja-meja} je dosežena natanko takrat, ko imamo pot na $n$ vozliščih.
@@ -1427,7 +1431,8 @@ Poglejmo, da je to res množica ničelne prisile. Popolnoma pobarvana kopija $K_
 \end{trditev}
 
 Zgornja meja~\eqref{eq:kartezicni-produkt-zgornja-meja} nam da tudi zgornjo mejo za hiperkocke. \emph{Hiperkocka} velikosti $n+1$ je graf, ki ga dobimo kot kartezični produkt manjše hiperkocke velikosti $n$ in polnega grafa velikosti 2. S simboli $Q_{n+1} = Q_n \boxempty K_2$, pri čemer je $Q_0$ enak $K_1$. Na sliki~\ref{fig:hiperkocke} so prikazane hiperkocke $Q_1$, $Q_2$ in $Q_3$.
-\begin{figure}[h]
+
+\begin{figure}[H]
     \begin{subfigure}{0.33\textwidth}
         \centering
         \begin{tikzpicture}[scale=0.9]
@@ -1657,7 +1662,7 @@ Znana je tudi zgornja meja za ničelno prisilo korone dveh splošnih grafov.
 
 Izkaže se~\cite{aim2008minimumrank}, da za nekatere zgornje rezultate velja enakost, natančneje za~\ref{itm:meja-kartezicni-s-potjo}.~točko posledice~\ref{posl:kartezicni-produkt-zgornje-meje-pot-cikel-polni} za grafe $n(G) \leq n$, neenakosti~\eqref{eq:kartezicni-produkt-zgornja-meja-polni}, \eqref{eq:hiperkocka-zgornja-meja} in \eqref{eq:krepki-produkt-zgornja-meja-poti} ter poseben primer trditve~\ref{trd:korona-zgornja-meja}.
 Poleg tega so podani tudi rezultati za kartezični produkt poti, cikla in polnega grafa s potjo ne glede na velikost grafa ter kartezičnega produkta cikla s polnim grafom, kar povzemamo v naslednji trditvi:
-\begin{trditev}{\cite{aim2008minimumrank}}
+\begin{trditev}[\cite{aim2008minimumrank}]
     Ničelna prisila za produkte nekaterih družin grafov za $m, n \geq 1$ (če ni označeno drugače) je:
     \begin{enumerate}
         \item $Z(P_m \boxempty P_n) = \min\{m,n\}$
@@ -1669,14 +1674,14 @@ Poleg tega so podani tudi rezultati za kartezični produkt poti, cikla in polneg
 
 \section{Izračun ničelne prisile}
 \label{sec:izracun}
-V tem poglavju bomo problem ničelne prisile preučili skozi stališče računske zahtevnosti: pogledali si bomo algoritem, ki preveri, ali je dana množica za dan graf res množica ničelne prisile, in s tem dokazali, da problem spada v NP. Analizirali bomo trivialen splošni algoritem za izračun ničelne prisile poljubnega grafa, si pogledali njegove potencialne izboljšave in povzeli nekaj rezultatov o NP-polnosti problema.
+V tem poglavju bomo problem ničelne prisile preučili skozi stališče računske zahtevnosti: pogledali si bomo algoritem, ki preveri, ali je dana množica za dan graf res množica ničelne prisile, in s tem dokazali, da problem spada v\NP. Analizirali bomo trivialen splošni algoritem za izračun ničelne prisile poljubnega grafa, si pogledali njegove potencialne izboljšave in povzeli nekaj rezultatov o\NP-polnosti problema.
 
 \subsection{Predstavitve grafov in računska zahtevnost}
-Preden začnemo z analizo algoritmov, sis oglejmo načine predstavitve grafov v računalnikih in zahtevnosti operacij pri različnih predstavitvah. 
+Preden začnemo z analizo algoritmov, si oglejmo načine predstavitve grafov v računalnikih in zahtevnosti operacij pri različnih predstavitvah. 
 
 Predpostavljali bomo, da so oznake vozlišč grafa $G$ velikosti $n$ kar cela števila od 0 do $n-1$ (v večini programskih jezikov indeks v seznamih in podobnih podatkovnih strukturah teče od 0 naprej). Zaradi takih oznak pri delu z grafi lahko uporabljamo eno bolj preprostih podatkovnih struktur, seznam, saj si podatek o $i$-tem vozlišču (npr.~barvo) shranimo pod indeks~$i$. Če so oznake kaj drugega in jih bomo kasneje potrebovali, jih lahko preslikamo v števila od 0 do $n-1$ in si v seznam na $i$-to mesto shranimo prejšnjo oznako vozlišča. 
 
-Prvi način predstavitve je matrika sosednosti. Ta vsebuje ničle na tistih indeksih $(i,j)$, za katere velja, da vozlišči $i$ in $j$ nista sosednji, in enke za tista vozlišča, ki so sosednja. Na diagonali so torej vedno ničle, saj graf ne vsebuje zank, v primeru neusmerjenega grafa pa je matrika še simetrična. Predstavimo jo s seznamom seznamov, $i$-ti element zunanjega seznama je $i$-ta vrstica matrike, torej porabimo $O(n^2)$ prostora. Kakšna je zahtevnost pogostih operacij nad grafom? Da ugotovimo, ali sta vozlišči $i$ in $j$ sosednji, porabimo $O(1)$, saj moramo le preveriti, ali je element v $i$-ti vrstici na $j$-tem indeksu ena, in je dostop do elementa seznama prek indeksa časovne zahtevnosti $O(1)$. Enako časovno zahtevnost ima iz istega razloga tudi dodajanje ali odstranjevanje povezave. Če želimo poiskati vse sosede vozlišča $i$, porabimo $O(n)$, saj moramo preveriti celotno $i$-to vrstico. Če želimo dodati ali odstraniti vozlišče, potrebujemo $O(2n)$ operacij (gremo čez en stolpec in eno vrstico), pri čemer pri odstranjevanju v večini primerih porabimo še več, saj brisanje elementa iz seznama v najslabšem primeru traja $O(n)$, medtem ko je dodajanje na konec seznama amortizirano $O(1)$.
+Prvi način predstavitve je matrika sosednosti. Ta vsebuje ničle na tistih indeksih $(i,j)$, za katere velja, da vozlišči $i$ in $j$ nista sosednji, in enke za tista vozlišča, ki so sosednja. Na diagonali so torej vedno ničle, saj graf ne vsebuje zank, v primeru neusmerjenega grafa pa je matrika še simetrična. Predstavimo jo s seznamom seznamov, $i$-ti element zunanjega seznama je $i$-ta vrstica matrike, torej porabimo $O(n^2)$ prostora. Kakšna je zahtevnost pogostih operacij nad grafom? Da ugotovimo, ali sta vozlišči $i$ in $j$ sosednji, porabimo $O(1)$, saj moramo le preveriti, ali je element v $i$-ti vrstici na $j$-tem indeksu ena, in je dostop do elementa seznama prek indeksa časovne zahtevnosti $O(1)$. Enako časovno zahtevnost ima iz istega razloga tudi dodajanje ali odstranjevanje povezave. Če želimo poiskati vse sosede vozlišča $i$, porabimo $O(n)$ operacij, saj moramo preveriti celotno $i$-to vrstico. Če želimo dodati ali odstraniti vozlišče, potrebujemo $O(2n)$ operacij (gremo čez en stolpec in eno vrstico), pri čemer pri odstranjevanju v večini primerih porabimo še več, saj brisanje elementa iz seznama v najslabšem primeru traja $O(n)$, medtem ko je dodajanje na konec seznama amortizirano $O(1)$.
 
 Graf lahko predstavimo tudi s seznamom sosedov: za vsako vozlišče naštejemo njegove sosede. V tem primeru prav tako uporabimo seznam seznamov, pri čemer se na indeksu~$i$ zunanjega seznama nahaja seznam sosedov vozlišča $i$. Pri tem porabimo $O(n+m)$ prostora, kjer je $m = m(G)$ število povezav grafa. Če nas zanima, ali sta vozlišči $i$ in $j$ sosednji, moramo pregledati celoten seznam sosedov vozlišča~$i$, torej je časovna zahtevnost enaka $O(\deg i)$. Če je seznam urejen, lahko uporabimo binarno iskanje, ki ima logaritmično časovno zahtevnost, torej $O(\log \deg i)$. Odstranjevanje povezave med vozliščema $i$ in $j$ traja $O(2 \deg i + 2 \deg j)$, saj moramo v seznamu sosedov obeh poiskati in odstraniti drugo vozlišče, pri iskanju moramo v najslabšem primeru preiskati cel seznam sosedov, pri odstranjevanju pa ga prekopirati eno v levo. V najslabšem primeru traja celotna operacija $O(4n)$ (če je seznam sosedov urejen, pa $O(2\log n + 2n)$). Dodajanje povezave $ij$ traja $O(1)$, če nam vrstni red seznama sosedov ni pomemben. Če pa nam je vrstni red pomemben, lahko na seznamu sosedov $i$ in $j$ uporabimo binarno iskanje, da najdemo pravo mesto. V tem primeru porabimo $O(\log \deg i + \deg i)$ za eno vozlišče, saj ima dodajanje v seznam dolžine $p$ časovno zahtevnost $O(p)$, v najslabšem primeru skupaj torej $O(2 \log n + 2 n)$. Da najdemo vse sosede nekega vozlišča, moramo le pogledati na $i$-to mesto zunanjega seznama, torej ima operacija konstantno časovno zahtevnost. Če želimo dodati vozlišče, moramo dodati seznam z njegovimi sosedi na konec zunanjega seznama in njegovo oznako na konec nekaterih seznamov sosedov, kar traja $O(n)$. Za odstranjevanje vozlišča pa moramo odstraniti njegov seznam sosedov in vozlišče odstraniti iz vseh ostalih seznamov sosedov. Za prvo porabimo $O(n)$, za drugo pa $O(n^2)$, skupna časovna zahtevnost je torej $O(n^2)$.
 
@@ -1699,7 +1704,7 @@ Na prvi pogled se zdi, da bi bilo vedno najbolj optimalno izbrati seznam sosedov
         odstrani $i$ & $O(n^2)$ & $O(n^2)$ & $O(n)$ \\
         \bottomrule
     \end{tabular}
-    \caption{Prikazana je primerjava časovnih zahtevnosti nekaterih pogostih operacij na grafih med tremi predstavitvami: matrika sosednosti (2.~stolpec), seznam sosedov, implementiran s seznamom (3.~stolpec) in seznam sosedov, implementiran z množico (4.~stolpec).}
+    \caption{Prikazana je primerjava časovnih zahtevnosti nekaterih pogostih operacij na grafih med tremi predstavitvami.}
     \label{tab:primerjava-predstavitev}
 \end{table}
 
@@ -1712,12 +1717,12 @@ Ker se bomo dotaknili tudi težavnosti odločitvenih problemov, si poglejmo neka
 \end{definicija}
 Povedano drugače, v razred $\P$ spadajo tisti problemi, za katere poznamo algoritem, ki najde rešitev v polinomskem času. Po drugi strani v $\NP$ spadajo tisti problemi, za katere poznamo algoritem, ki v polinomskem času preveri, ali je dana rešitev pravilna. Spodnja definicija razreda $\NP$ je namreč ekvivalentna zgornji~\cite[izrek 7.20]{sipser2006complexity}:
 \begin{definicija}
-    Problem $\Pi$ je v $\NP$, če obstaja certifikat, polinomske dolžine glede na vhodne podatke, za rešitev in obstaja polinomski algoritem (preverjevalec), ki vrne ``da'', če certifikat za konkreten primer problema dokaže, da je odgovor na problem ``da'', in ``ne'' sicer.
+    Problem $\Pi$ je v $\NP$, če obstaja certifikat za rešitev, polinomske dolžine glede na vhodne podatke, in obstaja polinomski algoritem (preverjevalec), ki vrne ``da'', če certifikat za konkreten primer problema dokaže, da je odgovor na problem ``da'', in ``ne'' sicer.
 \end{definicija}
 
 Hitro vidimo, da velja $\P \subseteq \NP$. Če za problem poznamo algoritem, ki najde rešitev v polinomskem času, potem moramo poznati tudi algoritem, ki v polinomskem času preveri pravilnost te rešitve, saj sicer ne moremo biti gotovi, da nam prvi algoritem res vrne rešitev problema. (Isto lahko vidimo tudi iz zgornjih definicij obeh razredov, saj je deterministični Turingov stroj posebna različica nedeterminističnega Turingovega stroja.)
 
-Ali velja tudi $\NP \subseteq \P$ in posledično $\P = \NP$? To bi pomenilo, da je vsak problem, katerega rešitev lahko preverimo v polinomskem času, tudi rešljiv v polinomskem času. Odgovor na vprašanje ni znan, veliko matematikov pa predvideva, da je nikalen, saj po nekaj desetletjih preučevanja težkih problem znotraj $\NP$, rečemo jim tudi $\NP$-polni, znanih naj bi jih bilo več kot 3000~\cite{wikiPvsNP}, nihče ni uspel najti polinomskega algoritma za kateregakoli izmed njih.
+Ali velja tudi $\NP \subseteq \P$ in posledično $\P = \NP$? To bi pomenilo, da je vsak problem, katerega rešitev lahko preverimo v polinomskem času, tudi rešljiv v polinomskem času. Odgovor na vprašanje ni znan, veliko matematikov pa predvideva, da je nikalen, saj po nekaj desetletjih preučevanja težkih problem znotraj $\NP$, rečemo jim tudi $\NP$-polni, znanih naj bi jih bilo več kot 3000, nihče ni uspel najti polinomskega algoritma za kateregakoli izmed njih.
 
 \begin{definicija}
     \label{def:np-poln}
@@ -1727,7 +1732,7 @@ Ali velja tudi $\NP \subseteq \P$ in posledično $\P = \NP$? To bi pomenilo, da 
         \item vsak problem $\Pi' \in \NP$ lahko v polinomskem času prevedemo na $\Pi$.
     \end{enumerate}
 \end{definicija}
-Polinomska prevedljivost problema $\Pi'$ na problem $\Pi$ pomeni, da je reševanje $\Pi'$ lažje (oziroma kvečjemu polinomsko težje) od reševanja problema $\Pi$. Povedano drugače, nek algoritem, ki reši problem $\Pi$ lahko uporabimo kot del relativno preprostega algoritma, ki reši $\Pi'$. 
+Polinomska prevedljivost problema $\Pi'$ na problem $\Pi$ pomeni, da je reševanje $\Pi'$ lažje (oziroma kvečjemu polinomsko težje) od reševanja problema $\Pi$. Povedano drugače, nek polinomski algoritem, ki reši problem $\Pi$, lahko uporabimo za konstrukcijo polinomskega algoritma, ki reši $\Pi'$. 
 
 Povedali smo že, da za probleme v $\NPC$ ne poznamo polinomskih algoritmov. Če bi tak algoritem za nek $\NP$-poln problem obstajal, bi sledilo $\P = \NP$:
 \begin{trditev}
@@ -1751,10 +1756,10 @@ Ti dve tehniki bomo uporabili v podpoglavju~\ref{subsec:np-polnost}.
 
 Do zdaj smo govorili samo o težavnosti odločitvenih problemov, kaj pa, če imamo nek splošen računski problem? Formalno definiramo, da je računski problem \emph{$\NP$-težek}, če bi obstoj polinomskega algoritma impliciral, da je $\P = \NP$. Tako sem spadajo tudi vsi $\NP$-polni (odločitveni) problemi. Če imamo nek optimizacijski problem, kot ga bomo srečali v tem delu, ga lahko prevedemo na odločitven problem; če je ta $\NP$-poln, potem je originalni problem $\NP$-težek.
 
-\subsection{Preverljivost}
-Dan imamo graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Najti želimo algoritem, ki preveri, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. 
+\subsection{Preverljivost množice ničelne prisile}
+Dan imamo (ne nujno povezan) graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Najti želimo algoritem, ki preveri, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. 
 
-Psevdokoda zgornjega postopka je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji. Za graf v tem primeru izberemo predstavitev s seznamom sosedov, implementiranega s seznamom, saj želimo prihraniti na prostoru. (Če bi izbrali matriko sosednosti, bi že za grafe velikosti 25000 porabili približno 5GB spomina, tudi za redke grafe, kot je na primer pot. Če pa bi pot velikosti 25000 predstavili s seznamom sosedov, bi porabili le nekaj MB.) Poleg tega ne bomo potrebovali operacij odstranjevanja ali ugotavljati sosednosti med dvema vozliščema, zato je smiselno izbrati bolj preprosto podatkovno strukturo seznam namesto množice. 
+Psevdokoda zgornjega postopka je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, v funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji. Za graf v tem primeru izberemo predstavitev s seznamom sosedov, implementiranega s seznamom, saj želimo prihraniti na prostoru. (Če bi izbrali matriko sosednosti, bi že za grafe velikosti 25000 porabili približno 5GB spomina, tudi za redke grafe, kot je na primer pot. Če pa bi pot velikosti 25000 predstavili s seznamom sosedov, bi porabili le nekaj MB.) Poleg tega ne bomo potrebovali operacij odstranjevanja ali ugotavljati sosednosti med dvema vozliščema, zato je smiselno izbrati bolj preprosto podatkovno strukturo seznam namesto množice. 
 
 Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``barvanje'' $barva$ poišče vse nepobarvane sosede vozlišča $u$. Uporablja podatkovno strukturo seznam, ki ima metodo \textsc{dodaj} za dodajanje elementa na konec seznama z amortizirano konstantno časovno zahtevnostjo. Funkcija \textsc{vsiPobarvani} sprejme graf $G$ in trenutno ``barvanje'' $barva$  ter vrne logično vrednost \texttt{true} ali \texttt{false}, odvisno od tega, ali so vsa vozlišča v grafu pobarvana.
 \begin{algorithm}[!h]
@@ -1771,15 +1776,15 @@ Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``
         \ForEach{$u$}{$V \setminus Z$}
         \State $barva(u) \gets 1$ \Comment{Barva 1 pomeni, da vozlišče ni pobarvano.}
         \EndFor
-        \State $sprememba \gets true$
+        \State $sprememba \gets \texttt{true}$
         \While{$sprememba$}
-        \State $sprememba \gets false$
+        \State $sprememba \gets \texttt{false}$
         \ForEach{$u$}{$V$}
         \If{$barva(u) = 0$}
         \State $sosedi \gets \Call{najdiBeleSosede}{G, u, barva}$
         \If{$\Call{dolzina}{sosedi} =  1$} \Comment{Edini nepobarvan sosed $u$,}
         \State $barva(sosedi[0]) \gets 0$ \Comment{spremeni barvo.}
-        \State $sprememba \gets true$
+        \State $sprememba \gets \texttt{true}$
         \EndIf
         \EndIf
         \EndFor
@@ -1800,10 +1805,10 @@ Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``
         \Function{vsiPobarvani}{$G, barva$}
         \ForEach{$u$}{$V$}
         \If{$barva(u) = 1$}
-        \Return{$false$} \Comment{Obstaja nepobarvano vozlišče.}
+        \Return{$\texttt{false}$} \Comment{Obstaja nepobarvano vozlišče.}
         \EndIf
         \EndFor
-        \State \Return{$true$} \Comment{Vsa vozlišča so pobarvana.}
+        \State \Return{$\texttt{true}$} \Comment{Vsa vozlišča so pobarvana.}
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
@@ -1893,15 +1898,15 @@ Sedaj analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} in pokaž
 
 Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}. Shranjevanje barv porabi $O(n)$ prostora, prav tako podatek, kdo povzroči spremembo barve v vozliščih, zapisan v $povzroci$. (Lahko bi si tudi samo zapisali, ali je vozlišče že dodano v vrsto, vendar s spremenljivko $povzroci$ dobimo še dodaten podatek; z majhno modifikacijo lahko algoritem vrne zaporedje sprememb barve vozlišč in kdo jih je povzročil, pri tem pa ostane red prostorske zahtevnosti enak.) Za shranjevanje belih sosedov nekega vozlišča $u$ porabimo $O(\deg u)$, skupaj torej $O(m+n)$ prostora. Ostane še vrsta, v katero vemo, da dodamo največ $O(n)$ vozlišč, torej potrebujemo toliko tudi prostora. Skupna prostorska zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan} je torej $O(m+n)$.
 
-Red prostorske zahtevnosti bi lahko zmanjšali, če bi namesto shranjevanja nepobarvanih sosedov za vsako vozlišče shranjevali samo število. S tem bi porabili $O(n)$ prostora, skupna prostorska zahtevnost bi bila torej $O(n)$. Pri tem bi morali, po tem, ko bi v pomožni funkciji \textsc{preveriSosede} ugotovili, da se je števec nepobarvanih sosedov nekega vozlišča $u$ zmanjšal na 1, poiskati, kateri sosed vozlišča $u$ je še nepobarvan, za kar bi potrebovali $O(\deg u)$ operacij. Ker bi se to zgodilo največ $O(n)$-krat, bi skupno porabili $O(n+m)$ operacij več, kar torej ne spremeni reda časovne zahtevnosti, spremeni pa konstanto.
+Prostorsko zahtevnost bi lahko zmanjšali, če bi namesto shranjevanja nepobarvanih sosedov za vsako vozlišče shranjevali samo število. S tem bi porabili $O(n)$ prostora, skupna prostorska zahtevnost bi bila torej $O(n)$. Pri tem bi morali, po tem, ko bi v pomožni funkciji \textsc{preveriSosede} ugotovili, da se je števec nepobarvanih sosedov nekega vozlišča $u$ zmanjšal na 1, poiskati, kateri sosed vozlišča $u$ je še nepobarvan, za kar bi potrebovali $O(\deg u)$ operacij. Ker bi se to zgodilo največ $O(n)$-krat, bi skupno porabili $O(n+m)$ operacij več, kar torej ne spremeni reda časovne zahtevnosti, spremeni pa konstanto.
 
-V prilogi~\ref{sec:algoritmi} je podana C++ implementacija vseh treh algoritmov (naivnega algoritma~\ref{alg:preveri-zf-naiven} in dveh verzij algoritma~\ref{alg:preveri-zf-izboljsan}, z množicami ali števci). Na sliki~\ref{fig:primerjava-check-random-graf} je predstavljena primerjava hitrosti teh treh algoritmov v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi (povezavo dodamo v $G$ z verjetnostjo $p$ neodvisno od ostalih povezav). Levo je izbran $p=0.01$, torej z veliko verjetnostjo generiramo ``redke'' grafe z malo povezavami, desno pa $p=0.7$, torej imajo generirani grafi veliko povezav.
+V prilogi~\ref{sec:algoritmi} je podana C++ implementacija vseh treh algoritmov (naivnega algoritma~\ref{alg:preveri-zf-naiven} in dveh verzij algoritma~\ref{alg:preveri-zf-izboljsan}, z množicami ali števci). Na sliki~\ref{fig:primerjava-check-random-graf} je predstavljena primerjava časov izvajanja teh treh algoritmov v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi (povezavo dodamo v $G$ z verjetnostjo $p$ neodvisno od ostalih povezav). Levo je izbran $p=0.01$, torej z veliko verjetnostjo generiramo ``redke'' grafe z malo povezavami, desno pa $p=0.7$, torej imajo generirani grafi veliko povezav.
 V obeh primerih je za preverjanje izbrana naključna množica 95\% velikosti grafa $G$.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.49\linewidth]{koda/results/plots/random_sparse.pdf}
     \includegraphics[width=0.49\linewidth]{koda/results/plots/random_dense.pdf}
-    \caption{Predstavljena je primerjava hitrosti treh algoritmov za preverjanje in nakloni njihovih premic v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi; levo je izbran $p=0.01$, desno pa $p=0.7$.}
+    \caption{Predstavljena je primerjava časov izvajanja treh algoritmov za preverjanje in njihovi približni koeficienti rasti v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi; levo je izbran $p=0.01$, desno pa $p=0.7$.}
     \label{fig:primerjava-check-random-graf}
 \end{figure}
 
@@ -1914,15 +1919,15 @@ Da bi bolje demonstrirali odvisnost naivnega algoritma od oznak vozlišč, si po
     \centering
     \includegraphics[width=0.49\linewidth]{koda/results/plots/pot_prvo_vozlisce.pdf}
     \includegraphics[width=0.49\linewidth]{koda/results/plots/pot_zadnje_vozlisce.pdf}
-    \caption{Primerjava treh algoritmov za preverjanje in naklonov njihovih premic za poti v odvisnosti od velikosti; pri tem je na levi strani izbrana začetna množica $\{ 0 \}$, na desni pa $\{n-1\}$.}
+    \caption{Primerjava treh algoritmov za preverjanje in njihovi približni koeficienti rasti za poti v odvisnosti od velikosti; pri tem je na levi strani izbrana začetna množica $\{ 0 \}$, na desni pa $\{n-1\}$.}
     \label{fig:primerjava-check-pot}
 \end{figure}
-Na levem grafu se naiven algoritem izkaže najbolje, saj je iskanje edinega belega soseda hitro (vsako vozlišče ima največ 2 soseda), poleg tega zaradi vrstnega reda sprememb algoritem naredi le 1~iteracijo \texttt{while} zanke. Na desnem grafu pa se pokaže prava časovna zahtevnost naivnega algoritma, saj mora zaradi obratnega vrstnega reda sprememb(od $n-1$ proti 0) \texttt{while} zanka narediti toliko iteracij, kolikor je velikost grafa, in odpove že za poti velikosti $10^6$. Vidimo lahko, da je trend hitrosti naivnega algoritma v tem primeru kvadratičen, kar potrjuje teoretično časovno zahtevnost. 
+Na levem grafu se naiven algoritem izkaže najbolje, saj je iskanje edinega belega soseda hitro (vsako vozlišče ima največ 2 soseda), poleg tega zaradi vrstnega reda sprememb algoritem naredi le 1~iteracijo \texttt{while} zanke. Na desnem grafu pa se pokaže prava časovna zahtevnost naivnega algoritma, saj mora zaradi obratnega vrstnega reda sprememb(od $n-1$ proti 0) \texttt{while} zanka narediti toliko iteracij, kolikor je velikost grafa, in odpove že za poti velikosti $10^6$. Vidimo lahko, da je trend hitrosti naivnega algoritma v tem primeru kvadratičen, kar se ujema s teoretično časovno zahtevnostjo. 
 
-Opazimo tudi, da je teoretično boljša različica z množicami v praksi pravzaprav slabša. Vzrok temu je, da je povečanje števca v tabeli za 1 v jeziku C++ močno optimizirano, medtem ko je odstranjevanje iz množice precej počasno. Dejstvo, da moramo v različici s števci poiskati edinega belega soseda, na hitrost ne vpliva preveč, saj se to zgodi zelo redko. 
+Opazimo tudi, da je teoretično boljša različica z množicami v praksi pravzaprav slabša. Vzrok temu je, da je povečanje števca v tabeli za 1 v jeziku C++ majhna operacija, medtem ko je odstranjevanje iz množice večja in precej počasnejša. Dejstvo, da moramo v različici s števci poiskati edinega belega soseda, na hitrost ne vpliva preveč, saj se to zgodi zelo redko. 
 
-\subsection{Eksponenten algoritem}
-Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če imamo dan splošen graf $G$ in ne vemo ničesar o njegovem številu ničelne prisile $Z(G)$, lahko preiščemo vse možnosti. Za vsako podmnožico vozlišč grafa $G$ preverimo, ali je množica ničelne prisile, in sledimo, katera je do zdaj najmanjša taka množica. Pri tem uporabimo izboljšani algoritem za preverjanje, zapisan v algoritmu~\ref{alg:preveri-zf-izboljsan}. Postopek je opisan v algoritmu~\ref{alg:eksponentni-izracun-zf}.
+\subsection{Eksponenten algoritem za izračun}
+Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če imamo dan splošen (ne nujno povezan) graf $G$ in ne vemo ničesar o njegovem številu ničelne prisile $Z(G)$, lahko preiščemo vse možnosti. Za vsako podmnožico vozlišč grafa $G$ preverimo, ali je množica ničelne prisile, in sledimo, katera je do zdaj najmanjša taka množica. Pri tem uporabimo izboljšani algoritem za preverjanje, zapisan v algoritmu~\ref{alg:preveri-zf-izboljsan}. Postopek je opisan v algoritmu~\ref{alg:eksponentni-izracun-zf}.
 \begin{algorithm}[!h]
     \caption{Izračuna število ničelne prisile s preiskovanjem vseh možnosti.}
     \label{alg:eksponentni-izracun-zf}
@@ -1943,7 +1948,7 @@ Sedaj si poglejmo najbolj osnoven algoritem za izračun ničelne prisile. Če im
 \end{algorithm}
 
 Analizirajmo zahtevnost algoritma~\ref{alg:eksponentni-izracun-zf}. Za vsak element potenčne množice~$V$ pokličemo \textsc{preveriIzboljsan}, ki ima časovno zahtevnost $O(m+n)$. Vseh elementov je $2^n$, skupna časovna zahtevnost algoritma je torej $O(2^n(m+n))$. (Časovna zahtevnost bi bila še slabša, če bi uporabili osnovni algoritem za preverjanje.)
-Prostorska zahtevnost algoritma pa je $O(m+n)$, saj je to prostorska zahtevnost funkcije  \textsc{preveriIzboljsan}, ki edina porabi nekaj dodatnega prostora (ki ga po izhodu iz funkcije tudi sprosti), preostanek algoritma pa porabi konstantno prostora.
+Prostorska zahtevnost algoritma pa je $O(m+n)$, saj je to prostorska zahtevnost funkcije  \textsc{preveriIzboljsan}, ki edina porabi nekaj dodatnega prostora (ki ga po izhodu iz funkcije tudi sprosti), preostanek algoritma pa porabi $O(n)$ prostora za shranjevanje trenutne množice $Z$.
 
 Razmislimo, ali lahko algoritem~\ref{alg:eksponentni-izracun-zf} kako izboljšamo. Hitro opazimo, da nam pravzaprav ni treba pregledati čisto vseh podmnožic. Če jih uredimo naraščajoče po velikosti, potem lahko s pregledovanjem končamo, čim najdemo eno, ki je množica ničelne prisile (ker vemo, da so vse kasnejše podmnožice, ki jih še nismo pregledali, kvečjemu večje ali enake po velikosti). Podobno, lahko jih uredimo padajoče, in s pregledovanjem končamo, čim za neko velikost ne najdemo več množice ničelne prisile. (Da potem ne obstaja kakšna manjša množica ničelne prisile, vemo zaradi posledice~\ref{posl:ne-obstaja-manjsi-zfs}.)
 
@@ -1964,7 +1969,7 @@ N &= \binom{n}{\lfloor \frac{n}{2} \rfloor} + \binom{n}{\lfloor \frac{n}{4} \rfl
 &\geq \left( \frac{n - \lfloor \frac{n}{4} \rfloor + 1}{\lfloor \frac{n}{4} \rfloor} \right)^{\lfloor \frac{n}{4} \rfloor} \geq  \left( \frac{n - \frac{n}{4} + 1}{\frac{n}{4}} \right)^{\lfloor \frac{n}{4} \rfloor} \\
 &= \left( 3 +  \frac{4}{n} \right)^{\lfloor \frac{n}{4} \rfloor} \geq 3^{\lfloor \frac{n}{4} \rfloor} \geq 3^\frac{n-4}{4} = 2^\frac{n-4}{4 \log_3 2}= c \cdot 2^\frac{n}{2.5237\ldots}.
 \end{align*}
-Pri tem smo uporabili $\lfloor \frac{n}{4} \rfloor \leq \frac{n}{4}$ in rešitev enačbe $3^\frac{n-4}{4} = 2^x$ ter v konstanto $c$ skrili~$2^\frac{-4}{4\log_3 2}$. Časovna zahtevnost je torej še vedno eksponentna: $\Omega((m+n) 2^\frac{n}{2.5237\ldots})$.
+Pri tem smo uporabili $\lfloor \frac{n}{4} \rfloor \leq \frac{n}{4}$ in v konstanto $c$ skrili~$2^\frac{-4}{4\log_3 2}$. Časovna zahtevnost je torej še vedno eksponentna: $\Omega((m+n) 2^\frac{n}{2.5237\ldots})$.
 
 Eksperimentalno primerjajmo tri (najbolj zanimive) različice eksponentnega algoritma~\ref{alg:eksponentni-izracun-zf}, in sicer:
 \begin{itemize}
@@ -1974,13 +1979,13 @@ Eksperimentalno primerjajmo tri (najbolj zanimive) različice eksponentnega algo
 \end{itemize}
 Pri tem za preverjanje, ali je množica res množica ničelne prisile, uporabimo algoritem~\ref{alg:preveri-zf-izboljsan}, implementiran s tabelo števcev (saj se je v prejšnjem podpoglavju v splošnem izkazal za najhitrejšega), podrobnosti implementacije so ponovno podane v prilogi~\ref{sec:algoritmi}.
 
-Na sliki~\ref{fig:eksp-alg-primerjava} so predstavljene primerjave hitrosti teh treh algoritmov za 100 naključno generiranih grafov po modelu Erdős–Rényi za različne vrednosti $p$ (in s tem gostote povezav): od leve proti desni za $p=\{ 0.01, 0.4, 0.7 \}$, pri čemer je bila velikost generiranih grafov fiksna, $n(G) = 15$.
+Na sliki~\ref{fig:eksp-alg-primerjava} so predstavljene primerjave časov izvajanja teh treh algoritmov za 100 naključno generiranih grafov po modelu Erdős–Rényi za različne vrednosti $p$ (in s tem gostote povezav): od leve proti desni za $p=\{ 0.01, 0.4, 0.7 \}$, pri čemer je bila velikost generiranih grafov fiksna, $n(G) = 15$.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.32\linewidth]{koda/results/plots/zfn_random_15_sparse.pdf}
     \includegraphics[width=0.32\linewidth]{koda/results/plots/zfn_random_15_mid.pdf}
     \includegraphics[width=0.32\linewidth]{koda/results/plots/zfn_random_15_dense.pdf}
-    \caption{Primerjava hitrosti treh različic algoritma~\ref{alg:eksponentni-izracun-zf} (padajoči pregled, padajoči pregled z upoštevanjem prejšnjih množic ničelne prisile, pregled z binarnim iskanjem) za 100 naključno generiranih grafov po modelu Erdős–Rényi velikosti 15, pri čemer je $p$ zgoraj levo enak 0.01, zgoraj desno 0.4, spodaj pa 0.7.}
+    \caption{Primerjava časov izvajanja treh različic algoritma~\ref{alg:eksponentni-izracun-zf} (padajoči pregled, padajoči pregled z upoštevanjem prejšnjih množic ničelne prisile, pregled z binarnim iskanjem) za 100 naključno generiranih grafov po modelu Erdős–Rényi velikosti 15, pri čemer je $p$ zgoraj levo enak 0.01, zgoraj desno 0.4, spodaj pa 0.7.}
     \label{fig:eksp-alg-primerjava}
 \end{figure}
 Opazimo, da se za redke grafe, ki imajo zelo verjetno veliko izoliranih vozlišč in posledično veliko ničelno prisilo (večinoma $n-1$) najslabše obnaša binarno iskanje. To je smiselno, saj vsakič preveri sredino trenutnega intervala, ugotovi, da množica ničelne prisile te velikosti ne obstaja, in skoči v desni interval, konča pa šele, ko sreča $n-1$, torej po $\log n$ korakih. Ostala dva algoritma medtem preverita le podmnožice velikosti $n-2$, padajoči algoritem s podmnožicami še nekaj manj kot navaden, zato je najhitrejši.
@@ -1989,19 +1994,19 @@ Za srednje goste grafe se najslabše izkaže padajoči pregled s podmnožicami. 
 
 Za goste grafe so hitrosti precej podobne, v splošnem pa se najbolje izkaže padajoča različica algoritma. Binarno iskanje ima sicer najslabši povprečni čas, ki pa se od padajočega pregleda s podmnožicami ne razlikuje veliko, poleg tega ima slednji višje skoke. 
 
-Zanimivo je primerjati tudi distribucijo števila $Z(G)$ v odvisnosti od $p$ za fiksen $n(G) = 18$ (prikazano na sliki~\ref{fig:er-random-18}, uporabljena je bila različica algoritma~\ref{alg:eksponentni-izracun-zf} s padajočim pregledom).
 \begin{figure}[h]
-     \centering
-     \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_avg.pdf}
-     \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_boxplot.pdf}
-     \caption{Distribucija ničelne prisile za model Erdős–Rényi v odvisnosti od $p$ za fiksno velikost grafov $n=18$. Za vsak $p$ je ničelna prisila izračunana za 100 naključno generiranih grafov, levo sta narisana povprečje in standardni odklon, desno pa škatla z brki.}
-     \label{fig:er-random-18}
+    \centering
+    \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_avg.pdf}
+    \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_boxplot.pdf}
+    \caption{Distribucija ničelne prisile za model Erdős–Rényi v odvisnosti od $p$ za fiksno velikost grafov $n=18$. Za vsak $p$ je ničelna prisila izračunana za 100 naključno generiranih grafov, levo sta narisana povprečje in standardni odklon, desno pa škatla z brki.}
+    \label{fig:er-random-18}
 \end{figure}
+Zanimivo je primerjati tudi porazdelitev števila $Z(G)$ v odvisnosti od $p$ za fiksen $n(G) = 18$ (prikazano na sliki~\ref{fig:er-random-18}, uporabljena je bila različica algoritma~\ref{alg:eksponentni-izracun-zf} s padajočim pregledom).
 Ker so za zelo majhne $p$ grafi močno nepovezani (imajo veliko komponent), je ničelna prisila velika. Vrednost števila hitro pade, že za $p=0.01$ je v povprečju približno~7; standardni odklon je tu največji, saj 2 povezavi več lahko pomenita, da je prisila manjša za 2. Nato število $Z(G)$ počasi spet raste, saj imajo vozlišča vse več sosedov. Standardni odklon postaja vse manjši, saj z vse večjo verjetnostjo izbiramo grafe s čedalje več povezavami in je prisila vse pogosteje maksimalna (torej $n-1$).
 
 Prikazana je tudi škatla z brki, ki potrdi, da je odklon za začetne, manjše $p$ večji, maksimumi in minimumi pa so bolj ekstremni.
 
-\subsection{NP-polnost}
+\subsection{\textsf{NP}-polnost}
 \label{subsec:np-polnost}
 
 V prejšnjem podpoglavju smo si pogledali algoritem z eksponentno časovno zahtevnostjo za reševanje problema števila ničelne prisile za splošen graf. Ali lahko najdemo hitrejši, polinomski algoritem? V tem poglavju bomo naredili pregled rezultatov o kompleksnosti problema števila ničelne prisile in videli, da je $\NP$-težek; če bi torej obstajal polinomski algoritem za naš problem, bi sledilo $\P = \NP$. 
@@ -2117,12 +2122,14 @@ Posledično sledi tudi $\NP$-polnost uteženega problema za splošne grafe. To n
 
 Avtor v~\cite[izrek~2.3.8]{aazami2008hardness} za utežen problem dokaže tudi, da je za poljuben fiksen $\epsilon > 0$ $\NP$-težko najti približek rešitve $Z(G,w)$ na $2^{\log^{1-\epsilon}n}$ natančno. Če bi torej obstajal aproksimativen algoritem s tako konstanto, bi sledilo $\P = \NP$, zato pričakujemo, da takšni aproksimativni algoritmi ne obstajajo.
 
+Čeprav je problem \ZFOdl\ \NP-poln, pa polinomski algoritmi morda obstajajo za specifično družino ali tip grafa. Za drevesa smo v poglavju~\ref{sec:osnovni-rezultati} dokazali, da je število ničelne prisile enako kar velikosti minimalnega pokritja s potmi. Ker za drevesa poznamo linearen algoritem za izračun minimalnega pokritja~\cite{franzblau2002hamiltoniancompletions}, imamo zaradi trditve~\ref{trd:zf-dreves} torej tudi linearen algoritem za ničelno prisilo dreves.
+
 %\subsection{Pregled algoritmov za specifične družine grafov}
 %\hl{TODO}
 %Greedy nekam?
 %Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
-\section{Pregled ostalih rezultatov ničelne prisile}
+\section{Pregled ostalih rezultatov o ničelni prisili}
 \label{sec:ostali-rezultati}
 V tem poglavju naredimo hiter pregled ostalih rezultatov, povezanih s pojmom ničelne prisile. V prvem podpoglavju se osredotočimo na boljše zgornje in spodnje meje za grafe, ki ustrezajo nekaterim pogojem glede največje in najmanjše stopnje vozlišča, v drugem podpoglavju pa si ogledamo, kako je ničelna prisila povezana z nekaterimi drugimi parametri na grafih, kot so dominacijsko število, neodvisnostno število in velikost največjega prirejanja.
 
@@ -2157,7 +2164,7 @@ za nek graf $G$.
 
 Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing}, in si poglejmo, kako se poenostavijo v primeru ničelne prisile.
 
-\begin{izrek}{\cite[izrek 3.4]{amos2015kforcing}}
+\begin{izrek}[{\cite[izrek 3.4]{amos2015kforcing}}]
     Naj bo $k$ pozitivno celo število. Imejmo graf $G$ z $n \geq 2$ vozlišči in naj za stopnje vozlišč velja $\Delta \geq k, \delta \geq 1$. Potem za število $k$-prisile velja naslednja zgornja meja
     \begin{equation}
         \label{eq:kprisila-zgornja-meja}
@@ -2188,7 +2195,7 @@ Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing
 \end{posledica}
 
 Za primera $k=1$ in $k=2$ pa obstaja še boljša meja, če predpostavimo povezanost grafa $G$. Graf je \emph{$k$-povezan}, če ima več kot $k$ vozlišč in ob odstranitvi poljubne podmnožice manj kot $k$ vozlišč preostanek inducira povezan podgraf.
-\begin{izrek}{\cite[izrek 4.4]{amos2015kforcing}}
+\begin{izrek}[{\cite[izrek 4.4]{amos2015kforcing}}]
     Naj bo $k$ pozitivno celo število. Imejmo $k$-povezan graf $G$ z $n > k$ vozlišči in $\Delta \geq 2$. Potem velja
     \begin{equation}
         \label{eq:kprisila-zgornja-meja-povezan}
@@ -2227,7 +2234,7 @@ pri čemer smo upoštevali trivialni neenakosti $1 - k \leq -2$ (pri prvi zgornj
 \end{proof}
 
 Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za katere je meja~\eqref{eq:zgornja-meja-zf-povezan} dosežena~\cite{lu2016proof, gentner2016extremal}. V~\cite{gentner2018bounds} je dokazano, da lahko mejo precej izboljšamo, če izključimo te in še kakšne grafe; znebimo se lahko zadnjega člena $\frac{2}{\Delta - 1}$.
-\begin{izrek}{{\cite[izrek 4]{gentner2018bounds}}}
+\begin{izrek}[{\cite[izrek 4]{gentner2018bounds}}]
     \label{izr:zgornja-meja-gentner}
     Za povezan graf $G$ z največjo stopnjo $\Delta \geq 3$ velja
     \[ Z(G) \leq \frac{\Delta-2}{\Delta-1} n(G) \]
@@ -2285,7 +2292,7 @@ Izkaže se, da so grafi $K_{\Delta + 1}, K_{\Delta, \Delta}$ in $C_n$ edini, za 
 \end{figure}
 
 Poglejmo še rezultate za spodnjo mejo ničelne prisile.
-\begin{trditev}{{\cite[izrek 3]{davila2014bounds}}}
+\begin{trditev}[{\cite[izrek 3]{davila2014bounds}}]
     Imejmo graf $G$ z ožino $g \geq 5$ in najmanjšo stopnjo vozlišča $\delta \geq 2$. Potem za ničelno prisilo velja spodnja meja
     \[ Z(G) \geq 2 \delta - 2.  \]
 \end{trditev}
@@ -2306,7 +2313,7 @@ Poglejmo si še, kakšne povezave ima ničelna prisila z drugimi grafovskimi poj
 \subsubsection{Dominacija}
 
 \emph{Dominacijska množica} $D$ grafa $G$ je taka podmnožica vozlišč, da za vsako vozlišče grafa velja, da je v $D$ ali je sosednje vozlišču iz $D$ (pravimo, da je vsako vozlišče \emph{dominirano}). Velikost najmanjše dominacijske množice je \emph{dominacijsko število} $\gamma(G)$ grafa $G$.
-Če dodamo še pravilo, da je vozlišče dominirano tudi, če je edini nedominirani sosed nekega dominiranega vozlišča, in ta postopek ponavljamo, dobimo \emph{električno dominacijo}. Problem je dobil ime iz motivacije, ki je nadzor električnih omrežij, kjer želimo s čim manj nadzornimi napravami pokriti cel sistem.
+Če dodamo še pravilo, da je vozlišče dominirano tudi, če je edini nedominirani sosed nekega dominiranega vozlišča, in ta postopek ponavljamo, dobimo \emph{električno dominacijo}. Motivacija zanjo je nadzor električnih omrežij, kjer želimo s čim manj nadzornimi napravami pokriti cel sistem.
 \begin{definicija}
     Množica $S \subseteq$ je \emph{električna dominacijska množica}, če so po koncu apliciranja naslednjih pravil dominirana vsa vozlišča grafa:
     \begin{enumerate}
@@ -2320,13 +2327,13 @@ Očitno je problem povezan z ničelno prisilo, saj je 2.~pravilo ekvivalentno š
 
 Za veliko družin grafov je težko dobiti spodnjo mejo električnega dominacijskega števila (dolgi, tehnični dokazi), zato je zaželena splošna spodnja meja, ki jo dobimo s pomočjo ničelne prisile. Pri tem nam pride prav naslednja lema:
 
-\begin{lema}{{\cite[lema 2]{dean2011power}}}
+\begin{lema}[{\cite[lema 2]{dean2011power}}]
     \label{lem:dom-zf-stopnje}
     Naj bo $\{u_1, u_2, \ldots u_k \}$ električna dominacijska množica grafa $G$ brez izoliranih vozlišč. Potem za ničelno prisilo velja
     \[ Z(G) \leq \sum_{i=1}^{k} \deg(u_i). \]
 \end{lema}
 
-\begin{izrek}{{\cite[izrek 3.2]{benson2015power}}}
+\begin{izrek}[{\cite[izrek 3.2]{benson2018zero}}]
     Imejmo graf $G$ z vsaj eno povezavo in največjo stopnjo vozlišča $\Delta$. Potem velja
     \[ \gamma_P(G) \geq \left\lceil \frac{Z(G)}{\Delta} \right\rceil, \]
     meja je tesna.
@@ -2341,21 +2348,21 @@ Za veliko družin grafov je težko dobiti spodnjo mejo električnega dominacijsk
     Meja je tesna za polne grafe $K_n$, saj velja $Z(K_n) = \Delta(K_n) = n-1$, za električno dominacijsko število pa je očitno, da velja $\gamma_P(K_n) = 1$, saj je vsako vozlišče sosedno vsem ostalim.
 \end{proof}
 
-S pomočjo te povezave avtorji v~\cite{benson2015power} določijo električno dominacijsko število in število ničelne prisile (oz.~meje) za nekatere produkte znanih družin oziroma splošnih grafov, med drugim npr.~ničelno prisilo za leksikografski produkt med dvema regularnima grafoma, kjer ima prvi nizko dominacijsko število, drugi pa nizko električno dominacijsko število.
+S pomočjo te povezave avtorji v~\cite{benson2018zero} določijo električno dominacijsko število in število ničelne prisile (oz.~meje) za nekatere produkte znanih družin oziroma splošnih grafov, med drugim npr.~ničelno prisilo za leksikografski produkt med dvema regularnima grafoma, kjer ima prvi nizko dominacijsko število, drugi pa nizko električno dominacijsko število.
 
-Oglejmo si še en tip dominacije, za katerega se izkaže, da je povezana z ničelno prisilo. Povezana dominacijska množica grafa $G$ je taka dominacijska množica, ki inducira povezan podgraf v grafu $G$. \emph{Povezano dominacijsko število} $\gamma_c(G)$ je torej velikost najmanjše take množice za nek graf $G$.
+Oglejmo si še en tip dominacije, za katerega se izkaže, da je povezan z ničelno prisilo. Povezana dominacijska množica grafa $G$ je taka dominacijska množica, ki inducira povezan podgraf v grafu $G$. \emph{Povezano dominacijsko število} $\gamma_c(G)$ je torej velikost najmanjše take množice za nek graf $G$.
 
 Dominacijo lahko (podobno kot prisilo v~\ref{def:k-prisila}) posplošimo: za $k$-dominacijsko množico $D$ grafa $G$ velja, da je vsako vozlišče, ki ni v $D$, sosednje vsaj $k$ vozliščem iz $D$. Velikost najmanjše take množica je \emph{$k$-dominacijsko število} grafa $G$, označimo $\gamma_k(G)$. Za $k = 1$ očitno dobimo navadno dominacijo.
 
 Sedaj lahko definiramo posplošeno verzijo povezane dominacije: povezana $k$-dominacijska množica je taka $k$-dominacijska množica, ki inducira povezan podgraf, \emph{povezano $k$-dominacijsko število} $\gamma_{k,c}(G)$ pa velikost najmanjše take množice.
 
 Izkaže se, da velja naslednja povezava med $k$-prisilo in $k$-dominacijo:
-\begin{lema}{{\cite[lema 4.1]{amos2015kforcing}}}
+\begin{lema}[{\cite[lema 4.1]{amos2015kforcing}}]
     \label{lem:k-prisila-povezana-k-dominacija}
     Naj bo $G$ $k$-povezan graf za neko pozitivno celo število $k < n(G)$. Naj bo $F$ najmanjša taka množica $k$-prisile, da je $G[V \setminus F]$ povezan podgraf. Potem je $V \setminus F$ povezana $k$-dominacijska množica grafa $G$.
 \end{lema}
 Posledično lahko dokažemo sledečo zgornjo mejo $k$-prisile:
-\begin{posledica}{{\cite[posledica 4.2]{amos2015kforcing}}}
+\begin{posledica}[{\cite[posledica 4.2]{amos2015kforcing}}]
     Naj bo $G$ $k$-povezan graf za neko pozitivno celo število $k < n(G)$. Potem za $k$-prisilo in $k$-dominacijo tega grafa velja naslednja povezava:
     \[ F_k(G) \leq n(G) - \gamma_{k,c}(G). \]
 \end{posledica}
@@ -2391,7 +2398,7 @@ Ker je ta različica bolj omejena kot prva in iščemo najdaljše zaporedje, oč
 \end{equation}
 
 Izkaže se~\cite{bresar2017grundy}, da je Z-Grundyjeva dominacija povezana z ničelno prisilo (zato ima v imenu črko ``Z'', ki pride iz ``zero forcing''):
-\begin{izrek}{{\cite[izrek 2.2]{bresar2017grundy}}}
+\begin{izrek}[{\cite[izrek 2.2]{bresar2017grundy}}]
     \label{izr:prisila-zgrundy}
     Za graf $G$ brez izoliranih vozlišč velja
     \[ \gamma^Z_{gr} + Z(G) = n(G) .\]
@@ -2404,7 +2411,7 @@ Zaradi povezave~\eqref{eq:grundy-zgrundy} med Grundyjevo in Z-Grundyjevo dominac
 \end{posledica}
 
 Avtorji~\cite{bresar2017grundy} s pomočjo izreka~\ref{izr:prisila-zgrundy} določijo vrednosti ničelne prisile nekaterih produktov grafov znanih družin, med drugim krepkega produkta med ciklom in potjo:
-\begin{trditev}{{\cite[trditev 2.5.]{bresar2017grundy}}}
+\begin{trditev}[{\cite[trditev 2.5.]{bresar2017grundy}}]
     Za $n \geq 3$ in $m \geq 2$ velja
     \[ Z(C_n \boxtimes P_m) = 2m + n - 2 .\]
 \end{trditev}
@@ -2443,7 +2450,7 @@ Iz zgornje meje ničelne prisile~\eqref{eq:zgornja-meja-zf-povezan} za povezan g
 \end{posledica}
 
 To mejo se da še malo izboljšati, če izvzamemo graf $K_4$:
-\begin{izrek}{{\cite[izrek 3]{davila2018total}}}
+\begin{izrek}[{\cite[izrek 3]{davila2018total}}]
     Za povezan kubičen graf $G \neq K_4$ brez krempljev velja
     \[ Z(G) \leq \frac{1}{2} n(G), \]
     meja je tesna natanko tedaj, ko je $G$ graf $C_3 \boxempty K_2$ ali $N_2$ (prikazana na sliki~\ref{fig:prizma-ogrlica}).
@@ -2515,7 +2522,7 @@ To mejo se da še malo izboljšati, če izvzamemo graf $K_4$:
 \end{figure}
 
 Še bolj pa se zgornjo mejo za tak tip grafa da izboljšati z naslednjim izrekom:
-\begin{izrek}{{\cite[izrek 5]{davila2018claw}}}
+\begin{izrek}[{\cite[izrek 5]{davila2018claw}}]
     Za povezan kubičen graf $G \neq K_4$ brez krempljev velja
     \begin{enumerate}
         \item $Z(G) \leq \alpha(G) + 1$,
@@ -2558,10 +2565,10 @@ Ker iz~\cite{faudree1992independent} vemo, da za neodvisnostno število kubične
 \section{Priloga: implementacija algoritmov}
 \label{sec:algoritmi}
 
-Algoritmi so implementirani v C++, koda je strukturirana takole:
+Algoritmi so implementirani v programskem jeziku C++, koda je strukturirana takole:
 \begin{itemize}
-    \item v \texttt{Graph.cpp} je implementirana podatkovna struktura grafa s seznamom sosedov;
-    \item v \texttt{utils.cpp} so implementirane pomožne funkcije, med drugim tudi algoritmov~\ref{alg:preveri-zf-naiven}~in~\ref{alg:preveri-zf-izboljsan},
+    \item v \texttt{Graph.cpp} je implementirana podatkovna struktura grafa s seznamom sosedov, koda je zaradi jedrnatosti izpuščena;
+    \item v \texttt{utils.cpp} so implementirane pomožne funkcije, med drugim tudi algoritmov~\ref{alg:preveri-zf-naiven}~in~\ref{alg:preveri-zf-izboljsan}, koda je zaradi jedrnatosti izpuščena;
     \item v \texttt{check.hpp} so implementirani algoritmi preverjanja (torej~\ref{alg:preveri-zf-naiven}~in~\ref{alg:preveri-zf-izboljsan}), pri čemer algoritem z vrsto sprejme podatkovno strukturo za sledenje belim sosedom;
     \item v \texttt{WhiteNeighbours.cpp} sta implementirani dve podatkovni strukturi za sledenje belim sosedom, ena z množicami, druga s tabelo števcev;
     \item v \texttt{zero\_forcing\_number.cpp} so implementirane tri različice algoritma~\ref{alg:eksponentni-izracun-zf} za izračun števila ničelne prisile: množice pregledujemo po velikosti padajoče, po velikosti padajoče, a samo podmnožice prejšnjih množic ničelne prisile, in s pomočjo binarnega iskanja. 
