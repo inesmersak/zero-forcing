@@ -267,11 +267,20 @@ We implement algorithms for checking whether a set is zero forcing and for calcu
 \pagenumbering{arabic}  % in z arabskimi številkami
 
 \section{Uvod}
-Napišite kratek zgodovinski in matematični uvod.  Pojasnite motivacijo za problem, kje
-nastopa, kje vse je bil obravnavan. Na koncu opišite tudi organizacijo dela -- kaj je v kakšnem
-razdelku.
+Pojem ničelne prisile je bil prvič predstavljen v~\cite{aim2008minimumrank} leta 2008 kot zgornja meja za problem maksimalnega koranga grafa. Kljub temu, da je problem ničelne prisile (in nekatere njegove različice) \NP-težek~\cite{fallat2016complexity, aazami2008hardness, brimkov2017complexity}, pa je za določene pogoste razrede grafov število lahko določljivo. V članku~\cite{aim2008minimumrank} s pomočjo ničelne prisile določijo maksimalne korange in minimalne range mnogih znanih grafov in družin, ki prej niso bili znani.
+
+Neodvisno je bila ničelna prisila obravnavana tudi v fiziki za nadzor velikih kvantnih sistemov prek manjšega, lokalnega dela sistema~\cite{burgarth2007control}. Ekvivalentni pojem \emph{propagacija} so bolj formalno uvedli v~\cite{severini2008nondiscriminatorypropagation} leta 2008, kjer so prav tako postavili vprašanje najmanjše take podmnožice vozlišč, da bo na koncu pobarvan cel graf, problem preučili za nekaj preprostih družin grafov in število določili za uravnotežena $n$-terna drevesa.
+
+Kasneje se je ničelno prisilo začelo preučevati tudi v povezavi drugimi grafovskimi problemi, kot npr.~s povezano dominacijo \cite{amos2015kforcing}, Grundyjevim dominacijskim številom~\cite{bresar2017grundy}, neodvisnostnim številom~\cite{davila2018claw} in električno dominacijo~\cite{dean2011power, benson2015power, aazami2008hardness}. Slednja ima še posebej zanimivo motivacijo v nadzoru električnih omrežij, saj želimo cel sistem pokriti s čim manj (dragimi) nadzornimi napravami. Nekateri izmed teh rezultatov so predstavljeni v tem delu v poglavju~\ref{sec:ostali-rezultati}.
+
+Ker je izračun števila ničelne prisile~\NP-težek problem, hkrati pa je pomembna meja za nekatere druge parametre, je bila motivacija za iskanje tesnejših zgornjih in spodnjih mej velika. V~\cite{amos2015kforcing} so v ta namen definirali splošnejšo različico problema, \emph{$k$-prisilo}, s pomočjo katere so v~\cite{amos2015kforcing, gentner2018bounds} našli boljše zgornje meje, nekatere sicer držijo le za povezane grafe. S spodnjo mejo pa so se v odvisnosti od ožine grafa ukvarjali v~\cite{davila2018forcing, davila2018lower, davila2014bounds, gentner2018bounds, gentner2016extremal}.
+
+V~\ref{sec:osnovne-definicije}.~poglavju preletimo nekatere osnovne definicije teorije grafov, ki jih bomo uporabljali v delu, nato pa definiramo pojem ničelne prisile, si ogledamo nekaj lastnosti, trivialno zgornjo in spodnjo mejo ter motivacijo za imenom ``ničelna prisila''. V~\ref{sec:osnovni-rezultati}.~poglavju določimo število ničelne prisile za nekatere razrede grafov, kot so npr.~poti, cikli in polni grafi, v~\ref{sec:ekstremni-primeri}.~poglavju pa karakteriziramo grafe, za katere sta spodnja in zgornja meja iz~\ref{sec:osnovne-definicije}.~poglavja tesni.
+
+V~\ref{sec:izracun}.~poglavju sta zapisana algoritma za preverjanje množice in eksponentni algoritem za izračun števila ničelne prisile, katere hitrost je primerjana na naključno generiranih grafih po modelu Erdős–Rényi, implementacija pa je priložena v prilogi~\ref{sec:algoritmi}. Predstavljeni so tudi nekateri rezultati glede računske zahtevnosti tega in tesno povezanih problemov. V~\ref{sec:ostali-rezultati}.~poglavju je narejen pregled boljših spodnjih in zgornjih mej za ničelno prisilo nekaterih grafov, predstavljene pa so tudi povezave z nekaterimi drugimi grafovskimi parametri, omenjenimi zgoraj.
 
 \section{Osnovne definicije}
+\label{sec:osnovne-definicije}
 V tem poglavju najprej navedemo nekaj osnovnih definicij teorije grafov, nato pa definiramo dva temeljna pojma tega dela, množico ničelne prisile in število ničelne prisile, si ogledamo motivacijo za poimenovanje in nekaj primerov.
 
 \emph{Graf} $G$ je definiran kot urejen par množice vozlišč, označimo jo z $V(G)$, in množice povezav $E(G)$, pri čemer so povezave pari elementov iz $V(G)$. Za potrebe tega dela bo za graf veljalo, da je končen (dovolj je, če je končna množica vozlišč) in ima neprazno množico vozlišč, nima zank (nobena povezava ne sme biti sestavljena samo iz enega vozlišča) in večkratnih povezav (elementi v $E(G)$ se ne ponavljajo). Če so elementi množice povezav urejeni pari, pravimo, da je graf \emph{usmerjen}, v nasprotnem primeru pa \emph{neusmerjen}. Če ni označeno drugače, bomo z besedo graf mislili neusmerjen povezan graf. \emph{Velikost grafa} $G$ je definirano kot število vozlišč tega grafa, označimo tudi kot $|G|$ ali $n(G)$. V nadaljevanju bomo, kjer je očitno, za kateri graf gre, množico vozlišč grafa označevali kar z $V$, množico povezav pa z $E$. Velikost množice povezav grafa $G$ pa bomo označevali z $m(G)$.
@@ -1202,6 +1211,7 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
 Ker za drevesa poznamo linearen algoritem za izračun minimalnega pokritja~\cite{franzblau2002hamiltoniancompletions}, imamo zaradi trditve~\ref{trd:zf-dreves} tudi linearen algoritem za ničelno prisilo dreves.
 
 \section{Ekstremni primeri}
+\label{sec:ekstremni-primeri}
 Poglejmo si, za katere grafe je pri zgornji meji~\eqref{eq:trv-zgornja-meja} in trivialni spodnji meji~\eqref{eq:trv-trv-spodnja-meja} za ničelno prisilo dosežena enakost.
 \begin{trditev}{{\cite[trditev 2.2]{row2012technique}}}
     Za graf $G$ na $n > 1$ vozliščih velja:
@@ -1234,6 +1244,7 @@ Brez dokaza navedimo še naslednji rezultat:
 Pri tem je $G$ \emph{graf dveh paralelnih poti}, če v njem obstajata dve disjunktni inducirani poti, ki pokrivata vsa vozlišča $G$ in lahko $G$ v ravnini narišemo kot vzporedni poti, med katerima se povezave (narisane kot ravne črte) ne križajo. En primer takega grafa je graf z dvema povezanima komponentama, pri čemer je vsaka pot.
 
 \section{Ničelna prisila produktov grafov}
+\label{sec:produkti}
 V tem poglavju si bomo ogledali nekaj rezultatov o številu ničelne prisile za produkte grafov. Osnova za to poglavje je predvsem~\cite{aim2008minimumrank}.
 
 \begin{trditev}
@@ -1657,6 +1668,7 @@ Poleg tega so podani tudi rezultati za kartezični produkt poti, cikla in polneg
 \end{trditev}
 
 \section{Izračun ničelne prisile}
+\label{sec:izracun}
 V tem poglavju bomo problem ničelne prisile preučili skozi stališče računske zahtevnosti: pogledali si bomo algoritem, ki preveri, ali je dana množica za dan graf res množica ničelne prisile, in s tem dokazali, da problem spada v NP. Analizirali bomo trivialen splošni algoritem za izračun ničelne prisile poljubnega grafa, si pogledali njegove potencialne izboljšave in povzeli nekaj rezultatov o NP-polnosti problema.
 
 \subsection{Predstavitve grafov in računska zahtevnost}
@@ -1982,10 +1994,10 @@ Zanimivo je primerjati tudi distribucijo števila $Z(G)$ v odvisnosti od $p$ za 
      \centering
      \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_avg.pdf}
      \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_boxplot.pdf}
-     \caption{Distribucija ničelne prisile za model Erdős–Rényi v odvisnosti od $p$ za fiksno velikost grafov $n=18$. Za vsak $p$ je ničelna prisila izračunana za 100 generiranih grafov, levo sta narisana povprečje in standardni odklon, desno pa škatla z brki.}
+     \caption{Distribucija ničelne prisile za model Erdős–Rényi v odvisnosti od $p$ za fiksno velikost grafov $n=18$. Za vsak $p$ je ničelna prisila izračunana za 100 naključno generiranih grafov, levo sta narisana povprečje in standardni odklon, desno pa škatla z brki.}
      \label{fig:er-random-18}
 \end{figure}
-Vidimo, da so za zelo majhne $p$ grafi močno nepovezani (imajo veliko komponent), zato je ničelna prisila velika. Vrednost števila hitro pade, že za $p=0.01$ je v povprečju približno~7; standardni odklon je tu največji, saj 2 povezavi več lahko pomenita, da je prisila manjša za 2. Nato število $Z(G)$ počasi spet raste, saj imajo vozlišča vse več sosedov. Standardni odklon je vse manjši, saj z vse večjo verjetnostjo izbiramo grafe s skoraj vsemi povezavami in je prisila vse pogosteje maksimalna (torej $n-1$).
+Ker so za zelo majhne $p$ grafi močno nepovezani (imajo veliko komponent), je ničelna prisila velika. Vrednost števila hitro pade, že za $p=0.01$ je v povprečju približno~7; standardni odklon je tu največji, saj 2 povezavi več lahko pomenita, da je prisila manjša za 2. Nato število $Z(G)$ počasi spet raste, saj imajo vozlišča vse več sosedov. Standardni odklon postaja vse manjši, saj z vse večjo verjetnostjo izbiramo grafe s čedalje več povezavami in je prisila vse pogosteje maksimalna (torej $n-1$).
 
 Prikazana je tudi škatla z brki, ki potrdi, da je odklon za začetne, manjše $p$ večji, maksimumi in minimumi pa so bolj ekstremni.
 
@@ -2111,6 +2123,7 @@ Avtor v~\cite[izrek~2.3.8]{aazami2008hardness} za utežen problem dokaže tudi, 
 %Kaj pa algoritem, ki vrne neko množico ničelne prisile? Npr.~začnemo z vsemi vozlišči, potem odstranimo vozlišča stopnje 1 etc ali kaj podobnega? Spet nekaj s path coveringom morda pomaga?
 
 \section{Pregled ostalih rezultatov ničelne prisile}
+\label{sec:ostali-rezultati}
 V tem poglavju naredimo hiter pregled ostalih rezultatov, povezanih s pojmom ničelne prisile. V prvem podpoglavju se osredotočimo na boljše zgornje in spodnje meje za grafe, ki ustrezajo nekaterim pogojem glede največje in najmanjše stopnje vozlišča, v drugem podpoglavju pa si ogledamo, kako je ničelna prisila povezana z nekaterimi drugimi parametri na grafih, kot so dominacijsko število, neodvisnostno število in velikost največjega prirejanja.
 
 \subsection{Boljša zgornja in spodnja meja}
