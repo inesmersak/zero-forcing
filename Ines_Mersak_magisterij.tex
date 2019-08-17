@@ -1887,8 +1887,8 @@ V prilogi~\ref{sec:algoritmi} je podana C++ implementacija vseh treh algoritmov 
 V obeh primerih je za preverjanje izbrana naključna množica 95\% velikosti grafa $G$.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=210pt]{koda/results/plots/random_sparse.png}
-    \includegraphics[width=210pt]{koda/results/plots/random_dense.png}
+    \includegraphics[width=0.49\linewidth]{koda/results/plots/random_sparse.pdf}
+    \includegraphics[width=0.49\linewidth]{koda/results/plots/random_dense.pdf}
     \caption{Predstavljena je primerjava hitrosti treh algoritmov za preverjanje in nakloni njihovih premic v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi; levo je izbran $p=0.01$, desno pa $p=0.7$.}
     \label{fig:primerjava-check-random-graf}
 \end{figure}
@@ -1900,8 +1900,8 @@ Pri redkih grafih (slika~\ref{fig:primerjava-check-random-graf} levo) vsaj za ma
 Da bi bolje demonstrirali odvisnost naivnega algoritma od oznak vozlišč, si poglejmo še primerjavo teh treh algoritmov na poteh različnih velikosti, prikazano na sliki~\ref{fig:primerjava-check-pot}. Pri tem smo na levi strani za začetno množico vzeli vozlišče z oznako 0, na desni pa z oznako $n-1$.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=210pt]{koda/results/plots/pot_prvo_vozlisce.png}
-    \includegraphics[width=210pt]{koda/results/plots/pot_zadnje_vozlisce.png}
+    \includegraphics[width=0.49\linewidth]{koda/results/plots/pot_prvo_vozlisce.pdf}
+    \includegraphics[width=0.49\linewidth]{koda/results/plots/pot_zadnje_vozlisce.pdf}
     \caption{Primerjava treh algoritmov za preverjanje in naklonov njihovih premic za poti v odvisnosti od velikosti; pri tem je na levi strani izbrana začetna množica $\{ 0 \}$, na desni pa $\{n-1\}$.}
     \label{fig:primerjava-check-pot}
 \end{figure}
@@ -1965,9 +1965,9 @@ Pri tem za preverjanje, ali je množica res množica ničelne prisile, uporabimo
 Na sliki~\ref{fig:eksp-alg-primerjava} so predstavljene primerjave hitrosti teh treh algoritmov za 100 naključno generiranih grafov po modelu Erdős–Rényi za različne vrednosti $p$ (in s tem gostote povezav): od leve proti desni za $p=\{ 0.01, 0.4, 0.7 \}$, pri čemer je bila velikost generiranih grafov fiksna, $n(G) = 15$.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=170pt]{koda/results/plots/zfn_random_15_sparse.png}
-    \includegraphics[width=170pt]{koda/results/plots/zfn_random_15_mid.png}
-    \includegraphics[width=170pt]{koda/results/plots/zfn_random_15_dense.png}
+    \includegraphics[width=0.32\linewidth]{koda/results/plots/zfn_random_15_sparse.pdf}
+    \includegraphics[width=0.32\linewidth]{koda/results/plots/zfn_random_15_mid.pdf}
+    \includegraphics[width=0.32\linewidth]{koda/results/plots/zfn_random_15_dense.pdf}
     \caption{Primerjava hitrosti treh različic algoritma~\ref{alg:eksponentni-izracun-zf} (padajoči pregled, padajoči pregled z upoštevanjem prejšnjih množic ničelne prisile, pregled z binarnim iskanjem) za 100 naključno generiranih grafov po modelu Erdős–Rényi velikosti 15, pri čemer je $p$ zgoraj levo enak 0.01, zgoraj desno 0.4, spodaj pa 0.7.}
     \label{fig:eksp-alg-primerjava}
 \end{figure}
@@ -1977,17 +1977,17 @@ Za srednje goste grafe se najslabše izkaže padajoči pregled s podmnožicami. 
 
 Za goste grafe so hitrosti precej podobne, v splošnem pa se najbolje izkaže padajoča različica algoritma. Binarno iskanje ima sicer najslabši povprečni čas, ki pa se od padajočega pregleda s podmnožicami ne razlikuje veliko, poleg tega ima slednji višje skoke. 
 
-Zanimivo je primerjati tudi distribucijo števila $Z(G)$ v odvisnosti od $p$ za fiksen $n(G) = 18$ (prikazano na sliki~\ref{fig:er-random-18}, uporabljen je bila različica algoritma~\ref{alg:eksponentni-izracun-zf} s padajočim pregledom).
+Zanimivo je primerjati tudi distribucijo števila $Z(G)$ v odvisnosti od $p$ za fiksen $n(G) = 18$ (prikazano na sliki~\ref{fig:er-random-18}, uporabljena je bila različica algoritma~\ref{alg:eksponentni-izracun-zf} s padajočim pregledom).
 \begin{figure}[h]
      \centering
-     \includegraphics[width=170pt]{koda/results/plots/er_zfn_dist_18_avg.png}
-     \includegraphics[width=170pt]{koda/results/plots/er_zfn_dist_18_boxplot.png}
-     \caption{Distribucija ničelne prisile za model Erdős–Rényi v odvisnosti od $p$ za fiksno velikost grafov $n=18$. Za vsak $p$ je ničelna prisila izračunana za 100 generiranih grafov, levo sta narisana povprečje in varianca, desno pa škatla z brki.}
+     \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_avg.pdf}
+     \includegraphics[width=0.49\linewidth]{koda/results/plots/er_zfn_dist_18_boxplot.pdf}
+     \caption{Distribucija ničelne prisile za model Erdős–Rényi v odvisnosti od $p$ za fiksno velikost grafov $n=18$. Za vsak $p$ je ničelna prisila izračunana za 100 generiranih grafov, levo sta narisana povprečje in standardni odklon, desno pa škatla z brki.}
      \label{fig:er-random-18}
 \end{figure}
-Vidimo, da so za zelo majhne $p$ grafi močno nepovezani (imajo veliko komponent), zato je ničelna prisila velika. Varianca je prav tako velika, saj 2 povezavi več lahko pomenita, da je prisila manjša za 2. Vrednost števila hitro pade, že za $p=0.01$ je v povprečju približno~7, nato pa počasi spet raste, saj imajo vozlišča vse več sosedov. Varianca je vse manjša, saj z vse večjo verjetnostjo izbiramo grafe s skoraj vsemi povezavami in je prisila vse pogosteje maksimalna (torej $n-1$).
+Vidimo, da so za zelo majhne $p$ grafi močno nepovezani (imajo veliko komponent), zato je ničelna prisila velika. Vrednost števila hitro pade, že za $p=0.01$ je v povprečju približno~7; standardni odklon je tu največji, saj 2 povezavi več lahko pomenita, da je prisila manjša za 2. Nato število $Z(G)$ počasi spet raste, saj imajo vozlišča vse več sosedov. Standardni odklon je vse manjši, saj z vse večjo verjetnostjo izbiramo grafe s skoraj vsemi povezavami in je prisila vse pogosteje maksimalna (torej $n-1$).
 
-Prikazana je tudi škatla z brki, ki potrdi, da je varianca za začetne, manjše $p$ večja, maksimumi in minimumi so bolj ekstremni.
+Prikazana je tudi škatla z brki, ki potrdi, da je odklon za začetne, manjše $p$ večji, maksimumi in minimumi pa so bolj ekstremni.
 
 \subsection{NP-polnost}
 \label{subsec:np-polnost}
