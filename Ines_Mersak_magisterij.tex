@@ -22,7 +22,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 
 \usepackage{bibentry}         % za navajanje literature v programu dela s celim imenom
 \nobibliography{\literatura}
-\newcommand{\plancite}[1]{\item[\cite{#1}] \bibentry{#1}} % citiranje v programu dela
+\newcommand{\plancite}[1]{\item[\cite{#1}] \bibentry{#1}.} % citiranje v programu dela
 
 \usepackage{filecontents}  % za pisanje datoteke s PDF metapodatki
 \usepackage{silence} \WarningFilter{latex}{Overwriting file}  % odstrani annoying warning o obstoju datoteke
@@ -250,7 +250,7 @@ Magistrsko delo naj vsebuje poglobljen pregled znanih rezultatov o ničelni pris
 \end{center}
 Množica ničelne prisile grafa $G$ je taka podmnožica vozlišč $Z$, za katero velja: če na začetku pobarvamo vozlišča iz $Z$, nato pa uporabljamo pravilo za širjenje barve, dokler se dogajajo spremembe, morajo biti na koncu pobarvana vsa vozlišča grafa~$G$. Pri tem je pravilo širjenja barve tako, da pobarvano vozlišče $u$ spremeni barvo soseda~$v$ natanko tedaj, ko je ta edini še nepobarvan sosed vozlišča $u$. Število ničelne prisile grafa $G$ je velikost najmanjše take množice ničelne prisile. Delo obravnava ničelno prisilo nekaterih pogostih družin grafov, zgornje in spodnje meje zanjo in karakterizira grafe, ki te meje dosežejo. Obravnavane so tudi zgornje meje za nekatere produkte grafov in povezave ničelne prisile z nekaterimi drugimi grafovskimi parametri, kot sta npr.~dominacijsko število in neodvisnostno število. 
 
-V sklopu dela so v C++ implementirani algoritmi za preverjanje, ali je množica res množica ničelne prisile, in za izračun števila ničelne prisile za dan graf $G$. Slednji so eksponentni, vendar za splošen graf ne moremo doseči polinomske časovne zahtevnosti, saj je problem \NP-težek. Predstavljeni so tudi nekateri drugi rezultati kompleksnosti za probleme, ki so tesno povezani z ničelno prisilo. 
+V sklopu dela so v C++ implementirani algoritmi za preverjanje, ali je množica res množica ničelne prisile, in za izračun števila ničelne prisile za dani graf $G$. Slednji so eksponentni, vendar za splošen graf (najverjetneje) ne moremo doseči polinomske časovne zahtevnosti, saj je problem \NP-težek. Predstavljeni so tudi nekateri drugi rezultati kompleksnosti za probleme, ki so tesno povezani z ničelno prisilo. 
 
 \vfill
 \begin{center}
@@ -258,9 +258,9 @@ V sklopu dela so v C++ implementirani algoritmi za preverjanje, ali je množica 
 \textsc{Abstract}\\[2mm]
 \end{center}
 
-Zero forcing set of graph $G$ is a subset $Z$ of vertices for which the following holds: if initially the vertices from $Z$ are coloured black and we apply the colour change rule repeatedly, then at the end of the process all vertices of $G$ should be black. Here the colour change rule is defined as: a black vertex $u$ forces the change of colour in a white negihbour $v$ if $v$ is the only white neighbour of $u$. Zero forcing number of a graph is the size of the smallest zero forcing set. In this work, we list and prove results for some well known families of graphs, lower and upper bounds of zero forcing number and characterise the graphs for which these bounds are tight. Some upper bounds for various products of graphs and connections to other graph parameters, such as domination and independence number, are also given. 
+Zero forcing set of graph $G$ is a subset $Z$ of vertices for which the following holds: if initially the vertices from $Z$ are coloured black and we apply the colour change rule repeatedly, then at the end of the process all vertices of $G$ should be black. Here the colour change rule is defined as: a black vertex $u$ forces the change of colour in a white negihbour $v$, if $v$ is the only white neighbour of $u$. The zero forcing number of a graph is the size of the smallest zero forcing set. In this work, we list and prove results for some well known families of graphs, lower and upper bounds of the zero forcing number and characterise the graphs for which these bounds are tight. Some upper bounds for various products of graphs and connections to other graph parameters, such as domination and independence number, are also given. 
 
-We implement algorithms for checking whether a set is zero forcing and for calculating the zero forcing number of a general graph in C++. The latter are exponential, however due to \NP-hardness of the problem, polynomial time complexity cannot be obtained. Some additional complexity results for closely related problems are also listed. 
+We implement algorithms for checking whether a set is zero forcing and for calculating the zero forcing number of a general graph in C++. The latter algorithms are exponential, however due to \NP-hardness of the problem, polynomial time complexity (most likely) cannot be obtained. Some additional complexity results for closely related problems are also listed. 
 
 \vfill\noindent
 \textbf{Math.~Subj.~Class.~(2010):} 05C99, 68Q25 \\[1mm]
@@ -430,7 +430,7 @@ Iz definicij opazimo, da velja $E(G \boxempty H) \subseteq E(G \boxtimes H)$, ka
         \label{fig:produkta-poti}
     \end{figure}
     
-    Pri obeh produktih opazimo, da kot inducirani podgrafi za ustrezno izbrano podmnožico vozlišč nastopajo 3 (ravno $n(P_3)$) kopije grafa $P_2$ in 2 (ravno $n(P_2)$) kopiji grafa $P_3$.
+    Pri obeh produktih opazimo, da kot inducirani podgrafi za ustrezno izbrano podmnožico vozlišč nastopajo tri (ravno $n(P_3)$) kopije grafa $P_2$ in dve (ravno $n(P_2)$) kopiji grafa $P_3$.
     
     Na slikah~\ref{fig:kartez-produkt-cikel-pot}~in~\ref{fig:krep-produkt-cikel-pot} sta prikazana še primera kartezičnega in krepkega produkta cikla in poti na $n$ vozliščih, natančneje $C_4 \boxempty P_n$ na sliki~\ref{fig:kartez-produkt-cikel-pot} in $C_4 \boxtimes P_n$ na sliki~\ref{fig:krep-produkt-cikel-pot}.
     \begin{figure}[h]
@@ -693,12 +693,12 @@ Smiselno se je vprašati, ali je ob neki začetni množici pobarvanih vozlišč 
 \begin{proof}
     Pokažimo, da vozlišče, ki postane črno za nek vrstni red sprememb barv, lahko vedno postane črno, s pomočjo indukcije na število sprememb barv, ki so potrebne, da pobarvamo vozlišče. 
     
-    Fiksirajmo $Z$. Recimo, da za počrnitev vozlišča $u$ potrebujemo 1 spremembo barve. To pomeni, da je $u$ edini nepobarvan sosed enega izmed vozlišč v $Z$ (sprememba barve, ki jo potrebujemo, je ravno barva vozlišča $u$). Ne glede na to, v kakšnem vrstnem redu spreminjamo barve vozlišč, bo $u$ še vedno edini nepobarvan sosed enega izmed vozlišč v $Z$ in bo nekoč pobarvan.
+    Fiksirajmo $Z$. Recimo, da za počrnitev vozlišča $u$ potrebujemo eno spremembo barve. To pomeni, da je $u$ edini nepobarvan sosed enega izmed vozlišč v $Z$ (sprememba barve, ki jo potrebujemo, je ravno barva vozlišča $u$). Ne glede na to, v kakšnem vrstnem redu spreminjamo barve vozlišč, bo $u$ še vedno edini nepobarvan sosed enega izmed vozlišč v $Z$ in bo nekoč pobarvan.
     
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
 
-Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$ ($u$ povzroči spremembo barve vozlišča $v$). Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če ta ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
+Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$ ($u$ povzroči spremembo barve vozlišča $v$). Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če to ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
 \begin{trditev}[{\cite[trditev~2.10]{barioli2010zero}}]
     Za velikost minimalnega pokritja splošnega grafa $G$ s potmi $P(G)$ velja
     \begin{equation}
@@ -728,7 +728,7 @@ Iz trditve~\ref{trd:nadmnozica-zfs-je-zfs} vidimo, da za dve množici ničelne p
 Velja pa tudi naslednja posledica trditve~\ref{trd:nadmnozica-zfs-je-zfs}:
 \begin{posledica}
     \label{posl:ne-obstaja-manjsi-zfs}
-    Če za graf $G$ ne obstaja množica ničelne prisile velikosti $z_1$, kjer $1 < z_1 < n(G)-1$, potem tudi ne obstaja množica ničelne prisile velikosti $z_2 < z_1$.
+    Če za graf $G$ ne obstaja množica ničelne prisile velikosti $z_1$, kjer je $1 < z_1 < n(G)-1$, potem tudi ne obstaja množica ničelne prisile velikosti $z_2 < z_1$.
 \end{posledica}
 \begin{proof}
     Fiksirajmo $z_1$ in $z_2 \leq z_1$. Dokažimo, da če ne velja desna stran implikacije, tudi leva ne velja. Naj torej obstaja množica ničelne prisile velikosti $z_2$. Po trditvi~\ref{trd:nadmnozica-zfs-je-zfs} ji lahko dodajamo vozlišča grafa $G$, dokler ne bo velikosti $z_1$, pa bo še vedno množica ničelne prisile. Sledi torej, da obstaja množica ničelne prisile velikosti $z_1$ in dokaz je končan. 
@@ -754,7 +754,7 @@ Sedaj lahko definiramo množico vseh (simetričnih) matrik grafa $G$ nad poljem~
 Ideja za imenom ničelne prisile je sledeča. Vzemimo matriko, ki pripada grafu $G$, in vektor, ki je v jedru te matrike. Črna vozlišča grafa $G$ predstavljajo tiste koordinate v vektorju, za katere zahtevamo, da so enake nič, bela vozlišča pa so tiste koordinate, za katere (še) ni nobene zahteve. Sprememba barve $i$-tega vozlišča iz bele v črno pomeni, da mora $i$-ta koordinata vektorja biti nič. Če začnemo z množico ničelne prisile, sledi naslednja trditev 
 \begin{trditev}[{\cite[trditev 2.3]{aim2008minimumrank}}]
     \label{trd:rang2}
-    Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake 0, potem je $x = 0$.
+    Imejmo množico ničelne prisile $Z$ grafa $G$ in matriko $A \in S(\F, G)$ grafa $G$ nad poljem $\F$. Naj bo vektor $x$ v jedru matrike $A$. Če so vse koordinate, ki pripadajo vozliščem iz $Z$, enake $0$, potem je $x = 0$.
 \end{trditev}
 
 Ker imamo povezavo med grafom in matrikami, lahko definiramo tudi \emph{minimalni rang} in \emph{maksimalni korang} grafa $G$:
@@ -826,19 +826,19 @@ saj lahko pozitivno semidefinitno matriko grafa dobimo kot vsoto matrik klik iz 
 Glavna motivacija za uvedbo ničelne prisile je ravno preučevanje minimalnega ranga (oziroma maksimalnega koranga) grafov. Izkaže se, da je število ničelne prisile zgornja meja za maksimalni korang, za kar potrebujemo še sledeč rezultat:
 \begin{trditev}[{\cite[trditev 2.2]{aim2008minimumrank}}]
     \label{trd:rang1}
-    Imejmo matriko $A \in \F^{n \times n}$ s korangom $\korang(A) > k$. Potem obstaja tak neničelni vektor iz jedra $x \in \ker(A)$, katerega koordinate so enake 0 na poljubnih $k$ indeksih.
+    Imejmo matriko $A \in \F^{n \times n}$ s korangom $\korang(A) > k$. Potem obstaja tak neničelni vektor iz jedra $x \in \ker(A)$, katerega koordinate so enake $0$ na poljubnih $k$ indeksih.
 \end{trditev}
 
 Sedaj lahko dokažemo
 \begin{izrek}[{\cite[trditev 2.4]{aim2008minimumrank}}]
-    Imejmo množico ničelne prisile $Z$ grafa $G$. Potem za neko polje $\F$ velja $M^\F(G)  \leq |Z|$ in posledično
+    Imejmo množico ničelne prisile $Z$ grafa $G$. Potem za poljubno polje $\F$ velja $M^\F(G)  \leq |Z|$ in posledično
     \begin{equation}
         \label{eq:zf-korang}
         M^\F(G) \leq Z(G).
     \end{equation}
 \end{izrek}
 \begin{proof}
-    S protislovjem: predpostavimo $M^\F(G) > |Z|$ in vzemimo tako matriko $A \in S(\F, G)$, da $\korang(A) > |Z|$. Po trditvi~\ref{trd:rang1} obstaja tak neničelni vektor $x \in \ker(A)$, katerega koordinate so enake 0 na indeksih, pripadajočih vozliščem iz $Z$. Po trditvi~\ref{trd:rang2} pa sledi, da so potem vse koordinate $x$ enake 0, kar je protislovje z neničelnostjo $x$.
+    S protislovjem: predpostavimo $M^\F(G) > |Z|$ in vzemimo tako matriko $A \in S(\F, G)$, da je $\korang(A) > |Z|$. Po trditvi~\ref{trd:rang1} obstaja tak neničelni vektor $x \in \ker(A)$, katerega koordinate so enake 0 na indeksih, pripadajočih vozliščem iz $Z$. Po trditvi~\ref{trd:rang2} pa sledi, da so potem vse koordinate $x$ enake 0, kar je protislovje z neničelnostjo $x$.
 \end{proof}
 
 \section{Ničelna prisila nekaterih razredov grafov}
@@ -1359,10 +1359,10 @@ Sledi nekaj trivialnih posledic trditve~\ref{trd:kartezicni-produkt-zgornja-meja
     \label{posl:kartezicni-produkt-zgornje-meje-pot-cikel-polni}
     Za kartezične produkte splošnega grafa $G$ velja:
     \begin{enumerate}
-        \item $Z(G \boxempty P_n) \leq \min \{ Z(G)n, n(G) \} \stackrel{n(G) \leq n}{=} n(G)$ za $n \geq 1$
+        \item $Z(G \boxempty P_n) \leq \min \{ Z(G)n, n(G) \} \stackrel{n(G) \leq n}{=} n(G)$ za $n \geq 1$.
         \label{itm:meja-kartezicni-s-potjo}
-        \item $Z(G \boxempty C_n) \leq \min \{ Z(G)n, 2n(G) \}$ za $n \geq 3$
-        \item $Z(G \boxempty K_n) \leq \min \{ Z(G)n, (n-1)n(G) \}$ za $n \geq 2$
+        \item $Z(G \boxempty C_n) \leq \min \{ Z(G)n, 2n(G) \}$ za $n \geq 3$.
+        \item $Z(G \boxempty K_n) \leq \min \{ Z(G)n, (n-1)n(G) \}$ za $n \geq 2$.
     \end{enumerate}
 \end{posledica}
 \begin{proof}
@@ -1954,7 +1954,7 @@ Razmislimo, ali lahko algoritem~\ref{alg:eksponentni-izracun-zf} kako izboljšam
 
 Za oba vrstna reda obstajajo primeri, kjer moramo v najslabšem primeru še vedno pregledati vse možnosti. Prav tako sta pristopa ekvivalentna v splošnem primeru, kjer ne vemo nič o številu ničelne prisile: za grafe z majhnim številom bo sicer bolje deloval naraščajoči vrstni red, za grafe z velikim številom padajoči, gledano skupno (čez vse grafe) pa bo število operacij zaradi simetrije enako, saj je število podmnožic velikosti $i$ enako številu podmnožic velikosti $n-i$, $\binom{n}{i} = \binom{n}{n-i}$.
 
-Vendar pa lahko število pregledanih možnosti v primeru padajočega vrstnega reda še malo izboljšamo. Čim za velikost $i$ najdemo neko množico ničelne prisile, vemo $Z(G) \leq i$, zato lahko začnemo pregledovati množice velikosti $i-1$. V najslabšem primeru moramo sicer še vedno pregledati vse podmnožice neke velikosti, preden lahko nadaljujemo z manjšimi.
+Vendar pa lahko število pregledanih možnosti v primeru padajočega vrstnega reda še malo izboljšamo. Čim za velikost $i$ najdemo neko množico ničelne prisile, vemo, da velja $Z(G) \leq i$, zato lahko začnemo pregledovati množice velikosti $i-1$. V najslabšem primeru moramo sicer še vedno pregledati vse podmnožice neke velikosti, preden lahko nadaljujemo z manjšimi.
 
 Še ena ideja za izboljšavo temelji na trditvi~\ref{trd:nadmnozica-zfs-je-zfs}, ki pravi, da lahko neki množici ničelne prisile dodamo nekaj vozlišč, pa bo še vedno množica ničelne prisile. Začnemo s padajočim vrstnim redom in poiščemo vse množice ničelne prisile velikosti $n-2$, označimo jih z $\mathcal{Z}_{n-2}$. (Vemo, da so vse podmnožice velikosti $n-1$ množice ničelne prisile, zato začnemo kar z $n-2$.) Nato preiščemo samo tiste velikosti $n-3$, ki so podmnožice katere izmed množic v $\mathcal{Z}_{n-2}$. Nadaljujemo, dokler še najdemo kakšno množico ničelne prisile.
 Tako res ne izpustimo nobene množice ničelne prisile, kar nam zagotovi kontrapozicija posledice~\ref{posl:ne-obstaja-manjsi-zfs}: če obstaja neka množica ničelne prisile velikosti $z_2$, obstaja tudi množica ničelne prisile velikosti $z_1$ za vsak $z_2 \leq z_1 \leq n-1$.
@@ -2116,7 +2116,7 @@ Vsakemu vozlišču priredimo neko utež s pomočjo funkcije $w\colon V(G) \right
 \[ Z(G, w) = \min\{ w(Z) \mid Z \text{ množica ničelne prisile} \} .\]
 
 \begin{izrek}[\cite{aazami2008hardness}]
-    Problem \ZFOdl\ je $\NP$-poln za ravninske grafe z utežmi, tudi če so uteži kvečjemu 0 ali 1.
+    Problem \ZFOdl\ je $\NP$-poln za ravninske grafe z utežmi, tudi če so uteži kvečjemu $0$ ali $1$.
 \end{izrek}
 Posledično sledi tudi $\NP$-polnost uteženega problema za splošne grafe. To ni presenetljivo, saj je \ZFOdl\ za neutežene grafe ožji problem (predstavljamo si lahko, da imajo vse uteži vrednosti 1), za katerega vemo, da je $\NP$-poln, torej mora tak biti tudi širši problem. Ker je bila $\NP$-polnost uteženega problema dokazana 8~let pred neuteženim, pa je dokaz ponovno narejen s pomočjo polinomske prevedbe že znanega $\NP$-polnega problema, usmerjenega Hamiltonskega cikla, na naš problem. (Da je problem v $\NP$, pa pokažemo enako, kot za primer povezane ničelne prisile.)
 
@@ -2168,7 +2168,7 @@ Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing
     Naj bo $k$ pozitivno celo število. Imejmo graf $G$ z $n \geq 2$ vozlišči in naj za stopnje vozlišč velja $\Delta \geq k, \delta \geq 1$. Potem za število $k$-prisile velja naslednja zgornja meja
     \begin{equation}
         \label{eq:kprisila-zgornja-meja}
-        F_k(G) \leq \frac{(\Delta - k + 1)n}{\Delta - k + 1 + \min\{\delta,k\}}
+        F_k(G) \leq \frac{(\Delta - k + 1)n}{\Delta - k + 1 + \min\{\delta,k\}}.
     \end{equation}
 \end{izrek}
 
@@ -2186,7 +2186,7 @@ Navedimo zgornje meje za število $k$-prisile, dokazane v~\cite{amos2015kforcing
 \end{proof}
 
 \begin{posledica}
-    Za graf $G$ z vsaj 2 vozliščema in najmanjšo stopnjo $\delta \geq 1$ (nimamo izoliranih vozlišč) za ničelno prisilo velja naslednja zgornja meja
+    Za graf $G$ z vsaj dvema vozliščema in najmanjšo stopnjo $\delta \geq 1$ (nimamo izoliranih vozlišč) za ničelno prisilo velja naslednja zgornja meja
     \begin{equation}
         \label{eq:zgornja-meja-zf}
         Z(G) = F_1(G) \leq \frac{\Delta}{\Delta + 1} n(G),
