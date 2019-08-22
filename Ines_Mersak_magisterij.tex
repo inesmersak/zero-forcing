@@ -698,7 +698,9 @@ Smiselno se je vprašati, ali je ob neki začetni množici pobarvanih vozlišč 
     Sedaj naj naša trditev velja za vozlišča, ki potrebujejo $n-1$ sprememb barv, da postanejo črna. Recimo, da za vozlišče $u$ potrebujemo $n$ sprememb barv. To pomeni, da obstaja sosed $v$, ki potrebuje $n-1$ sprememb barv, da počrni, pri čemer bo vozlišče $u$ po tem edini nepobarvan sosed vozlišča $v$. Ker smo predpostavili, da trditev drži za vozlišča, ki potrebujejo $n-1$ sprememb, torej velja, da bo vozlišče $v$ postalo črno neodvisno od vrstnega reda sprememb. Po nekem vrstnem redu sprememb imamo torej črno vozlišče $v$, katerega edini nepobarvan sosed je $u$, ki bo torej (nekoč) postal črn. Torej tudi za vozlišče $u$ velja, da bo postalo pobarvano neodvisno od vrstnega reda sprememb, in indukcija je zaključena.
 \end{proof}
 
-Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$ ($u$ povzroči spremembo barve vozlišča $v$). Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če to ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
+Oglejmo si pojem pokrivanja grafa s potmi, za katerega se bo izkazalo, da je povezan z ničelno prisilo. \emph{Pokritje s potmi} grafa $G$ je taka množica induciranih podgrafov poti, da vsako vozlišče grafa pripada natanko eni izmed poti. Pri tem lahko pokritje vsebuje tudi pot velikosti ena (torej eno samo vozlišče). Velikost najmanjšega pokritja s potmi nekega grafa označimo s $P(G)$. Eno izmed minimalnih pokritij s potmi grafa $G$ na sliki~\ref{fig:osnovni-primer-prisile} na strani~\pageref{fig:osnovni-primer-prisile} je množica $\{ \{1\}, \{2,3,4,5\} \}$, velja $P(G) = 2$.
+
+Če imamo dano množico ničelne prisile $Z$ nekega grafa, lahko zapišemo zaporedje sprememb barv vozlišč, pri čemer je sprememba oblike $u \rightarrow v$ ($u$ povzroči spremembo barve vozlišča $v$). Zaporedje lahko razbijemo na podzaporedja, tako da vozlišča inducirajo pot; takemu podzaporedju rečemo \emph{veriga sprememb} in ga zapišemo kot $(u_1, u_2, \ldots, u_k)$, pri čemer velja $u_i \rightarrow u_{i+1}$ za $1 \leq i \leq k-1$.  Ta podzaporedja so disjunktna (glede na vozlišča), saj vsako vozlišče povzroči spremembo v največ enem vozlišču (saj se ta zgodi, ko ima natanko enega belega soseda) in je vsako vozlišče spremenilo barvo zaradi enega vozlišča (ali pa je bilo v začetni množici $Z$). Povedano drugače, vsako vozlišče se v zaporedju sprememb nahaja največ dvakrat: enkrat na levi strani spremembe, drugič na desni. Poleg tega vemo, da se vsako vozlišče, ki ni v $Z$, v zaporedju sprememb pojavi vsaj enkrat, saj je $Z$ množica ničelne prisile in mora biti na koncu torej pobarvan cel graf. Število verig je $|Z|$, začetno vozlišče vsake so ravno vozlišča iz $Z$, pri čemer za verigo sprememb štejemo tudi eno samo vozlišče iz $Z$, če to ne povzroči spremembe v nobenem vozlišču. Verige so torej particija vozlišč grafa, ki inducira neko pokritje s potmi. Iz tega sledi
 \begin{trditev}[{\cite[trditev~2.10]{barioli2010zero}}]
     Za velikost minimalnega pokritja splošnega grafa $G$ s potmi $P(G)$ velja
     \begin{equation}
@@ -706,7 +708,7 @@ Za dano množico ničelne prisile $Z$ lahko zapišemo zaporedje sprememb barv vo
         P(G) \leq Z(G).
     \end{equation}
 \end{trditev}
-Poglejmo si, kako izgleda veriga sprememb na grafu s slike~\ref{fig:osnovni-primer-prisile} iz primera~\ref{prim:osnovni-zf}, pri čemer vzemimo množico ničelne prisile $Z_3 = \{1,5\}$. Če se dogovorimo, da v primeru večih možnih povzročiteljev spremembe prevlada vozlišče z manjšo oznako, dobimo verigi $5 \rightarrow 4 \rightarrow 3$ in $1 \rightarrow 2$.
+Poglejmo si, kako izgleda veriga sprememb na grafu s slike~\ref{fig:osnovni-primer-prisile} iz primera~\ref{prim:osnovni-zf}, pri čemer vzemimo množico ničelne prisile $Z_3 = \{1,5\}$. Če se dogovorimo, da v primeru večih možnih povzročiteljev spremembe prevlada vozlišče z manjšo oznako, dobimo verigi $5 \rightarrow 4 \rightarrow 3$ in $1 \rightarrow 2$, ki torej inducirata še eno minimalno pokritje tega grafa poleg že omenjenega.
 
 Če imamo dano množico ničelne prisile $Z$ za nek graf $G$ in v $Z$ dodamo še kakšno vozlišče, se izkaže, da je to še vedno množica ničelne prisile grafa $G$.
 \begin{trditev}
@@ -1163,8 +1165,7 @@ Za lažjo predstavo je na sliki~\ref{fig:trikotnik} prikazan primer grafa $T_4$ 
 \end{proof}
 
 \subsection{Drevesa}
-\emph{Drevo} $T$ je graf, ki ne vsebuje ciklov (kot podgrafov). Za število povezav drevesa velja $m(T) = n(T) - 1$, poleg tega ima vsako drevo z $n(T) \geq 2$ vsaj dva lista, tj.~vozlišči stopnje 1.
-
+\emph{Drevo} $T$ je graf, ki ne vsebuje ciklov (kot podgrafov). Za število povezav drevesa velja $m(T) = n(T) - 1$, poleg tega ima vsako drevo z $n(T) \geq 2$ vsaj dva lista, tj.~vozlišči stopnje 1. Izkaže se, da je ničelna prisila drevesa $T$ enaka kar velikosti minimalnega pokritja s potmi $P(T)$:
 \begin{trditev}[{\cite[trditev 4.2]{aim2008minimumrank}}]
     \label{trd:zf-dreves}
     $Z(T) = P(T)$.
@@ -1687,9 +1688,6 @@ Graf lahko predstavimo tudi s seznamom sosedov: za vsako vozlišče naštejemo n
 
 Seznam sosedov lahko implementiramo tudi kot seznam množic. Če so te implementirane z zgoščenimi tabelami, to pomeni, da imajo preverjanje, ali je element v množici, dodajanje in odstranjevanje v povprečju konstantno časovno zahtevnost. Ali sta vozlišči sosednji, lahko zato ugotovimo v konstantnem času, prav toliko porabimo tudi za odstranjevanje povezave in dodajanje povezave. Dodajanje vozlišča je še vedno $O(n)$, odstranjevanje pa prav tako postane $O(n)$. 
 
-Vse tri predstavitve lahko primerjamo v tabeli~\ref{tab:primerjava-predstavitev}.
-Na prvi pogled se zdi, da bi bilo vedno najbolj optimalno izbrati seznam sosedov, implementiran z množicami. Vendar pa je treba upoštevati, da dodajanje, iskanje in odstranjevanje iz množice v povprečju sicer je konstantne časovne zahtevnosti, je pa ta konstanta večja kot npr.~pri dodajanju na konec seznama. Tako je predstavitev najbolj smiselno izbrati glede na to, katere operacije bomo potrebovali in koliko prostora imamo na voljo oziroma kako velike grafe želimo obravnavati. 
-
 \begin{table}[h]
     \centering
     \begin{tabular}{lccc}
@@ -1707,6 +1705,9 @@ Na prvi pogled se zdi, da bi bilo vedno najbolj optimalno izbrati seznam sosedov
     \caption{Prikazana je primerjava časovnih zahtevnosti nekaterih pogostih operacij na grafih med tremi predstavitvami.}
     \label{tab:primerjava-predstavitev}
 \end{table}
+
+Vse tri predstavitve lahko primerjamo v tabeli~\ref{tab:primerjava-predstavitev}.
+Na prvi pogled se zdi, da bi bilo vedno najbolj optimalno izbrati seznam sosedov, implementiran z množicami. Vendar pa je treba upoštevati, da dodajanje, iskanje in odstranjevanje iz množice v povprečju sicer je konstantne časovne zahtevnosti, je pa ta konstanta večja kot npr.~pri dodajanju na konec seznama. Tako je predstavitev najbolj smiselno izbrati glede na to, katere operacije bomo potrebovali in koliko prostora imamo na voljo oziroma kako velike grafe želimo obravnavati. 
 
 Ker se bomo dotaknili tudi težavnosti odločitvenih problemov, si poglejmo nekaj osnovnih definicij računske zahtevnosti.
 \begin{definicija}
@@ -1759,9 +1760,7 @@ Do zdaj smo govorili samo o težavnosti odločitvenih problemov, kaj pa, če ima
 \subsection{Preverljivost množice ničelne prisile}
 Dan imamo (ne nujno povezan) graf $G$ in neko podmnožico njegovih vozlišč $Z \subseteq V$. Najti želimo algoritem, ki preveri, ali je $Z$ množica ničelne prisile. To naredimo tako, da simuliramo postopek širjenja barve po pravilu, da črno vozlišče povzroči spremembo barve v edinemu nepobarvanemu sosedu. Pregledamo vsa črna vozlišča, ugotovimo, katera imajo natanko enega nepobarvanega soseda, in mu spremenimo barvo. Postopek ponavljamo, dokler se še dogajajo kakšne spremembe. Če je na koncu pobarvan cel graf, je $Z$ res množica ničelne prisile, v nasprotnem primeru pa ne. 
 
-Psevdokoda zgornjega postopka je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, v funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji. Za graf v tem primeru izberemo predstavitev s seznamom sosedov, implementiranega s seznamom, saj želimo prihraniti na prostoru. (Če bi izbrali matriko sosednosti, bi že za grafe velikosti 25000 porabili približno 5GB spomina, tudi za redke grafe, kot je na primer pot. Če pa bi pot velikosti 25000 predstavili s seznamom sosedov, bi porabili le nekaj MB.) Poleg tega ne bomo potrebovali operacij odstranjevanja ali ugotavljati sosednosti med dvema vozliščema, zato je smiselno izbrati bolj preprosto podatkovno strukturo seznam namesto množice. 
-
-Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``barvanje'' $barva$ poišče vse nepobarvane sosede vozlišča $u$. Uporablja podatkovno strukturo seznam, ki ima metodo \textsc{dodaj} za dodajanje elementa na konec seznama z amortizirano konstantno časovno zahtevnostjo. Funkcija \textsc{vsiPobarvani} sprejme graf $G$ in trenutno ``barvanje'' $barva$  ter vrne logično vrednost \texttt{true} ali \texttt{false}, odvisno od tega, ali so vsa vozlišča v grafu pobarvana.
+Psevdokoda zgornjega postopka je zapisana v algoritmu~\ref{alg:preveri-zf-naiven}, v funkciji \textsc{preveri}, pod njo pa sta zapisani še dve pomožni funkciji.
 \begin{algorithm}[!h]
     \caption{Preveri, ali je dana množica množica ničelne prisile za dan graf.}
     \label{alg:preveri-zf-naiven}
@@ -1812,6 +1811,9 @@ Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
+ Za graf v tem primeru izberemo predstavitev s seznamom sosedov, implementiranega s seznamom, saj želimo prihraniti na prostoru. (Če bi izbrali matriko sosednosti, bi že za grafe velikosti 25000 porabili približno 5GB spomina, tudi za redke grafe, kot je na primer pot. Če pa bi pot velikosti 25000 predstavili s seznamom sosedov, bi porabili le nekaj MB.) Poleg tega ne bomo potrebovali operacij odstranjevanja ali ugotavljati sosednosti med dvema vozliščema, zato je smiselno izbrati bolj preprosto podatkovno strukturo seznam namesto množice. 
+
+Funkcija \textsc{najdiBeleSosede} za dan graf $G$, vozlišče $u$ in trenutno ``barvanje'' $barva$ poišče vse nepobarvane sosede vozlišča $u$. Uporablja podatkovno strukturo seznam, ki ima metodo \textsc{dodaj} za dodajanje elementa na konec seznama z amortizirano konstantno časovno zahtevnostjo. Funkcija \textsc{vsiPobarvani} sprejme graf $G$ in trenutno ``barvanje'' $barva$  ter vrne logično vrednost \texttt{true} ali \texttt{false}, odvisno od tega, ali so vsa vozlišča v grafu pobarvana.
 
 Analizirajmo zahtevnost algoritma~\ref{alg:preveri-zf-naiven}. Označimo velikosti vhodnih podatkov takole: $n = n(G), m = m(G), z = |Z|$.
 
@@ -1900,8 +1902,7 @@ Analizirajmo še prostorsko zahtevnost algoritma~\ref{alg:preveri-zf-izboljsan}.
 
 Prostorsko zahtevnost bi lahko zmanjšali, če bi namesto shranjevanja nepobarvanih sosedov za vsako vozlišče shranjevali samo število. S tem bi porabili $O(n)$ prostora, skupna prostorska zahtevnost bi bila torej $O(n)$. Pri tem bi morali, po tem, ko bi v pomožni funkciji \textsc{preveriSosede} ugotovili, da se je števec nepobarvanih sosedov nekega vozlišča $u$ zmanjšal na 1, poiskati, kateri sosed vozlišča $u$ je še nepobarvan, za kar bi potrebovali $O(\deg u)$ operacij. Ker bi se to zgodilo največ $O(n)$-krat, bi skupno porabili $O(n+m)$ operacij več, kar torej ne spremeni reda časovne zahtevnosti, spremeni pa konstanto.
 
-V prilogi~\ref{sec:algoritmi} je podana C++ implementacija vseh treh algoritmov (naivnega algoritma~\ref{alg:preveri-zf-naiven} in dveh verzij algoritma~\ref{alg:preveri-zf-izboljsan}, z množicami ali števci). Na sliki~\ref{fig:primerjava-check-random-graf} je predstavljena primerjava časov izvajanja teh treh algoritmov v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi (povezavo dodamo v $G$ z verjetnostjo $p$ neodvisno od ostalih povezav). Levo je izbran $p=0.01$, torej z veliko verjetnostjo generiramo ``redke'' grafe z malo povezavami, desno pa $p=0.7$, torej imajo generirani grafi veliko povezav.
-V obeh primerih je za preverjanje izbrana naključna množica 95\% velikosti grafa $G$.
+V prilogi~\ref{sec:algoritmi} je podana C++ implementacija vseh treh algoritmov (naivnega algoritma~\ref{alg:preveri-zf-naiven} in dveh verzij algoritma~\ref{alg:preveri-zf-izboljsan}, z množicami ali števci). Na sliki~\ref{fig:primerjava-check-random-graf} je predstavljena primerjava časov izvajanja teh treh algoritmov v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi (povezavo dodamo v $G$ z verjetnostjo $p$ neodvisno od ostalih povezav). 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.49\linewidth]{koda/results/plots/random_sparse.pdf}
@@ -1909,6 +1910,9 @@ V obeh primerih je za preverjanje izbrana naključna množica 95\% velikosti gra
     \caption{Predstavljena je primerjava časov izvajanja treh algoritmov za preverjanje in njihovi približni koeficienti rasti v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi; levo je izbran $p=0.01$, desno pa $p=0.7$.}
     \label{fig:primerjava-check-random-graf}
 \end{figure}
+Levo je izbran $p=0.01$, torej z veliko verjetnostjo generiramo ``redke'' grafe z malo povezavami, desno pa $p=0.7$, torej imajo generirani grafi veliko povezav.
+V obeh primerih je za preverjanje izbrana naključna množica 95\% velikosti grafa $G$.
+
 
 Izkaže se, da je na gostih grafih (slika~\ref{fig:primerjava-check-random-graf} desno) zelo malo verjetno, da se bo za izbrano množico sploh začel proces širjenja barve. Vsi algoritmi tako naredijo samo eno iteracijo, vendar pa ima naiven algoritem pri tem precej manj dela (ne gradi množic ali dodatnih tabel), zato je za majhne velikosti najhitrejši, vendar ga algoritem z vrsto in števci hitro ujame. Ker je delo z množicami najbolj zamudno, je ta različica algoritma z vrsto najpočasnejša.
 
