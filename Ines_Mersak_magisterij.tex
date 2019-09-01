@@ -92,6 +92,7 @@ na Levy-jeve topološke prostore.}  % Opis dela v eni povedi. Ne sme vsebovati m
 \usepackage{mathtools}
 \usepackage{soulutf8}
 \usepackage{booktabs}
+\usepackage{pdfpages}
 
 \setlength{\overfullrule}{50pt} % označi predlogo vrstico
 \pagestyle{plain}               % samo številka strani na dnu, nobene glave / noge
@@ -189,8 +190,11 @@ FAKULTETA ZA MATEMATIKO IN FIZIKO\\[5mm]
 \cleardoublepage
 
 %% sem pride IZJAVA O AVTORSTVU  -- SE NATISNE V VIS
+\includepdf{izjava_o_avtorstvu.pdf}
+\cleardoublepage
 
 % zahvala
+\addtocounter{page}{-2}
 \pdfbookmark[1]{Zahvala}{zahvala} %
 \section*{Zahvala}
 Rada bi se zahvalila mentorju za hitro odzivnost in dobre komentarje ter vso pomoč med pisanjem diplomske in magistrske naloge.
