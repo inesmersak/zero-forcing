@@ -10,8 +10,20 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 %\usepackage[cache=false]{minted}
- \usepackage{algorithm}
-\usepackage{algorithmic}
+
+% Za pisanje psevdokode
+\usepackage{algpseudocode}  % za psevdokodo
+\usepackage{algorithm}
+\floatname{algorithm}{Algoritem}
+\renewcommand{\listalgorithmname}{Kazalo algoritmov}
+\algnewcommand\algorithmicto{\textbf{to}}
+\algnewcommand\algorithmicin{\textbf{in}}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algrenewtext{For}[3]{\algorithmicfor\ #1 $\gets$ #2\ \algorithmicto\ #3\ \algorithmicdo}
+\algdef{S}[FOR]{ForEach}[2]{\algorithmicforeach\ #1\ \algorithmicin\ #2\ \algorithmicdo}
+\newcommand{\algorithmicbreak}{\textbf{break}}
+\newcommand{\Break}{\State \algorithmicbreak}
+
 
 \usepackage{tikz}
 \usetikzlibrary{math, overlay-beamer-styles}
@@ -53,6 +65,7 @@
 \DeclareMathOperator{\M}{M}
 \DeclareMathOperator{\supp}{supp}
 \newcommand{\squarep}{\mathbin{\square}}
+\newcommand{\NP}{\ensuremath{\mathsf{NP}}}
 
 
 \begin{document}
@@ -60,7 +73,7 @@
 \frame{\titlepage}
 
 \section{Uvod}
-\begin{frame}[fragile]{Definicija}
+\begin{frame}[fragile,label=definicija]{Definicija}
     $ G = (V,E)$ končen enostaven neusmerjen graf
 
     \medskip
@@ -98,13 +111,15 @@
     \end{figure}
 \end{frame}
 
+\againframe{definicija}
+
 \begin{frame}{Zgornja in spodnja meja}
     Za ničelno prisilo velja: 
     \[ Z(G) \leq n(G) - 1 \]
     \[ Z(G)  \geq 1 \]
     
     Spodnjo mejo lahko s krajšim premislekom hitro izboljšamo:
-    \[ Z(G) \geq \delta \]
+    \[ Z(G) \geq \delta(G) \]
 \end{frame}
 
 \begin{frame}{Motivacija}
@@ -204,6 +219,8 @@
                 
         \end{tikzpicture}
     \end{figure}
+    
+    \[ Z(P_n) \geq \delta(P_n) = 1 \]
 \end{frame}
 
 \begin{frame}{Polni graf}
@@ -230,6 +247,8 @@
         }
         \end{tikzpicture}
     \end{figure}
+    
+    \[ Z(K_n) \geq \delta(K_n) = n-1 \]
 \end{frame}
 
 \begin{frame}{Karakterizacija grafov z ekstremnimi $Z(G)$}
@@ -250,7 +269,7 @@
     
     \begin{figure}
         \centering
-        \begin{tikzpicture}[scale=0.9]
+        \begin{tikzpicture}[scale=0.7]
         \tikzmath{\n = 7; \r = 2.5;}
         \begin{scope}[every node/.style={circle,thick,draw}]
         \foreach \i in {1,...,\n}
@@ -269,6 +288,8 @@
         }
         \end{tikzpicture}
     \end{figure}
+    
+    \[ Z(C_n) \geq \delta(C_n) = 2 \]
 \end{frame}
 
 \begin{frame}{Zvezda}
@@ -316,59 +337,94 @@
         }
         \end{tikzpicture}
     \end{figure}
-\end{frame}
-
-\section{Nekaj ocen}
-\begin{frame}{Kartezični produkt}
-    \begin{definicija}
-        \alert{Kartezični produkt} grafov $G \squarep H$ je graf, za katerega velja:
-        \begin{enumerate}
-            \item množica vozlišč je $V(G) \times V(H)$,
-            \item vozlišči $(u,u')$ in $(v,v')$  sta sosednji $\iff$
-            \begin{itemize}
-                \item $u = v$ in $u' \sim v'$ v $H$ ali
-                \item $u' = v'$ in $u \sim v$ v $G$.
-            \end{itemize}
-        \end{enumerate}
-    \end{definicija}
     
-    \begin{trditev}
-        \[ Z(G \squarep H) \leq \min \{Z(G)\cdot|H|, Z(H) \cdot |G| \} \]
-    \end{trditev}
-    \vspace{-3mm}
-    \[ Q_n = Q_{n-1} \squarep K_2 \implies Z(Q_{n}) \leq 2^{n-1} \]
-\end{frame}
-
-\begin{frame}{Zgornja meja}
-    \begin{izrek}
-        Naj bo $G$ graf z $n$ vozlišči, največjo stopnjo vozlišča označimo z $\Delta$ in privzamemo, da je najmanjša stopnja vozlišča vsaj 1.
-        \begin{enumerate}
-            \item $Z(G) \leq \frac{\Delta}{\Delta + 1} n$
-            \item Če je $G$ povezan in velja $\Delta \geq 2$, potem $Z(G) \leq 
-            \frac{(\Delta - 2)n + 2}{\Delta - 1}$
-        \end{enumerate}
-    \end{izrek}
+    \[ Z(W_n) \geq \delta(W_n) = 3 \]
 \end{frame}
 
 \section{Izračun}
 \begin{frame}{Preverljivost}
+    Ali obstaja množica ničelne prisile $\leq k$?
     
+    \bigskip
+    
+    Želimo algoritem, ki preveri, ali je dana množica za dan graf res množica ničelne prisile.
+    
+    \bigskip
+    
+    Tri implementacije:
+    \begin{itemize}
+        \item naivna,
+        \item z vrsto in množicami belih sosedov,
+        \item z vrsto in seznamom števcev belih sosedov.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{}
-    
+    Model Erdős–Rényi: vsako povezavo izberemo z verjetnostjo $p$. 
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.49\linewidth]{../koda/results/plots/random_sparse.pdf}
+        \includegraphics[width=0.49\linewidth]{../koda/results/plots/random_dense.pdf}
+        \caption{Primerjava časov izvajanja v odvisnosti od velikosti grafa za naključno generirane grafe $G$ po modelu Erdős–Rényi.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.49\linewidth]{../koda/results/plots/pot_prvo_vozlisce.pdf}
+        \includegraphics[width=0.49\linewidth]{../koda/results/plots/pot_zadnje_vozlisce.pdf}
+        \caption{Primerjava časov izvajanja za poti v odvisnosti od velikosti; pri tem je na levi strani izbrana začetna množica $\{ 0 \}$, na desni pa $\{n-1\}$.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Eksponentni algoritem}
-    
+    \begin{algorithm}[H]
+        \caption{}
+        \raggedright
+        \textbf{Vhod:} Graf $G = (V,E)$. \\
+        \textbf{Izhod:} Število ničelne prisile $Z(G)$, $1 \leq Z(G) \leq n-1$.
+        \begin{algorithmic}[1]
+            \State $z \gets n+1$
+            \ForEach{$Z$}{$2^V$}
+            \If{$\Call{preveri}{G, Z} \land |Z| < z$}
+            \State $z \gets |Z|$
+            \EndIf
+            \EndFor
+            \State \Return $z$
+        \end{algorithmic}
+    \end{algorithm}
 \end{frame}
 
 \begin{frame}{}
-    
+    \begin{figure}
+        \centering
+        \includegraphics[width=120pt]{../koda/results/plots/zfn_random_15_sparse.pdf}
+        \includegraphics[width=120pt]{../koda/results/plots/zfn_random_15_mid.pdf}
+        \includegraphics[width=120pt]{../koda/results/plots/zfn_random_15_dense.pdf}
+        \caption{Primerjava časov izvajanja treh različic eksponentnega algoritma.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Distribucija ničelne prisile za E-R model}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.49\linewidth]{../koda/results/plots/er_zfn_dist_18_avg.pdf}
+        \includegraphics[width=0.49\linewidth]{../koda/results/plots/er_zfn_dist_18_boxplot.pdf}
+        \caption{Distribucija ničelne prisile za model Erdős–Rényi, za vsak $p$ je ničelna prisila izračunana za 100 naključno generiranih grafov.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{\textsf{NP}-polnost}
+    Problem iskanja množice ničelne prisile je $\NP$-težek. 
     
+    \bigskip
+    
+    Problem iskanja povezane množice ničelne prisile je prav tako $\NP$-težek.
+    
+    \bigskip
+    
+    Za drevesa znamo ničelno prisilo izračunati v $O(n)$.
 \end{frame}
 
 \end{document}
