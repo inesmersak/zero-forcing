@@ -189,9 +189,9 @@
     \begin{izrek}
         Za naslednje družine grafov velja $Z(G) = M(G)$:
         \begin{enumerate}
-            \item vsi grafi $G$ z $|G| \leq 6$
-            \item $P_n, C_n, K_n$
-            \item drevesa
+            \item vsi grafi $G$ z $|G| \leq 6$,
+            \item $P_n, C_n, K_n$,
+            \item drevesa.
         \end{enumerate}
     \end{izrek}
 \end{frame}
@@ -383,9 +383,9 @@
         \caption{}
         \raggedright
         \textbf{Vhod:} Graf $G = (V,E)$. \\
-        \textbf{Izhod:} Število ničelne prisile $Z(G)$, $1 \leq Z(G) \leq n-1$.
+        \textbf{Izhod:} Število ničelne prisile $Z(G)$.
         \begin{algorithmic}[1]
-            \State $z \gets n+1$
+            \State $z \gets n(G)+1$
             \ForEach{$Z$}{$2^V$}
             \If{$\Call{preveri}{G, Z} \land |Z| < z$}
             \State $z \gets |Z|$
@@ -394,6 +394,15 @@
             \State \Return $z$
         \end{algorithmic}
     \end{algorithm}
+\end{frame}
+
+\begin{frame}
+    Trije načini pregleda množic iz $2^V$:
+    \begin{itemize}
+        \item padajoč,
+        \item padajoč, pregledujemo le podmnožice množic ničelne prisile,
+        \item bisekcija.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{}
