@@ -1,0 +1,200 @@
+\documentclass{beamer}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{color}
+%\setbeamertemplate{items}[ball] 
+\usepackage{aecompl,accents}
+\usepackage[all]{xy}
+\usepackage[normalem]{ulem}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+%\usepackage[cache=false]{minted}
+ \usepackage{algorithm}
+\usepackage{algorithmic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetheme{Ilmenau}
+\usecolortheme{beaver}
+\setbeamercolor{block title}{bg=darkred,fg=structure.fg!20!bg!50!bg}
+\setbeamercolor{block body}{bg=black!2!red!4!white}
+\setbeamercolor{local structure}{fg=darkred}
+\setbeamercolor{item projected}{bg=darkred}
+\setbeamercolor{titlelike}{parent=structure,bg=red!2!black!5!white}
+\setbeamertemplate{title page}[default][rounded=false,shadow=false5]
+\setbeamertemplate{enumerate items}[default]
+\useinnertheme{rectangles}
+\setbeamertemplate{blocks}[default]
+\setbeamertemplate{navigation symbols}{}
+\usefonttheme[onlymath]{serif}
+\usepackage[slovene]{babel}
+\usepackage[OT2,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{trditev}[theorem]{Trditev}
+\newtheorem{izrek}[theorem]{Izrek}
+\newtheorem{posledica}[theorem]{Posledica}
+\newtheorem{definicija}{Definicija}
+\newtheorem{domneva}[theorem]{Domneva}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Ničelna prisila]{Ničelna prisila}
+\author{Ines Meršak}
+\date[13.~april 2018]{Mentor: prof.~dr.~Sandi Klavžar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\korang}{korang}
+\DeclareMathOperator{\mr}{mr}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\supp}{supp}
+\newcommand{\squarep}{\mathbin{\square}}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Motivacija}
+\begin{frame}[fragile]{Definicija}
+    $ G = (V,E)$ končen enostaven neusmerjen graf
+
+    \medskip
+    
+    \begin{enumerate}
+        \item $Z \subset V$ množica črnih vozlišč, $V \setminus Z$ množica belih vozlišč
+        \item $\forall u \in Z$, ki ima natanko enega belega soseda $v$, vozlišče $v$ pobarvamo črno
+        \item drugo točko ponavljamo, dokler še lahko naredimo kakšno spremembo
+    \end{enumerate}
+    \begin{definicija}
+        \alert{Množica ničelne prisile} je tak $Z \subset V$, da so po koncu zgornjega postopka vsa vozlišča $G$ pobarvana črno.
+        $\alert{Z(G)} = \min \{|Z|\colon Z \subset V ,\ Z\text{ je množica ničelne prisile }G \} $
+    \end{definicija}
+\end{frame}
+
+\begin{frame}{Motivacija}
+    $S_n(\F)$ -- simetrične matrike $n\times n$ nad poljem $\F$
+    
+    \medskip
+    
+    $A \in S_n(\F) \colon$
+    $\mathcal{G}(A)$ je graf z $n$ vozlišči in povezavami $\{\{i,j\}\colon a_{ij} \neq 0, 1 \leq i < j \leq n \} $
+    
+    \medskip
+    \begin{definicija}
+        $\mathcal{S}(G) = \{ A \in S_n(\R)\colon \mathcal{G}(A) = G \} $ \\
+        $\mr(G) = \min \{ \rang A \colon A \in \mathcal{S}(G) \}$ \alert{minimalni rang} grafa $G$
+        $\M(G) = \max \{ \korang A \colon A \in \mathcal{S}(G) \}$ \alert{maksimalni korang} grafa $G$
+    \end{definicija}
+    
+    \[ \mr(G) + \M(G) = |V| \]
+\end{frame}
+
+\begin{frame}
+    \begin{block}{Problem minimalnega ranga grafa}
+        Določiti želimo parameter $\mr(G)$ za nek graf $G$.
+    \end{block}
+    
+    \bigskip
+    
+    Rešitev tega problema je ekvivalentna rešitvi problema maksimalne večkratnosti lastne vrednosti v družini $\mathcal{S}(G)$.
+    
+    \bigskip
+    
+    \begin{block}{Obraten problem lastnih vrednosti grafa}
+        Določiti želimo, kakšne so lahko lastne vrednosti matrik iz $\mathcal{S}(G)$.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    $\supp(x) = \{i \colon x_i \neq 0 \} $ \alert{nosilec} vektorja $x$
+    
+    \medskip
+    
+    \begin{trditev}
+        $\F$ polje, $A \in \F^{n \times n},\ \korang A > k$ za nek $k \in \N, \ 0 < k < n$.\\
+        Za poljubno množico $k$ indeksov $I$ obstaja neničelni vektor $x \in \ker A$, da je $\supp(x) \cap I = \emptyset$.
+    \end{trditev}
+    
+    \begin{trditev}
+        $Z$ množica ničelne prisile grafa $G$, $A \in \mathcal{S}(\F,G)$. \\
+        Če $x \in \ker A$ in $\supp(x) \cap Z = \emptyset$, je $x = 0$.
+    \end{trditev}
+    
+    \begin{trditev}
+        $Z \subseteq V$ množica ničelne prisile grafa $G$. \\ 
+        Velja $\M^\F(G) \leq |Z|$ in torej $\M^\F(G) \leq Z(G)$ za poljubno polje $\F$.
+    \end{trditev}
+\end{frame}
+
+\begin{frame}{$Z(G) = \M(G)$}
+    \begin{izrek}
+        Za naslednje družine grafov velja $Z(G) = \M(G)$:
+        \begin{enumerate}
+            \item vsi grafi $G$ z $|G| \leq 6$
+            \item $P_n, C_n, K_n$
+            \item drevesa
+        \end{enumerate}
+    \end{izrek}
+\end{frame}
+
+\section{Rezultati za tipične družine grafov}
+\begin{frame}{Karakterizacija grafov z ekstremnimi $Z(G)$}
+    \begin{trditev}
+        \[ Z(G) = 1 \iff G = P_n \text{ za } n \geq 1 \]
+    \end{trditev}
+    
+    \bigskip
+    
+    \begin{trditev}
+        Naj bo $G$ povezan graf z $|G| \geq 2$. Potem velja
+        \[ Z(G) = |G|-1 \iff G = K_{|G|} \]
+    \end{trditev}
+\end{frame}
+
+\begin{frame}
+    \[ Z(C_n) = 2 \text{ za } n \geq 3 \]
+    
+    \medskip
+    
+    \[ Z(S_n) = n-2 \text{ za } n \geq 4 \]
+\end{frame}
+
+\section{Nekaj ocen}
+\begin{frame}{Kartezični produkt}
+    \begin{definicija}
+        \alert{Kartezični produkt} grafov $G \squarep H$ je graf, za katerega velja:
+        \begin{enumerate}
+            \item množica vozlišč je $V(G) \times V(H)$,
+            \item vozlišči $(u,u')$ in $(v,v')$  sta sosednji $\iff$
+            \begin{itemize}
+                \item $u = v$ in $u' \sim v'$ v $H$ ali
+                \item $u' = v'$ in $u \sim v$ v $G$.
+            \end{itemize}
+        \end{enumerate}
+    \end{definicija}
+    
+    \begin{trditev}
+        \[ Z(G \squarep H) \leq \min \{Z(G)\cdot|H|, Z(H) \cdot |G| \} \]
+    \end{trditev}
+    \vspace{-3mm}
+    \[ Q_n = Q_{n-1} \squarep K_2 \implies Z(Q_{n}) \leq 2^{n-1} \]
+\end{frame}
+
+\begin{frame}{Zgornja meja}
+    \begin{izrek}
+        Naj bo $G$ graf z $n$ vozlišči, največjo stopnjo vozlišča označimo z $\Delta$ in privzamemo, da je najmanjša stopnja vozlišča vsaj 1.
+        \begin{enumerate}
+            \item $Z(G) \leq \frac{\Delta}{\Delta + 1} n$
+            \item Če je $G$ povezan in velja $\Delta \geq 2$, potem $Z(G) \leq 
+            \frac{(\Delta - 2)n + 2}{\Delta - 1}$
+        \end{enumerate}
+    \end{izrek}
+\end{frame}
+
+%\section{Število korakov (propagation time)}
+%\begin{frame}{Definicija}
+%    
+%\end{frame}
+
+\end{document}
