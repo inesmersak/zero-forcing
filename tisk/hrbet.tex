@@ -1,0 +1,45 @@
+\documentclass[oneside,12pt]{article}
+
+\usepackage[slovene]{babel}    % slovenian language and hyphenation
+\usepackage[utf8]{inputenc}    % make čšž work on input
+\usepackage[T1]{fontenc}       % make čšž work on output
+\usepackage[paperheight=29.7cm,paperwidth=1cm,top=3cm,bottom=3cm,right=2mm,left=-2mm,heightrounded]{geometry}
+
+\newcommand{\Title}{}
+\newcommand{\Author}{Ines Meršak}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+% \pagestyle{empty}              % vse strani prazne
+% \setlength{\parindent}{0pt}    % zamik vsakega odstavka
+% \setlength{\parskip}{10pt}     % prazen prostor po odstavku
+\setlength{\overfullrule}{30pt}  % oznaci predlogo vrstico z veliko črnine
+
+\usepackage{rotating}
+
+\begin{document}
+
+\thispagestyle{empty}  % ta stran prazna
+
+\begin{turn}{90}
+  \Author
+\end{turn}
+\vfill
+\begin{turn}{90}
+  NIČELNA PRISILA
+\end{turn}
+\vfill
+\begin{turn}{90}
+  2019
+\end{turn}
+
+
+% text here
+
+\end{document}
+% vim: syntax=tex
+% vim: spell spelllang=sl
+% vim: foldlevel=99
+% Latex template: Jure Slak, jure.slak@gmail.com
+
